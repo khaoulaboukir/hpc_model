@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<romeo version="Romeo v3.10.2">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Task/Scheduler.xml">
+  <place id="1" identifier="Task_inprocess" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="571.0" y="121.0"/> 
+         <deltaLabel deltax="2.0" deltay="14.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="2" identifier="Ressource" label="" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="571.0" y="61.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-23.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="4" identifier="Completed_Task" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="811.0" y="121.0"/> 
+         <deltaLabel deltax="58.0" deltay="-13.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <transition id="1" identifier="Scheduler" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="Task1 #eqeq 1"> 
+     <graphics color="0"> 
+        <position x="421.0" y="121.0"/> 
+        <deltaLabel deltax="-47.0" deltay="-12.0"/> 
+        <deltaGuard deltax="1.0" deltay="9.0"/> 
+        <deltaUpdate deltax="1.0" deltay="22.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[Schdl = 1;]]></update> 
+  </transition> 
+
+  <transition id="2" identifier="Terminate" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="Task1_terminate #eqeq 1"> 
+     <graphics color="0"> 
+        <position x="691.0" y="121.0"/> 
+        <deltaLabel deltax="3.0" deltay="10.0"/> 
+        <deltaGuard deltax="9.0" deltay="22.0"/> 
+        <deltaUpdate deltax="2.0" deltay="36.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[Schdl = 0;]]></update> 
+  </transition> 
+
+  <arc place="2" transition="1" type="PlaceTransition" weight="1" tokenColor="0"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="1" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="1" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="4" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="2" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <timedCost></timedCost>
+
+  <nbTokenColor>0</nbTokenColor>
+
+  <declaration><![CDATA[// insert here your type definitions using C-like syntax
+
+// insert here your function definitions 
+// using C-like syntax
+
+initially {
+int clock = 0;
+int period = 5;
+int wcet = 2;
+int start_time = 0;
+int Task1 = 0;
+int Task1_terminate = 0;
+int Schdl = 0;
+// insert here the state variables declarations 
+// and possibly some code to initialize them 
+// using C-like syntax
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></declaration>
+
+  <project nbinput="1" openinput="1" nbinclude="0" >
+      <input id="1"  file="Task.xml"  status="open"/>
+ </project>
+
+  <preferences> 
+      <colorPlace  c0="SkyBlue2"  c1="gray"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
+ 
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
+ 
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
+ 
+  </preferences> 
+ </TPN> 
+
+  </romeo>

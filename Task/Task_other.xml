@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<romeo version="Romeo v3.10.2">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Task_other.xml">
+  <timedCost></timedCost>
+
+  <nbTokenColor>0</nbTokenColor>
+
+  <declaration><![CDATA[// insert here your type definitions using C-like syntax
+
+// insert here your function definitions 
+// using C-like syntax
+
+initially {
+
+// insert here the state variables declarations 
+// and possibly some code to initialize them 
+// using C-like syntax
+ 
+ }
+
+]]></declaration>
+
+  <project nbinput="0" openinput="0" nbinclude="0" >
+ </project>
+
+  <preferences> 
+      <colorPlace  c0="SkyBlue2"  c1="gray"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
+ 
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
+ 
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
+ 
+  </preferences> 
+ </TPN> 
+
+  </romeo>
