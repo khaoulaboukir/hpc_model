@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Task/Scheduler.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/Scheduler.xml">
   <place id="1" identifier="Task_inprocess" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="571.0" y="121.0"/> 
@@ -20,33 +20,45 @@
   <place id="4" identifier="Completed_Task" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="811.0" y="121.0"/> 
-         <deltaLabel deltax="58.0" deltay="-13.0"/> 
+         <deltaLabel deltax="4.0" deltay="11.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <transition id="1" identifier="Scheduler" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="Task1 #eqeq 1"> 
+  <transition id="1" identifier="Scheduler" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="Task1 #eqeq 1 || Task2 #eqeq 1 || Task3 #eqeq 1"> 
      <graphics color="0"> 
         <position x="421.0" y="121.0"/> 
         <deltaLabel deltax="-47.0" deltay="-12.0"/> 
         <deltaGuard deltax="1.0" deltay="9.0"/> 
-        <deltaUpdate deltax="1.0" deltay="22.0"/> 
+        <deltaUpdate deltax="1.0" deltay="24.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[Schdl = 1;]]></update> 
+     <update><![CDATA[task_in_process = sort_tasks(Task1, Task2, Task3);]]></update> 
   </transition> 
 
-  <transition id="2" identifier="Terminate" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="Task1_terminate #eqeq 1"> 
+  <transition id="2" identifier="Terminate" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="(task_in_process #eqeq 1 && Task1 #eqeq 0) || (task_in_process #eqeq 2 && Task2 #eqeq 0)"> 
      <graphics color="0"> 
         <position x="691.0" y="121.0"/> 
         <deltaLabel deltax="3.0" deltay="10.0"/> 
-        <deltaGuard deltax="9.0" deltay="22.0"/> 
-        <deltaUpdate deltax="2.0" deltay="36.0"/> 
+        <deltaGuard deltax="8.0" deltay="39.0"/> 
+        <deltaUpdate deltax="4.0" deltay="23.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[Schdl = 0;]]></update> 
+     <update><![CDATA[task_in_process = 0;]]></update> 
+  </transition> 
+
+  <transition id="3" identifier="Clock" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="121.0" y="61.0"/> 
+        <deltaLabel deltax="1.0" deltay="-20.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[clock = clock + 1;]]></update> 
   </transition> 
 
   <arc place="2" transition="1" type="PlaceTransition" weight="1" tokenColor="0"  inhibitingCondition=""> 
@@ -89,15 +101,49 @@
 
 // insert here your function definitions 
 // using C-like syntax
+// Fonction pour trier le tableau Task_List en fonction de la priorité et choisir la tâche à exécuter
+const int n = 3;
+const int priority1 = 1, WCET1 = 2, period1 = 5, id1 = 1;
+const int priority2 = 2, WCET2 = 3, period2 = 4, id2 = 2;
+const int priority3 = 3, WCET3 = 4, period3 = 7, id3 = 3;
+
+int sort_tasks(int Task1, int Task2, int Task3) {
+int task_in_process;
+int i, j, k, max_priority;
+int selected_task = 0;
+int [5] temp = {0, 0, 0, 0, 0};
+int [n][5] Task_List = {{0, priority1, WCET1, period1, id1}, {0, priority2, WCET2, period2, id2}, {0, priority3, WCET3, period3, id3}};
+Task_List[0][0] = Task1;
+Task_List[1][0] = Task2;
+Task_List[2][0] = Task3;
+for(i = 0; i < n - 1; i ++){
+if(Task_List[i][0] == 1){
+max_priority = i;
+for(j = i + 1; j < n; j ++){
+if(Task_List[j][0] == 1 && Task_List[j][1] > Task_List[max_priority][1])
+{max_priority = j;}
+}
+if(max_priority != i){
+for(k = 0; k < 5; k ++){
+temp[k] = Task_List[i][k];
+Task_List[i][k] = Task_List[max_priority][k];
+Task_List[max_priority][k] = temp[k];
+}
+}
+}
+}
+for(i = 0; i < n; i ++){
+if(Task_List[i][0] == 1 && selected_task == 0){
+selected_task = Task_List[i][4];
+}
+}
+return selected_task;
+}
 
 initially {
-int clock = 0;
-int period = 5;
-int wcet = 2;
-int start_time = 0;
-int Task1 = 0;
-int Task1_terminate = 0;
-int Schdl = 0;
+int task_in_process = 0, clock = 0, start_time = 0;
+int Task1 = 0, Task2 = 0, Task3 = 0;
+
 // insert here the state variables declarations 
 // and possibly some code to initialize them 
 // using C-like syntax
@@ -118,10 +164,66 @@ int Schdl = 0;
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ]]></declaration>
 
-  <project nbinput="1" openinput="1" nbinclude="0" >
-      <input id="1"  file="Task.xml"  status="open"/>
+  <project nbinput="2" openinput="2" nbinclude="0" >
+      <input id="1"  file="Task1.xml"  status="open"/>
+      <input id="2"  file="Task2.xml"  status="open"/>
  </project>
 
   <preferences> 
