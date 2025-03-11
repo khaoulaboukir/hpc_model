@@ -1,93 +1,137 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/Test1/Scheduler.xml">
-  <place id="1" identifier="Task_inprocess" label="" initialMarking="0" eft="0" lft="inf"> 
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/Test1/Task.xml">
+  <place id="1" identifier="Init" label="" initialMarking="1" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="571.0" y="121.0"/> 
-         <deltaLabel deltax="2.0" deltay="14.0"/> 
+         <position x="301.0" y="31.0"/> 
+         <deltaLabel deltax="-2" deltay="-24"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="2" identifier="Ressource" label="" initialMarking="1" eft="0" lft="inf"> 
+  <place id="2" identifier="Ready" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="571.0" y="61.0"/> 
-         <deltaLabel deltax="-1.0" deltay="-23.0"/> 
+         <position x="541.0" y="31.0"/> 
+         <deltaLabel deltax="0.0" deltay="-23.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="4" identifier="Completed_Task" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="3" identifier="Execution" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="811.0" y="121.0"/> 
-         <deltaLabel deltax="4.0" deltay="11.0"/> 
+         <position x="781.0" y="31.0"/> 
+         <deltaLabel deltax="1.0" deltay="-22.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <transition id="1" identifier="Scheduler" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="Waiting_Task #eqeq wt"> 
+  <place id="4" identifier="Suspend" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="901.0" y="121.0"/> 
+         <deltaLabel deltax="-5.0" deltay="11.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <transition id="1" identifier="Activation" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="421.0" y="121.0"/> 
-        <deltaLabel deltax="-47.0" deltay="-12.0"/> 
-        <deltaGuard deltax="2.0" deltay="10.0"/> 
-        <deltaUpdate deltax="0.0" deltay="22.0"/> 
+        <position x="421.0" y="31.0"/> 
+        <deltaLabel deltax="3.0" deltay="-22.0"/> 
+        <deltaGuard deltax="-9.0" deltay="12.0"/> 
+        <deltaUpdate deltax="21.0" deltay="11.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[task_in_process = Sort(tab_Task);]]></update> 
+     <update><![CDATA[tab_Task = Add_Task(tab_Task,
+1, 2, 7, 3), wt =
+Is_Waiting_Task(tab_Task, 1);]]></update> 
   </transition> 
 
-  <transition id="2" identifier="Terminate" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="Completed_Task #eqeq 1"> 
+  <transition id="2" identifier="Start" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="task_in_process #eqeq 1"> 
      <graphics color="0"> 
-        <position x="691.0" y="121.0"/> 
-        <deltaLabel deltax="3.0" deltay="10.0"/> 
-        <deltaGuard deltax="5.0" deltay="22.0"/> 
-        <deltaUpdate deltax="9.0" deltay="38.0"/> 
+        <position x="661.0" y="31.0"/> 
+        <deltaLabel deltax="0.0" deltay="-18.0"/> 
+        <deltaGuard deltax="-3.0" deltay="9.0"/> 
+        <deltaUpdate deltax="3.0" deltay="20.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[task_in_process = NULL;]]></update> 
+     <update><![CDATA[start_time = clock,  wt =
+Exec_Task(tab_Task, 1);]]></update> 
   </transition> 
 
-  <transition id="3" identifier="Clock" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="4" identifier="Terminate" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="clock - start_time #geq
+Terminate_Task(tab_Task,1)"> 
      <graphics color="0"> 
-        <position x="121.0" y="61.0"/> 
-        <deltaLabel deltax="1.0" deltay="-20.0"/> 
-        <deltaGuard deltax="20" deltay="-20"/> 
-        <deltaUpdate deltax="20" deltay="10"/> 
+        <position x="901.0" y="31.0"/> 
+        <deltaLabel deltax="-5.0" deltay="-17.0"/> 
+        <deltaGuard deltax="-39.0" deltay="8.0"/> 
+        <deltaUpdate deltax="-35.0" deltay="36.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[clock = clock + 1;]]></update> 
+     <update><![CDATA[Completed_Task = 1;]]></update> 
   </transition> 
 
-  <arc place="2" transition="1" type="PlaceTransition" weight="1" tokenColor="0"  inhibitingCondition=""> 
+  <transition id="5" identifier="Period" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="clock % period_Task(tab_Task, 1) #eqeq 0"> 
+     <graphics color="0"> 
+        <position x="541.0" y="121.0"/> 
+        <deltaLabel deltax="-32.0" deltay="-22.0"/> 
+        <deltaGuard deltax="-110.0" deltay="-1.0"/> 
+        <deltaUpdate deltax="-85.0" deltay="13.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[wt = Wait_Task(tab_Task, 1);]]></update> 
+  </transition> 
+
+  <arc place="1" transition="1" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
   </arc> 
  
 
-  <arc place="1" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="2" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
   </arc> 
 
-  <arc place="1" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+  <arc place="2" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
   </arc> 
  
 
-  <arc place="4" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="3" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
   </arc> 
 
-  <arc place="2" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="3" transition="4" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="4" transition="4" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="4" transition="5" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="2" transition="5" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
@@ -374,12 +418,9 @@ int Completed_Task = NULL;
 
 
 
-
 ]]></declaration>
 
-  <project nbinput="2" openinput="2" nbinclude="0" >
-      <input id="1"  file="Task1.xml"  status="open"/>
-      <input id="2"  file="Task.xml"  status="open"/>
+  <project nbinput="0" openinput="0" nbinclude="0" >
  </project>
 
   <preferences> 
