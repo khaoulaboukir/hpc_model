@@ -1,137 +1,106 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/Test1/Task1.xml">
-  <place id="1" identifier="Init" label="" initialMarking="1" eft="0" lft="inf"> 
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/Test2/Task1.xml">
+  <place id="1" identifier="Task_inprocess" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="301.0" y="31.0"/> 
-         <deltaLabel deltax="-2" deltay="-24"/> 
+         <position x="571.0" y="121.0"/> 
+         <deltaLabel deltax="2.0" deltay="14.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="2" identifier="Ready" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="2" identifier="Ressource" label="" initialMarking="1" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="541.0" y="31.0"/> 
-         <deltaLabel deltax="0.0" deltay="-23.0"/> 
+         <position x="571.0" y="61.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-23.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="3" identifier="Execution" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="4" identifier="Completed_Task" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="781.0" y="31.0"/> 
-         <deltaLabel deltax="1.0" deltay="-22.0"/> 
+         <position x="811.0" y="121.0"/> 
+         <deltaLabel deltax="4.0" deltay="11.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="4" identifier="Suspend" label="" initialMarking="0" eft="0" lft="inf"> 
-      <graphics color="0"> 
-         <position x="901.0" y="121.0"/> 
-         <deltaLabel deltax="-5.0" deltay="11.0"/> 
-      </graphics> 
-      <scheduling gamma="0" omega="0"/> 
-  </place> 
-
-  <transition id="1" identifier="Activation" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="1" identifier="Scheduler" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="421.0" y="31.0"/> 
-        <deltaLabel deltax="3.0" deltay="-22.0"/> 
-        <deltaGuard deltax="-9.0" deltay="12.0"/> 
-        <deltaUpdate deltax="21.0" deltay="11.0"/> 
+        <position x="421.0" y="61.0"/> 
+        <deltaLabel deltax="-1.0" deltay="-22.0"/> 
+        <deltaGuard deltax="2.0" deltay="10.0"/> 
+        <deltaUpdate deltax="-129.0" deltay="0.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[tab_Task = Add_Task(tab_Task,
-0, 1, 5, 2), wt =
-Is_Waiting_Task(tab_Task, 0);]]></update> 
+     <update><![CDATA[task_in_process = selected_Queue(Ready_Task);]]></update> 
   </transition> 
 
-  <transition id="2" identifier="Start" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="task_in_process #eqeq 0"> 
+  <transition id="2" identifier="Terminate" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="661.0" y="31.0"/> 
-        <deltaLabel deltax="0.0" deltay="-18.0"/> 
-        <deltaGuard deltax="-3.0" deltay="9.0"/> 
-        <deltaUpdate deltax="3.0" deltay="20.0"/> 
+        <position x="691.0" y="121.0"/> 
+        <deltaLabel deltax="3.0" deltay="10.0"/> 
+        <deltaGuard deltax="5.0" deltay="22.0"/> 
+        <deltaUpdate deltax="9.0" deltay="38.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[start_time = clock, wt =
-Exec_Task(tab_Task, 0);]]></update> 
+     <update><![CDATA[]]></update> 
   </transition> 
 
-  <transition id="4" identifier="Terminate" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="clock - start_time #geq
-Terminate_Task(tab_Task,0)"> 
+  <transition id="3" identifier="Clock" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="901.0" y="31.0"/> 
-        <deltaLabel deltax="-5.0" deltay="-17.0"/> 
-        <deltaGuard deltax="-32.0" deltay="8.0"/> 
-        <deltaUpdate deltax="-33.0" deltay="35.0"/> 
+        <position x="421.0" y="121.0"/> 
+        <deltaLabel deltax="-40.0" deltay="-6.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[Completed_Task = 1;]]></update> 
+     <update><![CDATA[]]></update> 
   </transition> 
 
-  <transition id="5" identifier="Period" label=""  eft="0" lft="inf" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="clock % period_Task(tab_Task, 0) #eqeq 0"> 
-     <graphics color="0"> 
-        <position x="541.0" y="121.0"/> 
-        <deltaLabel deltax="-32.0" deltay="-22.0"/> 
-        <deltaGuard deltax="-110.0" deltay="-1.0"/> 
-        <deltaUpdate deltax="-85.0" deltay="13.0"/> 
-        <deltaSpeed deltax="-20" deltay="5"/> 
-        <deltaCost deltax="-20" deltay="5"/> 
-     </graphics> 
-     <update><![CDATA[wt = Wait_Task(tab_Task, 0);]]></update> 
-  </transition> 
-
-  <arc place="1" transition="1" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+  <arc place="2" transition="1" type="PlaceTransition" weight="1" tokenColor="0"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
   </arc> 
  
 
-  <arc place="2" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="1" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
   </arc> 
 
-  <arc place="2" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+  <arc place="1" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
   </arc> 
  
 
-  <arc place="3" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="4" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
   </arc> 
 
-  <arc place="3" transition="4" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
-    <nail xnail="0" ynail="0"/> 
-    <graphics  color="0"> 
-     </graphics> 
-  </arc> 
- 
-
-  <arc place="4" transition="4" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="2" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
   </arc> 
 
-  <arc place="4" transition="5" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+  <arc place="2" transition="3" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
   </arc> 
  
 
-  <arc place="2" transition="5" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="1" transition="3" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
@@ -149,194 +118,106 @@ const int Task_count = 2;
 const int NULL = -1;
 const int Waiting_Task = 1;
 
-typedef struct{
-	int Running;
-	int Waiting;
-	int Suspend;
-}Task_Stat;
+typedef enum{
+	SUSPENDED, READY, RUNNING
+}Task_Status;
 
 typedef struct{
-	Task_Stat Statut;
+	Task_Status Status;
 	int id;
 	int Priority;
 	int Period;
 	int WCET;
 }TASK;
 
-int Is_Waiting_Task(TASK [Task_count] tab_Task, int id) {
-	if(tab_Task[id].id == id){
-		tab_Task[id].Statut.Waiting = 1;
-		return 1;
-	}
-	else{
-		return 0;
-	}
+TASK Add_Task(TASK [Task_count] List_Task, int id, int pr, int t, int w){
+	List_Task[id].Status = SUSPENDED;
+	List_Task[id].id = id;
+	List_Task[id].Priority = pr;
+	List_Task[id].Period = t;
+	List_Task[id].WCET = w;
+	return List_Task;
 }
 
-// int Is_Task_Completed(TASK [Task_count] tab_Task, int id, int clock, int start_time){
-// int i;
-// for(i = 0; i < Task_count; i++){
-// if (tab_Task[i].id == id){
-// if ((clock - start_time) #supeqsingapour tab_Task[i].WCET){
-// return 1;
-// }
-// return 0;
-// }
-// }
-// return 0;
-// }
-
-int Terminate_Task(TASK [Task_count] tab_Task, int id){
-int i;
-	for(i = 0; i < Task_count; i++){
-		if (tab_Task[i].id == id){
-			tab_Task[i].Statut.Waiting = 0;
-			tab_Task[i].Statut.Running = 0;
-			tab_Task[i].Statut.Suspend = 1;
-			return tab_Task[i].WCET;
-		}
-	}
-}
-
-// typedef struct{
-// TASK [Task_count] tab_Task;
-// int cmpt;
-// }two_Var;
-
-// two_Var Add_Task(TASK [Task_count] tab_Task, int cmpt, int id, int p, int t, int w){
-// two_Var result;
-// tab_Task[cmpt].Statut.Waiting = 1;
-// tab_Task[cmpt].Statut.Suspend = 0;
-// tab_Task[cmpt].Statut.Running = 0;
-// tab_Task[cmpt].id = id;
-// tab_Task[cmpt].Priority = p;
-// tab_Task[cmpt].Period = t;
-// tab_Task[cmpt].WCET = w;
-// cmpt ++;
-// result.tab_Task = tab_Task;
-// result.cmpt = cmpt;
-// return result;
-// }
-
-int Add_Task(TASK [Task_count] tab_Task, int id, int p, int t, int w){
-	tab_Task[id].Statut.Waiting = 1;
-	tab_Task[id].Statut.Suspend = 0;
-	tab_Task[id].Statut.Running = 0;
-	tab_Task[id].id = id;
-	tab_Task[id].Priority = p;
-	tab_Task[id].Period = t;
-	tab_Task[id].WCET = w;
-	return tab_Task;
-}
-
-int Sort(TASK [Task_count] tab_Task){
-int i, j, max_idx;
-int Selected_Task = NULL;
-TASK temp;
-int wait_count = 0;
-	for (i = 0; i < Task_count; i++){
-		if (tab_Task[i].Statut.Waiting == 1){
-			temp = tab_Task[i];
-			tab_Task[i] = tab_Task[wait_count];
-			tab_Task[wait_count] = temp;
-			wait_count = wait_count + 1;
-		}
-	}
-	for(i = 0; i < wait_count - 1; i++){
-		max_idx = i;
-		for(j = i +1; j < wait_count; j++){
-			if (tab_Task[j].Priority > tab_Task[max_idx].Priority){
-				max_idx = j;
-			}
-		}
-		if (max_idx != i){
-			temp = tab_Task[i];
-			tab_Task[i] = tab_Task[max_idx];
-			tab_Task[max_idx] = temp;
-		}
-	}
-	for(i = 0; i < wait_count; i++){
-		if(tab_Task[i].Statut.Waiting == 1 && Selected_Task == NULL){
-			Selected_Task = tab_Task[i].id;
-		}
-	}
-	return Selected_Task;
-}
-
-int Exec_Task(TASK [Task_count] tab_Task, int id){
-int i;
-	for(i = 0; i < Task_count; i++){
-		if (tab_Task[i].id == id){
-			tab_Task[i].Statut.Waiting = 0;
-			tab_Task[i].Statut.Running = 1;
+int is_Added_Task(TASK [Task_count] List_Task, int id){
+	int i;
+	for(i = 0; i < Task_count; i ++){
+		if(List_Task[i].id == id){
 			return 0;
 		}
 	}
 	return 1;
 }
 
-int Wait_Task(TASK [Task_count] tab_Task, int id){
-int i;
+// void reveil_Task(TASK [Task_count] List_Task, int id){
+// 	if(List_Task[id].id == id){
+// 		List_Task[id].Status = READY;
+// 	}
+// }
+
+TASK reveil_Task(TASK [Task_count] List_Task, int id){
+	int i;
+	TASK [Task_count] Ready_Task;
 	for(i = 0; i < Task_count; i++){
-		if (tab_Task[i].id == id){
-			tab_Task[i].Statut.Waiting = 1;
-			tab_Task[i].Statut.Running = 0;
-			return 1;
-		}
-		return 0;
+		Ready_Task[i] = List_Task[i];
 	}
+	if(Ready_Task[id].id == id){
+		Ready_Task[id].Status = READY;
+	}
+	return Ready_Task;
 }
 
-void Susp_Task(TASK [Task_count] tab_Task, int id){
-int i;
+int selected_Queue(TASK [Task_count] Ready_Task){
+	int i,  j, max_idx;
+	int selected_Task;
+	TASK temp;
+	TASK [Task_count] Queue_Task;
 	for(i = 0; i < Task_count; i++){
-		if (tab_Task[i].id == id){
-			tab_Task[i].Statut.Running = 0;
-			tab_Task[i].Statut.Suspend = 1;
+		Queue_Task[i] = Ready_Task[i];
+	}
+	for (i = 0; i < Task_count - 1; i++) {
+		max_idx = i;
+		for (j = i + 1; j < Task_count; j++) {
+			if (Queue_Task[j].Priority > Queue_Task[max_idx].Priority) {
+				max_idx = j;
+			}
+		}
+		if (max_idx != i) {
+			temp = Queue_Task[i];
+			Queue_Task[i] = Queue_Task[max_idx];
+			Queue_Task[max_idx] = temp;
 		}
 	}
-}
-
-int period_Task(TASK [Task_count] tab_Task, int id){
-int i;
-	for(i = 0; i < Task_count; i++){
-		if (tab_Task[i].id == id){
-			return tab_Task[i].Period;
-		}
-	}
-}
-
-int other_Task_Waiting(TASK [Task_count] tab_Task){
-int i;
-	for(i = 0; i < Task_count; i++){
-		if (tab_Task[i].Statut.Waiting == 1){
-			return 1;
-		}
-	}
-	return 0;
+	selected_Task = Queue_Task[0].id;
+	return selected_Task;
 }
 
 initially {
-int clock = 0, start_time = 0; 
-// int cmpt = 0;
-int task_in_process = NULL;
-int wt = NULL;
-int Completed_Task = NULL;
-// for (int i = 0; i < Task_count; i++){
-// tab_Task[i].Statut.Running = 0;
-// tab_Task[i].Statut.Waiting = 0;
-// tab_Task[i].Statut.Suspend = 1;
-// tab_Task[i].id = NULL;
-// tab_Task[i].Priority = NULL;
-// tab_Task[i].Period = NULL;
-// tab_Task[i].WCET = NULL;
-// }
- TASK [Task_count] tab_Task={{{0, 0, 1}, NULL, NULL, NULL, NULL},{{0, 0, 1}, NULL, NULL, NULL, NULL}};
-
+	int clock = 0, start_time = 0;
+	int task_in_process = NULL;
+	int wt = NULL;
+	int Completed_Task = NULL;
+	TASK [Task_count] List_Task;
+	TASK [Task_count] Ready_Task;
+	TASK [Task_count] Queue_Task;
+	int i;
+	for(i = 0; i < Task_count; i++){
+		List_Task[i].Status = SUSPENDED;
+		List_Task[i].id = NULL;
+		List_Task[i].Priority = NULL;
+		List_Task[i].Period = NULL;
+		List_Task[i].WCET = NULL;
+	}
 // insert here the state variables declarations 
 // and possibly some code to initialize them 
 // using C-like syntax
 }
+
+
+
+
+
+
 
 
 
