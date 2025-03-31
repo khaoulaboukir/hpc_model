@@ -1,90 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/TASK_File/multicore_task.xml">
-  <place id="1" identifier="Ready" label="" initialMarking="0" eft="0" lft="inf"> 
-      <graphics color="0"> 
-         <position x="241.0" y="61.0"/> 
-         <deltaLabel deltax="1.0" deltay="-21.0"/> 
-      </graphics> 
-      <scheduling gamma="0" omega="0"/> 
-  </place> 
-
-  <place id="2" identifier="Terminate" label="" initialMarking="0" eft="0" lft="inf"> 
-      <graphics color="0"> 
-         <position x="421.0" y="61.0"/> 
-         <deltaLabel deltax="-1.0" deltay="-21.0"/> 
-      </graphics> 
-      <scheduling gamma="0" omega="0"/> 
-  </place> 
-
-  <transition id="1" identifier="Task_Arr" label=""  eft="50" lft="50" eft_param="50" lft_param="50" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
-     <graphics color="0"> 
-        <position x="151.0" y="61.0"/> 
-        <deltaLabel deltax="-10.0" deltay="-34.0"/> 
-        <deltaGuard deltax="20" deltay="-20"/> 
-        <deltaUpdate deltax="7.0" deltay="9.0"/> 
-        <deltaSpeed deltax="-20" deltay="5"/> 
-        <deltaCost deltax="-20" deltay="5"/> 
-     </graphics> 
-     <update><![CDATA[need_sched++;
-insert_task(List_Task, Sorted_Task, 0);]]></update> 
-  </transition> 
-
-  <transition id="2" identifier="Execution" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 0)"> 
-     <graphics color="0"> 
-        <position x="331.0" y="61.0"/> 
-        <deltaLabel deltax="-4.0" deltay="-35.0"/> 
-        <deltaGuard deltax="-1.0" deltay="11.0"/> 
-        <deltaUpdate deltax="-1.0" deltay="24.0"/> 
-        <deltaSpeed deltax="-20" deltay="5"/> 
-        <deltaCost deltax="-20" deltay="5"/> 
-     </graphics> 
-     <update><![CDATA[]]></update> 
-  </transition> 
-
-  <transition id="3" identifier="Suspended" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
-     <graphics color="0"> 
-        <position x="511.0" y="61.0"/> 
-        <deltaLabel deltax="3.0" deltay="-33.0"/> 
-        <deltaGuard deltax="20" deltay="-20"/> 
-        <deltaUpdate deltax="7.0" deltay="10.0"/> 
-        <deltaSpeed deltax="-20" deltay="5"/> 
-        <deltaCost deltax="-20" deltay="5"/> 
-     </graphics> 
-     <update><![CDATA[no_need_sched++;]]></update> 
-  </transition> 
-
-  <arc place="1" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
-     <nail xnail="0" ynail="0"/> 
-     <graphics  color="0"> 
-     </graphics> 
-  </arc> 
-
-  <arc place="1" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
-    <nail xnail="0" ynail="0"/> 
-    <graphics  color="0"> 
-     </graphics> 
-  </arc> 
- 
-
-  <arc place="2" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
-     <nail xnail="0" ynail="0"/> 
-     <graphics  color="0"> 
-     </graphics> 
-  </arc> 
-
-  <arc place="2" transition="3" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
-    <nail xnail="0" ynail="0"/> 
-    <graphics  color="0"> 
-     </graphics> 
-  </arc> 
- 
-
-  <timedCost></timedCost>
-
-  <nbTokenColor>0</nbTokenColor>
-
-  <declaration><![CDATA[// insert here your type definitions using C-like syntax
+// insert here your type definitions using C-like syntax
 
 // insert here your function definitions 
 // using C-like syntax
@@ -92,7 +6,7 @@ insert_task(List_Task, Sorted_Task, 0);]]></update>
 
 /* Const */
 
-const int TASK_COUNT = 2;
+const int TASK_COUNT = 5;
 const int CORE_COUNT = 2;
 const int NULL = -1;
 
@@ -110,7 +24,7 @@ typedef struct{
 	int id;
 	int Priority;
 	// int Period;
-	int WCET;
+	// int WCET;
 }task_descriptor;
 
 
@@ -187,7 +101,7 @@ void suspend_task(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
 /* Core API */
 
 
-int in_core(core_descriptor [CORE_COUNT] &List_Core, int id){
+int is_selected_task(core_descriptor [CORE_COUNT] &List_Core, int id){
     int i;
     for(i=0; i < CORE_COUNT; i++){
         if(List_Core[i].selected_task == id){
@@ -216,7 +130,31 @@ core_descriptor maj_core(core_descriptor [CORE_COUNT] List_Core, int id) {
 
 void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_COUNT] &List_Core){
     Sorted_Task = sort_list(Sorted_Task);
-    List_Core = maj_core(List_Core, Sorted_Task[0].id);
+
+    int i = 0;
+    int task_found = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Sorted_Task[i].id;
+        int already_assigned = 0;
+
+        // Vérifier si cette tâche est déjà assignée à un core
+        int j = 0;
+        while (j < CORE_COUNT) {
+            if (List_Core[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        // Si cette tâche n’est pas encore utilisée, l’affecter à un core
+        if (already_assigned == 0 && task_id != NULL) {
+            List_Core = maj_core(List_Core, task_id);
+            task_found = 1;
+        }
+
+        i++;
+    }
 }
 
 int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
@@ -259,12 +197,27 @@ initially {
 		List_Task[0].id = 0;
 		List_Task[0].Priority = 1;
 		// List_Task[0].Period = 5;
-		List_Task[0].WCET = 2;
+		// List_Task[0].WCET = 2;
 		List_Task[1].state = SUSPENDED;
 		List_Task[1].id = 1;
 		List_Task[1].Priority = 2;
 		// List_Task[1].Period = 7;
-		List_Task[1].WCET = 3;
+		// List_Task[1].WCET = 3;
+        List_Task[2].state = SUSPENDED;
+		List_Task[2].id = 2;
+		List_Task[2].Priority = 3;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+        List_Task[3].state = SUSPENDED;
+		List_Task[3].id = 3;
+		List_Task[3].Priority = 4;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+        List_Task[4].state = SUSPENDED;
+		List_Task[4].id = 4;
+		List_Task[4].Priority = 5;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
 	
 	task_descriptor [TASK_COUNT] Sorted_Task;
 	int i;
@@ -273,7 +226,7 @@ initially {
 		Sorted_Task[i].id = NULL;
 		Sorted_Task[i].Priority = NULL;
 		// Sorted_Task[i].Period = NULL;
-		Sorted_Task[i].WCET = NULL;
+		// Sorted_Task[i].WCET = NULL;
 	}
 
     /* CPU Declaration */
@@ -293,27 +246,3 @@ initially {
 // using C-like syntax
  
  }
-
-
-
-
-
-
-
-
-]]></declaration>
-
-  <project nbinput="0" openinput="0" nbinclude="0" >
- </project>
-
-  <preferences> 
-      <colorPlace  c0="SkyBlue2"  c1="#ffbebe"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
- 
-      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
- 
-      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
- 
-  </preferences> 
- </TPN> 
-
-  </romeo>

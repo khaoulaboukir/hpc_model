@@ -6,7 +6,7 @@
 
 /* Const */
 
-const int TASK_COUNT = 2;
+const int TASK_COUNT = 5;
 const int CORE_COUNT = 2;
 const int NULL = -1;
 
@@ -24,7 +24,7 @@ typedef struct{
 	int id;
 	int Priority;
 	// int Period;
-	int WCET;
+	// int WCET;
 }task_descriptor;
 
 
@@ -101,7 +101,7 @@ void suspend_task(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
 /* Core API */
 
 
-int in_core(core_descriptor [CORE_COUNT] &List_Core, int id){
+int is_selected_task(core_descriptor [CORE_COUNT] &List_Core, int id){
     int i;
     for(i=0; i < CORE_COUNT; i++){
         if(List_Core[i].selected_task == id){
@@ -130,7 +130,31 @@ core_descriptor maj_core(core_descriptor [CORE_COUNT] List_Core, int id) {
 
 void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_COUNT] &List_Core){
     Sorted_Task = sort_list(Sorted_Task);
-    List_Core = maj_core(List_Core, Sorted_Task[0].id);
+
+    int i = 0;
+    int task_found = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Sorted_Task[i].id;
+        int already_assigned = 0;
+
+        // Vérifier si cette tâche est déjà assignée à un core
+        int j = 0;
+        while (j < CORE_COUNT) {
+            if (List_Core[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        // Si cette tâche n’est pas encore utilisée, l’affecter à un core
+        if (already_assigned == 0 && task_id != NULL) {
+            List_Core = maj_core(List_Core, task_id);
+            task_found = 1;
+        }
+
+        i++;
+    }
 }
 
 int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
@@ -173,12 +197,27 @@ initially {
 		List_Task[0].id = 0;
 		List_Task[0].Priority = 1;
 		// List_Task[0].Period = 5;
-		List_Task[0].WCET = 2;
+		// List_Task[0].WCET = 2;
 		List_Task[1].state = SUSPENDED;
 		List_Task[1].id = 1;
 		List_Task[1].Priority = 2;
 		// List_Task[1].Period = 7;
-		List_Task[1].WCET = 3;
+		// List_Task[1].WCET = 3;
+        List_Task[2].state = SUSPENDED;
+		List_Task[2].id = 2;
+		List_Task[2].Priority = 3;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+        List_Task[3].state = SUSPENDED;
+		List_Task[3].id = 3;
+		List_Task[3].Priority = 4;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+        List_Task[4].state = SUSPENDED;
+		List_Task[4].id = 4;
+		List_Task[4].Priority = 5;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
 	
 	task_descriptor [TASK_COUNT] Sorted_Task;
 	int i;
@@ -187,7 +226,7 @@ initially {
 		Sorted_Task[i].id = NULL;
 		Sorted_Task[i].Priority = NULL;
 		// Sorted_Task[i].Period = NULL;
-		Sorted_Task[i].WCET = NULL;
+		// Sorted_Task[i].WCET = NULL;
 	}
 
     /* CPU Declaration */

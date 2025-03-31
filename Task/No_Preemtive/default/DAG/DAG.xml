@@ -1,0 +1,765 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<romeo version="Romeo v3.10.2">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/DAG/DAG.xml">
+  <place id="1" identifier="core" label="" initialMarking="2" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="661.0" y="61.0"/> 
+         <deltaLabel deltax="1.0" deltay="-23.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="2" identifier="ReadyT1" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="181.0" y="271.0"/> 
+         <deltaLabel deltax="-2.0" deltay="-21.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="3" identifier="executing" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="661.0" y="121.0"/> 
+         <deltaLabel deltax="3.0" deltay="-21.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="4" identifier="SuspT1" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="361.0" y="271.0"/> 
+         <deltaLabel deltax="-3.0" deltay="-25.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="5" identifier="ReadyT2" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="631.0" y="211.0"/> 
+         <deltaLabel deltax="0.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="6" identifier="ReadyT3" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="631.0" y="331.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-25.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="7" identifier="SuspT2" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="811.0" y="211.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="8" identifier="SuspT3" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="811.0" y="331.0"/> 
+         <deltaLabel deltax="-9.0" deltay="-20.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="9" identifier="ReadyT4" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="991.0" y="271.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-21.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="10" identifier="SuspT4" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="1171.0" y="271.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="11" identifier="ATT2" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="451.0" y="211.0"/> 
+         <deltaLabel deltax="-2.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="12" identifier="ATT3" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="451.0" y="331.0"/> 
+         <deltaLabel deltax="-38.0" deltay="-6.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="13" identifier="ReadyTind" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="151.0" y="91.0"/> 
+         <deltaLabel deltax="5.0" deltay="-20.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="14" identifier="SuspTind" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="331.0" y="91.0"/> 
+         <deltaLabel deltax="5.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <transition id="1" identifier="T1ARR" label=""  eft="100" lft="100" eft_param="100" lft_param="100" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="91.0" y="271.0"/> 
+        <deltaLabel deltax="0.0" deltay="-33.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched++;
+insert_task(List_Task, Sorted_Task, 0);]]></update> 
+  </transition> 
+
+  <transition id="2" identifier="ExecT1" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 0)"> 
+     <graphics color="0"> 
+        <position x="271.0" y="271.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="17.0" deltay="12.0"/> 
+        <deltaUpdate deltax="11.0" deltay="23.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 0);]]></update> 
+  </transition> 
+
+  <transition id="3" identifier="T2ARR" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="541.0" y="211.0"/> 
+        <deltaLabel deltax="11.0" deltay="-31.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched++;
+insert_task(List_Task, Sorted_Task, 1);]]></update> 
+  </transition> 
+
+  <transition id="4" identifier="SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="need_sched #greater 0"> 
+     <graphics color="0"> 
+        <position x="571.0" y="121.0"/> 
+        <deltaLabel deltax="-51.0" deltay="-12.0"/> 
+        <deltaGuard deltax="0.0" deltay="12.0"/> 
+        <deltaUpdate deltax="-4.0" deltay="24.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[scheduler(Sorted_Task, List_Core);
+need_sched--;]]></update> 
+  </transition> 
+
+  <transition id="5" identifier="NO_SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="no_need_sched #greater 0"> 
+     <graphics color="0"> 
+        <position x="751.0" y="121.0"/> 
+        <deltaLabel deltax="58.0" deltay="-18.0"/> 
+        <deltaGuard deltax="6.0" deltay="9.0"/> 
+        <deltaUpdate deltax="42.0" deltay="20.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler(Sorted_Task);
+no_need_sched--;]]></update> 
+  </transition> 
+
+  <transition id="6" identifier="T3ARR" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="541.0" y="331.0"/> 
+        <deltaLabel deltax="12.0" deltay="-29.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="5.0" deltay="7.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched++;
+insert_task(List_Task, Sorted_Task, 2);]]></update> 
+  </transition> 
+
+  <transition id="7" identifier="ExecT2" label=""  eft="25" lft="30" eft_param="25" lft_param="30" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 1)"> 
+     <graphics color="0"> 
+        <position x="721.0" y="211.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="8.0" deltay="10.0"/> 
+        <deltaUpdate deltax="14.0" deltay="21.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_sched++;
+free_core(List_Core, 1);]]></update> 
+  </transition> 
+
+  <transition id="8" identifier="ExecT3" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 2)"> 
+     <graphics color="0"> 
+        <position x="721.0" y="331.0"/> 
+        <deltaLabel deltax="3.0" deltay="-30.0"/> 
+        <deltaGuard deltax="9.0" deltay="9.0"/> 
+        <deltaUpdate deltax="10.0" deltay="20.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_sched++;
+free_core(List_Core, 2);]]></update> 
+  </transition> 
+
+  <transition id="9" identifier="T4ARR" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="901.0" y="271.0"/> 
+        <deltaLabel deltax="-48.0" deltay="-16.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched++;
+insert_task(List_Task, Sorted_Task, 3);]]></update> 
+  </transition> 
+
+  <transition id="10" identifier="ExecT4" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 3)"> 
+     <graphics color="0"> 
+        <position x="1081.0" y="271.0"/> 
+        <deltaLabel deltax="2.0" deltay="-29.0"/> 
+        <deltaGuard deltax="5.0" deltay="8.0"/> 
+        <deltaUpdate deltax="10.0" deltay="18.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 3);]]></update> 
+  </transition> 
+
+  <transition id="11" identifier="Terminate" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="1261.0" y="271.0"/> 
+        <deltaLabel deltax="-5.0" deltay="-29.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="6.0" deltay="8.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_sched++;]]></update> 
+  </transition> 
+
+  <transition id="12" identifier="TerminateT1" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="451.0" y="271.0"/> 
+        <deltaLabel deltax="-8.0" deltay="-26.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_sched++;]]></update> 
+  </transition> 
+
+  <transition id="13" identifier="Tind" label=""  eft="100" lft="100" eft_param="100" lft_param="100" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="61.0" y="91.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="38.0" deltay="11.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched++;
+insert_task(List_Task, Sorted_Task, 4);]]></update> 
+  </transition> 
+
+  <transition id="14" identifier="ExecTind" label=""  eft="75" lft="80" eft_param="75" lft_param="80" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 4)"> 
+     <graphics color="0"> 
+        <position x="241.0" y="91.0"/> 
+        <deltaLabel deltax="9.0" deltay="-32.0"/> 
+        <deltaGuard deltax="15.0" deltay="10.0"/> 
+        <deltaUpdate deltax="17.0" deltay="26.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 4);]]></update> 
+  </transition> 
+
+  <transition id="15" identifier="TerminateTind" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="421.0" y="91.0"/> 
+        <deltaLabel deltax="15.0" deltay="-30.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_sched++;]]></update> 
+  </transition> 
+
+  <arc place="2" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="2" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="4" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="11" transition="3" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="5" transition="3" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="1" transition="4" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="3" transition="4" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="3" transition="5" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="1" transition="5" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="12" transition="6" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="6" transition="6" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="5" transition="7" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="7" transition="7" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="6" transition="8" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="8" transition="8" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="7" transition="9" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="8" transition="9" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="9" transition="9" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="9" transition="10" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="10" transition="10" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="10" transition="11" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="4" transition="12" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="11" transition="12" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="12" transition="12" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="13" transition="13" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="13" transition="14" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="14" transition="14" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="14" transition="15" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <timedCost></timedCost>
+
+  <nbTokenColor>0</nbTokenColor>
+
+  <declaration><![CDATA[// insert here your type definitions using C-like syntax
+
+// insert here your function definitions 
+// using C-like syntax
+
+
+/* Const */
+
+const int TASK_COUNT = 5;
+const int CORE_COUNT = 2;
+const int NULL = -1;
+
+
+/* Task data structures */
+
+typedef enum{
+    SUSPENDED,
+    READY,
+    RUNNING
+}task_state;
+
+typedef struct{
+	task_state state;
+	int id;
+	int Priority;
+	// int Period;
+	// int WCET;
+}task_descriptor;
+
+
+typedef enum{
+    ACTIVE,
+    IDLE
+}core_state;
+
+typedef struct{
+    core_state state;
+    int id;
+    int selected_task;
+}core_descriptor;
+
+
+/* Task lists + mainting functions*/
+
+task_descriptor sort_list(task_descriptor [TASK_COUNT] Sorted_Task){
+    // int result = 1;
+    int i, j;
+    task_descriptor temp;
+
+    for(i = 0; i < TASK_COUNT - 1; i++){
+        for(j = i; j < TASK_COUNT; j++){
+            if(Sorted_Task[i].Priority < Sorted_Task[j].Priority){
+                temp = Sorted_Task[i];
+                Sorted_Task[i] = Sorted_Task[j];
+                Sorted_Task[j] = temp;
+            }
+        }
+    }
+    return Sorted_Task;
+}
+
+void insert_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Sorted_Task, int id) {
+    int i = 0;
+    int index = NULL;
+    int found = 0;
+
+    // Trouver l’index dans List_Task
+    while (i < TASK_COUNT) {
+        if (List_Task[i].id == id && found == 0) {
+            index = i;
+            found = 1;
+        }
+        i++;
+    }
+
+    // Réinitialiser l’indice pour insérer dans Sorted_Task
+    i = 0;
+    found = 0;
+    while (i < TASK_COUNT) {
+        if (Sorted_Task[i].id == NULL && found == 0) {
+            Sorted_Task[i] = List_Task[index];
+            Sorted_Task[i].state = READY;
+            found = 1;
+        }
+        i++;
+    }
+}
+
+void suspend_task(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
+    int i;
+    for(int i = 0; i < TASK_COUNT; i++){
+	    if(Sorted_Task[i].id == id){
+            Sorted_Task[0].state = SUSPENDED;
+            Sorted_Task[0].Priority = NULL;
+        }
+    }
+    Sorted_Task = sort_list(Sorted_Task);
+}
+
+
+/* Core API */
+
+
+int is_selected_task(core_descriptor [CORE_COUNT] &List_Core, int id){
+    int i;
+    for(i=0; i < CORE_COUNT; i++){
+        if(List_Core[i].selected_task == id){
+            return 1;
+        }
+    }
+return 0;
+}
+
+core_descriptor maj_core(core_descriptor [CORE_COUNT] List_Core, int id) {
+    int i = 0;
+    while (i < CORE_COUNT) {
+        if (List_Core[i].selected_task == NULL) {
+            List_Core[i].state = ACTIVE;
+            List_Core[i].selected_task = id;
+            i = CORE_COUNT;
+        } else {
+            i++;
+        }
+    }
+    return List_Core;
+}
+
+
+/* Scheduler functions */
+
+void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_COUNT] &List_Core){
+    Sorted_Task = sort_list(Sorted_Task);
+
+    int i = 0;
+    int task_found = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Sorted_Task[i].id;
+        int already_assigned = 0;
+
+        // Vérifier si cette tâche est déjà assignée à un core
+        int j = 0;
+        while (j < CORE_COUNT) {
+            if (List_Core[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        // Si cette tâche n’est pas encore utilisée, l’affecter à un core
+        if (already_assigned == 0 && task_id != NULL) {
+            List_Core = maj_core(List_Core, task_id);
+            task_found = 1;
+        }
+
+        i++;
+    }
+}
+
+int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
+    Sorted_Task[0].state = SUSPENDED;
+    Sorted_Task[0].Priority = NULL;
+    Sorted_Task = sort_list(Sorted_Task);
+    if(Sorted_Task[0].id == NULL){
+        return NULL;
+    }
+    else{
+        return Sorted_Task[0].id;
+    }
+}
+
+
+/* Task API */
+
+void free_core(core_descriptor [CORE_COUNT] &List_Core, int id){
+    int i;
+    for(i=0; i < CORE_COUNT; i++){
+        if(List_Core[i].selected_task == id){
+            List_Core[i].state = IDLE;
+            List_Core[i].selected_task = NULL;
+        }
+    }
+}
+
+
+initially {
+    
+    int need_sched = 0;
+    int no_need_sched = 0;
+    int selected_task = NULL;
+
+    /* Task Declaration */
+    
+    /* Task_form = {state, id, priority, period, execution_time} */
+    task_descriptor [TASK_COUNT] List_Task;
+		List_Task[0].state = SUSPENDED;
+		List_Task[0].id = 0;
+		List_Task[0].Priority = 1;
+		// List_Task[0].Period = 5;
+		// List_Task[0].WCET = 2;
+		List_Task[1].state = SUSPENDED;
+		List_Task[1].id = 1;
+		List_Task[1].Priority = 2;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+        List_Task[2].state = SUSPENDED;
+		List_Task[2].id = 2;
+		List_Task[2].Priority = 3;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+        List_Task[3].state = SUSPENDED;
+		List_Task[3].id = 3;
+		List_Task[3].Priority = 4;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+        List_Task[4].state = SUSPENDED;
+		List_Task[4].id = 4;
+		List_Task[4].Priority = 5;
+		// List_Task[1].Period = 7;
+		// List_Task[1].WCET = 3;
+	
+	task_descriptor [TASK_COUNT] Sorted_Task;
+	int i;
+    for(i = 0; i < TASK_COUNT; i++){
+		Sorted_Task[i].state = SUSPENDED;
+		Sorted_Task[i].id = NULL;
+		Sorted_Task[i].Priority = NULL;
+		// Sorted_Task[i].Period = NULL;
+		// Sorted_Task[i].WCET = NULL;
+	}
+
+    /* CPU Declaration */
+    
+    /* CPU_form = {state, id, selected_task} */
+    core_descriptor [CORE_COUNT] List_Core;
+		List_Core[0].state = IDLE;
+		List_Core[0].id = 0;
+		List_Core[0].selected_task = NULL;
+		List_Core[1].state = IDLE;
+		List_Core[1].id = 1;
+		List_Core[1].selected_task = NULL;
+
+
+// insert here the state variables declarations 
+// and possibly some code to initialize them 
+// using C-like syntax
+ 
+ }
+
+
+
+
+
+
+
+
+
+
+
+]]></declaration>
+
+  <project nbinput="0" openinput="0" nbinclude="0" >
+ </project>
+
+  <preferences> 
+      <colorPlace  c0="SkyBlue2"  c1="#ffbebe"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
+ 
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
+ 
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
+ 
+  </preferences> 
+ </TPN> 
+
+  </romeo>
