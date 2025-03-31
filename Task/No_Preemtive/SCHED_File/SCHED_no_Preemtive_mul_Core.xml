@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/TASK2.xml">
-  <place id="1" identifier="CPU" label="" initialMarking="2" eft="0" lft="inf"> 
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/multicore_multitache/SCHED_no_Preemtive_mul_Core.xml">
+  <place id="1" identifier="core" label="" initialMarking="2" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="571.0" y="61.0"/> 
          <deltaLabel deltax="1.0" deltay="-23.0"/> 
@@ -17,29 +17,29 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <transition id="4" identifier="SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard="need_sched #greater 0"> 
+  <transition id="4" identifier="SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="need_sched #greater 0"> 
      <graphics color="0"> 
         <position x="481.0" y="121.0"/> 
         <deltaLabel deltax="-51.0" deltay="-12.0"/> 
         <deltaGuard deltax="2.0" deltay="11.0"/> 
-        <deltaUpdate deltax="18.0" deltay="25.0"/> 
+        <deltaUpdate deltax="-10.0" deltay="25.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[selected_task = scheduler(Sorted_Task, List_Core);
+     <update><![CDATA[scheduler(Sorted_Task, List_Core);
 need_sched--;]]></update> 
   </transition> 
 
-  <transition id="5" identifier="NO_SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard="no_need_sched #greater 0"> 
+  <transition id="5" identifier="NO_SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="no_need_sched #greater 0"> 
      <graphics color="0"> 
         <position x="661.0" y="121.0"/> 
         <deltaLabel deltax="58.0" deltay="-18.0"/> 
         <deltaGuard deltax="6.0" deltay="9.0"/> 
-        <deltaUpdate deltax="58.0" deltay="21.0"/> 
+        <deltaUpdate deltax="89.0" deltay="21.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[selected_task = no_need_scheduler(Sorted_Task);
+     <update><![CDATA[no_need_scheduler(Sorted_Task);
 no_need_sched--;]]></update> 
   </transition> 
 
@@ -134,21 +134,31 @@ task_descriptor sort_list(task_descriptor [TASK_COUNT] Sorted_Task){
     return Sorted_Task;
 }
 
-void insert_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Sorted_Task, int id){
-    int i, index = NULL;
+void insert_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Sorted_Task, int id) {
+    int i = 0;
+    int index = NULL;
+    int found = 0;
 
-    for (i = 0; i < TASK_COUNT; i++) {
-        if (List_Task[i].id == id) {
+    // Trouver l’index dans List_Task
+    while (i < TASK_COUNT) {
+        if (List_Task[i].id == id && found == 0) {
             index = i;
+            found = 1;
         }
+        i++;
     }
 
-    for(i = 0; i < TASK_COUNT - 1; i++){
-        Sorted_Task[i] = Sorted_Task[i + 1];
+    // Réinitialiser l’indice pour insérer dans Sorted_Task
+    i = 0;
+    found = 0;
+    while (i < TASK_COUNT) {
+        if (Sorted_Task[i].id == NULL && found == 0) {
+            Sorted_Task[i] = List_Task[index];
+            Sorted_Task[i].state = READY;
+            found = 1;
+        }
+        i++;
     }
-
-    Sorted_Task[TASK_COUNT - 1] = List_Task[index];
-    Sorted_Task[TASK_COUNT - 1].state = READY;
 }
 
 void suspend_task(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
@@ -165,22 +175,26 @@ void suspend_task(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
 
 /* Core API */
 
-int in_core(core_descriptor [CORE_COUNT] &List_Core, int id){
+
+int is_selected_task(core_descriptor [CORE_COUNT] &List_Core, int id){
     int i;
     for(i=0; i < CORE_COUNT; i++){
         if(List_Core[i].selected_task == id){
             return 1;
         }
-        return 0;
     }
+return 0;
 }
 
-int maj_core(core_descriptor [CORE_COUNT] List_Core, int id){
-    int i;
-    for(i=0; i < CORE_COUNT; i++){
-        if(List_Core[i].selected_task == NULL){
+core_descriptor maj_core(core_descriptor [CORE_COUNT] List_Core, int id) {
+    int i = 0;
+    while (i < CORE_COUNT) {
+        if (List_Core[i].selected_task == NULL) {
             List_Core[i].state = ACTIVE;
             List_Core[i].selected_task = id;
+            i = CORE_COUNT;
+        } else {
+            i++;
         }
     }
     return List_Core;
@@ -189,10 +203,9 @@ int maj_core(core_descriptor [CORE_COUNT] List_Core, int id){
 
 /* Scheduler functions */
 
-int scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_COUNT] &List_Core){
+void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_COUNT] &List_Core){
     Sorted_Task = sort_list(Sorted_Task);
     List_Core = maj_core(List_Core, Sorted_Task[0].id);
-    return Sorted_Task[0].id;
 }
 
 int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
@@ -269,6 +282,9 @@ initially {
 // using C-like syntax
  
  }
+
+
+
 
 
 
