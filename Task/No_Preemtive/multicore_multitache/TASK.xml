@@ -1,84 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
 <TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/multicore_multitache/TASK.xml">
-  <place id="1" identifier="Ready" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="1" identifier="core" label="" initialMarking="2" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="241.0" y="61.0"/> 
-         <deltaLabel deltax="1.0" deltay="-21.0"/> 
+         <position x="571.0" y="61.0"/> 
+         <deltaLabel deltax="1.0" deltay="-23.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="2" identifier="Terminate" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="3" identifier="executing" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="421.0" y="61.0"/> 
-         <deltaLabel deltax="-1.0" deltay="-21.0"/> 
+         <position x="571.0" y="121.0"/> 
+         <deltaLabel deltax="3.0" deltay="-21.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <transition id="1" identifier="Task_Arr" label=""  eft="50" lft="50" eft_param="50" lft_param="50" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="4" identifier="SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="need_sched #greater 0"> 
      <graphics color="0"> 
-        <position x="151.0" y="61.0"/> 
-        <deltaLabel deltax="-10.0" deltay="-34.0"/> 
-        <deltaGuard deltax="20" deltay="-20"/> 
-        <deltaUpdate deltax="7.0" deltay="9.0"/> 
+        <position x="481.0" y="121.0"/> 
+        <deltaLabel deltax="-51.0" deltay="-12.0"/> 
+        <deltaGuard deltax="2.0" deltay="11.0"/> 
+        <deltaUpdate deltax="-10.0" deltay="25.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[need_sched++;
-insert_task(List_Task, Sorted_Task, 0);]]></update> 
+     <update><![CDATA[scheduler(Sorted_Task, List_Core);
+need_sched--;]]></update> 
   </transition> 
 
-  <transition id="2" identifier="Execution" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 0)"> 
+  <transition id="5" identifier="NO_SCHED" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="no_need_sched #greater 0"> 
      <graphics color="0"> 
-        <position x="331.0" y="61.0"/> 
-        <deltaLabel deltax="-4.0" deltay="-35.0"/> 
-        <deltaGuard deltax="-1.0" deltay="11.0"/> 
-        <deltaUpdate deltax="-1.0" deltay="24.0"/> 
+        <position x="661.0" y="121.0"/> 
+        <deltaLabel deltax="58.0" deltay="-18.0"/> 
+        <deltaGuard deltax="6.0" deltay="9.0"/> 
+        <deltaUpdate deltax="89.0" deltay="21.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[free_core(List_Core, 0);]]></update> 
+     <update><![CDATA[no_need_sched--;]]></update> 
   </transition> 
 
-  <transition id="3" identifier="Suspended" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
-     <graphics color="0"> 
-        <position x="511.0" y="61.0"/> 
-        <deltaLabel deltax="3.0" deltay="-33.0"/> 
-        <deltaGuard deltax="20" deltay="-20"/> 
-        <deltaUpdate deltax="7.0" deltay="10.0"/> 
-        <deltaSpeed deltax="-20" deltay="5"/> 
-        <deltaCost deltax="-20" deltay="5"/> 
-     </graphics> 
-     <update><![CDATA[no_need_sched++;]]></update> 
-  </transition> 
-
-  <arc place="1" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
-     <nail xnail="0" ynail="0"/> 
-     <graphics  color="0"> 
-     </graphics> 
-  </arc> 
-
-  <arc place="1" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+  <arc place="1" transition="4" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
   </arc> 
  
 
-  <arc place="2" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+  <arc place="3" transition="4" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
      </graphics> 
   </arc> 
 
-  <arc place="2" transition="3" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+  <arc place="3" transition="5" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
   </arc> 
  
+
+  <arc place="1" transition="5" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
 
   <timedCost></timedCost>
 
@@ -241,15 +229,17 @@ void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_
     }
 }
 
-int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
-    Sorted_Task[0].state = SUSPENDED;
-    Sorted_Task[0].Priority = NULL;
+void no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
     Sorted_Task = sort_list(Sorted_Task);
-    if(Sorted_Task[0].id == NULL){
-        return NULL;
-    }
-    else{
-        return Sorted_Task[0].id;
+    int i;
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Sorted_Task[i].id == id){
+            Sorted_Task[i].state = SUSPENDED;
+            Sorted_Task[i].id = NULL;
+            Sorted_Task[i].Priority = NULL;
+            // Sorted_Task[i].Period = NULL;
+            Sorted_Task[i].WCET = NULL;
+        }
     }
 }
 
@@ -315,6 +305,7 @@ initially {
 // using C-like syntax
  
  }
+
 
 
 

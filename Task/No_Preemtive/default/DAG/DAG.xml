@@ -173,8 +173,7 @@ need_sched--;]]></update>
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[no_need_scheduler(Sorted_Task);
-no_need_sched--;]]></update> 
+     <update><![CDATA[no_need_sched--;]]></update> 
   </transition> 
 
   <transition id="6" identifier="T3ARR" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
@@ -200,7 +199,8 @@ insert_task(List_Task, Sorted_Task, 2);]]></update>
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
      <update><![CDATA[no_need_sched++;
-free_core(List_Core, 1);]]></update> 
+free_core(List_Core, 1);
+no_need_scheduler(Sorted_Task, 1);]]></update> 
   </transition> 
 
   <transition id="8" identifier="ExecT3" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 2)"> 
@@ -213,7 +213,8 @@ free_core(List_Core, 1);]]></update>
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
      <update><![CDATA[no_need_sched++;
-free_core(List_Core, 2);]]></update> 
+free_core(List_Core, 2);
+no_need_scheduler(Sorted_Task, 2);]]></update> 
   </transition> 
 
   <transition id="9" identifier="T4ARR" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
@@ -241,7 +242,7 @@ insert_task(List_Task, Sorted_Task, 3);]]></update>
      <update><![CDATA[free_core(List_Core, 3);]]></update> 
   </transition> 
 
-  <transition id="11" identifier="Terminate" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="11" identifier="Terminate" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="1261.0" y="271.0"/> 
         <deltaLabel deltax="-5.0" deltay="-29.0"/> 
@@ -250,10 +251,11 @@ insert_task(List_Task, Sorted_Task, 3);]]></update>
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[no_need_sched++;]]></update> 
+     <update><![CDATA[no_need_sched++;
+no_need_scheduler(Sorted_Task, 3);]]></update> 
   </transition> 
 
-  <transition id="12" identifier="TerminateT1" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="12" identifier="TerminateT1" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="451.0" y="271.0"/> 
         <deltaLabel deltax="-8.0" deltay="-26.0"/> 
@@ -262,7 +264,8 @@ insert_task(List_Task, Sorted_Task, 3);]]></update>
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[no_need_sched++;]]></update> 
+     <update><![CDATA[no_need_sched++;
+no_need_scheduler(Sorted_Task, 0);]]></update> 
   </transition> 
 
   <transition id="13" identifier="Tind" label=""  eft="100" lft="100" eft_param="100" lft_param="100" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
@@ -290,7 +293,7 @@ insert_task(List_Task, Sorted_Task, 4);]]></update>
      <update><![CDATA[free_core(List_Core, 4);]]></update> 
   </transition> 
 
-  <transition id="15" identifier="TerminateTind" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="15" identifier="TerminateTind" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="421.0" y="91.0"/> 
         <deltaLabel deltax="15.0" deltay="-30.0"/> 
@@ -299,7 +302,8 @@ insert_task(List_Task, Sorted_Task, 4);]]></update>
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[no_need_sched++;]]></update> 
+     <update><![CDATA[no_need_sched++;
+no_need_scheduler(Sorted_Task, 4);]]></update> 
   </transition> 
 
   <arc place="2" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
@@ -647,15 +651,17 @@ void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_
     }
 }
 
-int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
-    Sorted_Task[0].state = SUSPENDED;
-    Sorted_Task[0].Priority = NULL;
+void no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
     Sorted_Task = sort_list(Sorted_Task);
-    if(Sorted_Task[0].id == NULL){
-        return NULL;
-    }
-    else{
-        return Sorted_Task[0].id;
+    int i;
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Sorted_Task[i].id == id){
+            Sorted_Task[i].state = SUSPENDED;
+            Sorted_Task[i].id = NULL;
+            Sorted_Task[i].Priority = NULL;
+            // Sorted_Task[i].Period = NULL;
+            // Sorted_Task[i].WCET = NULL;
+        }
     }
 }
 
@@ -736,6 +742,8 @@ initially {
 // using C-like syntax
  
  }
+
+
 
 
 

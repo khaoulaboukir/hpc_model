@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/multicore_multitache/TASK2.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/deadline_misses/deadline_misses.xml">
   <place id="1" identifier="core" label="" initialMarking="2" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="571.0" y="61.0"/> 
@@ -35,7 +35,7 @@ need_sched--;]]></update>
         <position x="661.0" y="121.0"/> 
         <deltaLabel deltax="58.0" deltay="-18.0"/> 
         <deltaGuard deltax="6.0" deltay="9.0"/> 
-        <deltaUpdate deltax="89.0" deltay="21.0"/> 
+        <deltaUpdate deltax="3.0" deltay="21.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
@@ -80,7 +80,7 @@ need_sched--;]]></update>
 
 /* Const */
 
-const int TASK_COUNT = 2;
+const int TASK_COUNT = 3;
 const int CORE_COUNT = 2;
 const int NULL = -1;
 
@@ -277,6 +277,11 @@ initially {
 		List_Task[1].Priority = 2;
 		// List_Task[1].Period = 7;
 		List_Task[1].WCET = 3;
+		List_Task[2].state = SUSPENDED;
+		List_Task[2].id = 2;
+		List_Task[2].Priority = 3;
+		// List_Task[2].Period = 7;
+		List_Task[2].WCET = 3;
 	
 	task_descriptor [TASK_COUNT] Sorted_Task;
 	int i;
@@ -318,9 +323,15 @@ initially {
 
 
 
+
+
+
 ]]></declaration>
 
-  <project nbinput="0" openinput="0" nbinclude="0" >
+  <project nbinput="3" openinput="3" nbinclude="0" >
+      <input id="1"  file="TASK.xml"  status="open"/>
+      <input id="2"  file="TASK2.xml"  status="open"/>
+      <input id="3"  file="TASK3.xml"  status="open"/>
  </project>
 
   <preferences> 

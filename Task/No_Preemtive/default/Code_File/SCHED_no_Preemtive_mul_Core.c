@@ -157,15 +157,17 @@ void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_
     }
 }
 
-int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
-    Sorted_Task[0].state = SUSPENDED;
-    Sorted_Task[0].Priority = NULL;
+void no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
     Sorted_Task = sort_list(Sorted_Task);
-    if(Sorted_Task[0].id == NULL){
-        return NULL;
-    }
-    else{
-        return Sorted_Task[0].id;
+    int i;
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Sorted_Task[i].id == id){
+            Sorted_Task[i].state = SUSPENDED;
+            Sorted_Task[i].id = NULL;
+            Sorted_Task[i].Priority = NULL;
+            // Sorted_Task[i].Period = NULL;
+            Sorted_Task[i].WCET = NULL;
+        }
     }
 }
 

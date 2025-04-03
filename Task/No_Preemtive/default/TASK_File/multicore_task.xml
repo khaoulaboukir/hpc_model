@@ -3,26 +3,26 @@
 <TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/default/TASK_File/multicore_task.xml">
   <place id="1" identifier="Ready" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="241.0" y="61.0"/> 
-         <deltaLabel deltax="1.0" deltay="-21.0"/> 
+         <position x="481.0" y="151.0"/> 
+         <deltaLabel deltax="-2.0" deltay="-26.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
   <place id="2" identifier="Terminate" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="421.0" y="61.0"/> 
-         <deltaLabel deltax="-1.0" deltay="-21.0"/> 
+         <position x="661.0" y="151.0"/> 
+         <deltaLabel deltax="3.0" deltay="-23.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
   <transition id="1" identifier="Task_Arr" label=""  eft="50" lft="50" eft_param="50" lft_param="50" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="151.0" y="61.0"/> 
-        <deltaLabel deltax="-10.0" deltay="-34.0"/> 
+        <position x="391.0" y="151.0"/> 
+        <deltaLabel deltax="5.0" deltay="-32.0"/> 
         <deltaGuard deltax="20" deltay="-20"/> 
-        <deltaUpdate deltax="7.0" deltay="9.0"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
@@ -32,26 +32,27 @@ insert_task(List_Task, Sorted_Task, 0);]]></update>
 
   <transition id="2" identifier="Execution" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 0)"> 
      <graphics color="0"> 
-        <position x="331.0" y="61.0"/> 
-        <deltaLabel deltax="-4.0" deltay="-35.0"/> 
-        <deltaGuard deltax="-1.0" deltay="11.0"/> 
-        <deltaUpdate deltax="-1.0" deltay="24.0"/> 
+        <position x="571.0" y="151.0"/> 
+        <deltaLabel deltax="2.0" deltay="-34.0"/> 
+        <deltaGuard deltax="19.0" deltay="11.0"/> 
+        <deltaUpdate deltax="10.0" deltay="24.0"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
      <update><![CDATA[free_core(List_Core, 0);]]></update> 
   </transition> 
 
-  <transition id="3" identifier="Suspended" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="3" identifier="Suspend" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="511.0" y="61.0"/> 
-        <deltaLabel deltax="3.0" deltay="-33.0"/> 
+        <position x="751.0" y="151.0"/> 
+        <deltaLabel deltax="10.0" deltay="-31.0"/> 
         <deltaGuard deltax="20" deltay="-20"/> 
-        <deltaUpdate deltax="7.0" deltay="10.0"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
         <deltaSpeed deltax="-20" deltay="5"/> 
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
-     <update><![CDATA[no_need_sched++;]]></update> 
+     <update><![CDATA[no_need_sched++;
+no_need_scheduler(Sorted_Task, 0);]]></update> 
   </transition> 
 
   <arc place="1" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
@@ -187,7 +188,7 @@ void suspend_task(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
 /* Core API */
 
 
-int in_core(core_descriptor [CORE_COUNT] &List_Core, int id){
+int is_selected_task(core_descriptor [CORE_COUNT] &List_Core, int id){
     int i;
     for(i=0; i < CORE_COUNT; i++){
         if(List_Core[i].selected_task == id){
@@ -216,18 +217,42 @@ core_descriptor maj_core(core_descriptor [CORE_COUNT] List_Core, int id) {
 
 void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_COUNT] &List_Core){
     Sorted_Task = sort_list(Sorted_Task);
-    List_Core = maj_core(List_Core, Sorted_Task[0].id);
+
+    int i = 0;
+    int task_found = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Sorted_Task[i].id;
+        int already_assigned = 0;
+
+        int j = 0;
+        while (j < CORE_COUNT) {
+            if (List_Core[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        if (already_assigned == 0 && task_id != NULL) {
+            List_Core = maj_core(List_Core, task_id);
+            task_found = 1;
+        }
+
+        i++;
+    }
 }
 
-int no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task){
-    Sorted_Task[0].state = SUSPENDED;
-    Sorted_Task[0].Priority = NULL;
+void no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
     Sorted_Task = sort_list(Sorted_Task);
-    if(Sorted_Task[0].id == NULL){
-        return NULL;
-    }
-    else{
-        return Sorted_Task[0].id;
+    int i;
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Sorted_Task[i].id == id){
+            Sorted_Task[i].state = SUSPENDED;
+            Sorted_Task[i].id = NULL;
+            Sorted_Task[i].Priority = NULL;
+            // Sorted_Task[i].Period = NULL;
+            Sorted_Task[i].WCET = NULL;
+        }
     }
 }
 
@@ -293,6 +318,13 @@ initially {
 // using C-like syntax
  
  }
+
+
+
+
+
+
+
 
 
 
