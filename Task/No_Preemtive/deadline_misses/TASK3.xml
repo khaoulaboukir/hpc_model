@@ -17,6 +17,14 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
+  <place id="3" identifier="P3" label="tas3" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="331.0" y="211.0"/> 
+         <deltaLabel deltax="10" deltay="10"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
   <transition id="1" identifier="Task_Arr" label=""  eft="60" lft="60" eft_param="60" lft_param="60" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="151.0" y="61.0"/> 
@@ -65,7 +73,8 @@ no_need_scheduler(Sorted_Task, 2);]]></update>
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
      <update><![CDATA[free_core(List_Core, 2);
-no_need_sched++;]]></update> 
+no_need_sched++;
+no_need_scheduler(Sorted_Task, 1);]]></update> 
   </transition> 
 
   <arc place="1" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
@@ -100,6 +109,12 @@ no_need_sched++;]]></update>
      </graphics> 
   </arc> 
  
+
+  <arc place="3" transition="4" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
 
   <timedCost></timedCost>
 
