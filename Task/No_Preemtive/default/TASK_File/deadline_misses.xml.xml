@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/default/TASK_File/deadline_misses.xml.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/default/TASK_File/deadline_misses.xml.xml">
   <place id="1" identifier="Ready" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="481.0" y="151.0"/> 
@@ -65,7 +65,7 @@ no_need_scheduler(Sorted_Task, 0);]]></update>
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
      <update><![CDATA[free_core(List_Core, 0);
-no_need_sched++;
+need_sched--;
 no_need_scheduler(Sorted_Task, 0);]]></update> 
   </transition> 
 

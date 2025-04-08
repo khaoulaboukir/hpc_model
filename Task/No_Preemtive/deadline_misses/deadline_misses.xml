@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/deadline_misses/deadline_misses.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/deadline_misses/deadline_misses.xml">
   <place id="1" identifier="core" label="" initialMarking="2" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="571.0" y="61.0"/> 

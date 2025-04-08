@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Houssam/Test/No_Preemtive/deadline_misses/TASK3.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/deadline_misses/TASK3.xml">
   <place id="1" identifier="Ready" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="241.0" y="61.0"/> 
@@ -38,7 +38,7 @@
 insert_task(List_Task, Sorted_Task, 2);]]></update> 
   </transition> 
 
-  <transition id="2" identifier="Execution" label=""  eft="35" lft="40" eft_param="35" lft_param="40" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 2)"> 
+  <transition id="2" identifier="Execution" label=""  eft="40" lft="40" eft_param="40" lft_param="40" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 2)"> 
      <graphics color="0"> 
         <position x="331.0" y="61.0"/> 
         <deltaLabel deltax="-4.0" deltay="-35.0"/> 
@@ -73,7 +73,7 @@ no_need_scheduler(Sorted_Task, 2);]]></update>
         <deltaCost deltax="-20" deltay="5"/> 
      </graphics> 
      <update><![CDATA[free_core(List_Core, 2);
-no_need_sched++;
+need_sched--;
 no_need_scheduler(Sorted_Task, 1);]]></update> 
   </transition> 
 

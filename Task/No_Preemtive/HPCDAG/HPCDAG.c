@@ -6,7 +6,7 @@
 
 /* Const */
 
-const int TASK_COUNT = 5;
+const int TASK_COUNT = 7;
 const int CORE_COUNT = 3;
 const int NULL = -1;
 
@@ -56,47 +56,133 @@ typedef struct{
 
 /* Task lists + mainting functions*/
 
-task_descriptor sort_list(task_descriptor [TASK_COUNT] Sorted_Task){
-    // int result = 1;
-    int i, j;
-    task_descriptor temp;
+task_descriptor sort_list(task_descriptor [TASK_COUNT] Sorted_Task) {
+    int i, j, index = 0;
 
-    for(i = 0; i < TASK_COUNT - 1; i++){
-        for(j = i; j < TASK_COUNT; j++){
-            if(Sorted_Task[i].Priority < Sorted_Task[j].Priority){
-                temp = Sorted_Task[i];
-                Sorted_Task[i] = Sorted_Task[j];
-                Sorted_Task[j] = temp;
+    // 1. On va créer trois tableaux temporaires pour les CPU, GPU, et UNKOWN
+    task_descriptor [TASK_COUNT] cpu_tasks;
+    task_descriptor [TASK_COUNT] gpu_tasks;
+    task_descriptor [TASK_COUNT] unknown_tasks;
+
+    int cpu_count = 0;
+    int gpu_count = 0;
+    int unk_count = 0;
+
+    // 2. Séparer les tâches selon leur type de core
+    for (i = 0; i < TASK_COUNT; i++) {
+        if (Sorted_Task[i].id != NULL) {
+            if (Sorted_Task[i].core == CPU) {
+                cpu_tasks[cpu_count] = Sorted_Task[i];
+                cpu_count++;
+            } else if (Sorted_Task[i].core == GPU) {
+                gpu_tasks[gpu_count] = Sorted_Task[i];
+                gpu_count++;
+            } else {
+                unknown_tasks[unk_count] = Sorted_Task[i];
+                unk_count++;
             }
         }
     }
+
+    // 3. Trier les tâches CPU selon la priorité (ordre décroissant)
+    for (i = 0; i < cpu_count - 1; i++) {
+        for (j = i + 1; j < cpu_count; j++) {
+            if (cpu_tasks[i].Priority < cpu_tasks[j].Priority) {
+                task_descriptor temp = cpu_tasks[i];
+                cpu_tasks[i] = cpu_tasks[j];
+                cpu_tasks[j] = temp;
+            }
+        }
+    }
+
+    // 4. Réassembler les tableaux dans Sorted_Task : CPU -> GPU -> UNKOWN
+    index = 0;
+    for (i = 0; i < cpu_count; i++) {
+        Sorted_Task[index] = cpu_tasks[i];
+        index++;
+    }
+    for (i = 0; i < gpu_count; i++) {
+        Sorted_Task[index] = gpu_tasks[i];
+        index++;
+    }
+    for (i = 0; i < unk_count; i++) {
+        Sorted_Task[index] = unknown_tasks[i];
+        index++;
+    }
+
+    // 5. Nettoyer le reste du tableau si nécessaire
+    while (index < TASK_COUNT) {
+        Sorted_Task[index].id = NULL;
+        Sorted_Task[index].Priority = NULL;
+        Sorted_Task[index].state = SUSPENDED;
+        Sorted_Task[index].core = UNKOWN; // ou CPU/GPU si tu préfères
+        index++;
+    }
+
     return Sorted_Task;
 }
 
-void insert_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Sorted_Task, int id) {
-    int i = 0;
-    int index = NULL;
-    int found = 0;
+void insert_task(task_descriptor [TASK_COUNT + 10] &List_Task, task_descriptor [TASK_COUNT + 10] &Sorted_Task, int id) {
+    int i;
+    int index = -1;
+    int null_index = -1;
+    int already_exists = 0;
 
-    // Trouver l’index dans List_Task
-    while (i < TASK_COUNT) {
-        if (List_Task[i].id == id && found == 0) {
+    // Trouver l'index de la tâche dans List_Task
+    i = 0;
+    while (i < TASK_COUNT && index == -1) {
+        if (List_Task[i].id == id) {
             index = i;
-            found = 1;
         }
-        i++;
+        i = i + 1;
     }
 
-    // Réinitialiser l’indice pour insérer dans Sorted_Task
+    // Vérifier si la tâche existe déjà dans Sorted_Task
     i = 0;
-    found = 0;
-    while (i < TASK_COUNT) {
-        if (Sorted_Task[i].id == NULL && found == 0) {
-            Sorted_Task[i] = List_Task[index];
-            Sorted_Task[i].state = READY;
-            found = 1;
+    while (i < TASK_COUNT && already_exists == 0) {
+        if (Sorted_Task[i].id == id) {
+            already_exists = 1;
         }
-        i++;
+        i = i + 1;
+    }
+
+    // Si la tâche n'existe pas déjà et qu'on l'a trouvée dans List_Task
+    if (already_exists == 0 && index != -1) {
+        // Chercher la première position avec id == NULL
+        i = 0;
+        while (i < TASK_COUNT && null_index == -1) {
+            if (Sorted_Task[i].id == NULL) {
+                null_index = i;
+            }
+            i = i + 1;
+        }
+
+        // Si on a trouvé un NULL, on le supprime en décalant vers la gauche
+        if (null_index != -1) {
+            i = null_index;
+            while (i < TASK_COUNT - 1) {
+                Sorted_Task[i] = Sorted_Task[i + 1];
+                i = i + 1;
+            }
+            // Marquer la dernière case comme vide
+            Sorted_Task[TASK_COUNT - 1].id = NULL;
+        }
+
+        // Chercher la première position libre pour insérer
+        i = 0;
+        int position_insertion = -1;
+        while (i < TASK_COUNT + 10 && position_insertion == -1) {
+            if (Sorted_Task[i].id == NULL) {
+                position_insertion = i;
+            }
+            i = i + 1;
+        }
+
+        // Insérer la tâche à la fin
+        if (position_insertion != -1) {
+            Sorted_Task[position_insertion] = List_Task[index];
+            Sorted_Task[position_insertion].state = READY;
+        }
     }
 }
 
@@ -210,18 +296,20 @@ void scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, core_descriptor [CORE_
 }
 
 void no_need_scheduler(task_descriptor [TASK_COUNT] &Sorted_Task, int id){
-    Sorted_Task = sort_list(Sorted_Task);
     int i;
+    int removed = 0;
+
     for(i = 0; i < TASK_COUNT; i++){
-        if(Sorted_Task[i].id == id){
+        if(Sorted_Task[i].id == id && removed == 0){
             Sorted_Task[i].state = SUSPENDED;
             Sorted_Task[i].core = UNKOWN;
             Sorted_Task[i].id = NULL;
             Sorted_Task[i].Priority = NULL;
-            // Sorted_Task[i].Period = NULL;
-            // Sorted_Task[i].WCET = NULL;
+            removed = 1;
         }
     }
+
+    Sorted_Task = sort_list(Sorted_Task);
 }
 
 
@@ -305,7 +393,16 @@ initially {
 		List_Task[4].Priority = 5;
 		// List_Task[1].Period = 7;
 		// List_Task[1].WCET = 3;
-	
+        List_Task[5].state = SUSPENDED;
+        List_Task[5].core = CPU;
+		List_Task[5].id = 5;
+		List_Task[5].Priority = 6;
+
+        List_Task[6].state = SUSPENDED;
+        List_Task[6].core = CPU;
+		List_Task[6].id = 6;
+		List_Task[6].Priority = 7;
+
 	task_descriptor [TASK_COUNT] Sorted_Task;
 	int i;
     for(i = 0; i < TASK_COUNT; i++){
