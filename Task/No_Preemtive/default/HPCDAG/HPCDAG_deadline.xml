@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/HPCDAG/HPCDAG.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/HPCDAG/HPCDAG_deadline.xml">
   <place id="1" identifier="CPU" label="" initialMarking="2" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="841.0" y="151.0"/> 
@@ -473,6 +473,104 @@ insert_task(List_Task, Sorted_Task, 6);]]></update>
 no_need_scheduler(Sorted_Task, 6);]]></update> 
   </transition> 
 
+  <transition id="25" identifier="Deadline_missesTind1" label=""  eft="90" lft="90" eft_param="90" lft_param="90" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="241.0" y="121.0"/> 
+        <deltaLabel deltax="77.0" deltay="-14.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="47.0" deltay="6.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 4);
+need_sched--;
+no_need_scheduler(Sorted_Task, 4);]]></update> 
+  </transition> 
+
+  <transition id="26" identifier="Deadline_missesTind2" label=""  eft="50" lft="50" eft_param="50" lft_param="50" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="241.0" y="271.0"/> 
+        <deltaLabel deltax="82.0" deltay="-12.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 5);
+need_sched--;
+no_need_scheduler(Sorted_Task, 5);]]></update> 
+  </transition> 
+
+  <transition id="27" identifier="Deadline_missesTind3" label=""  eft="55" lft="55" eft_param="55" lft_param="55" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="241.0" y="421.0"/> 
+        <deltaLabel deltax="81.0" deltay="-11.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20.0" deltay="13.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 6);
+need_sched--;
+no_need_scheduler(Sorted_Task, 6);]]></update> 
+  </transition> 
+
+  <transition id="28" identifier="Deadline_missesT2" label=""  eft="32" lft="32" eft_param="32" lft_param="32" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="721.0" y="511.0"/> 
+        <deltaLabel deltax="3.0" deltay="5.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="18.0" deltay="33.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 1);
+need_sched--;
+no_need_scheduler(Sorted_Task, 1);]]></update> 
+  </transition> 
+
+  <transition id="29" identifier="Deadline_missesT3" label=""  eft="22" lft="22" eft_param="22" lft_param="22" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="721.0" y="751.0"/> 
+        <deltaLabel deltax="13.0" deltay="8.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="49.0" deltay="37.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 2);
+need_sched--;
+no_need_scheduler(Sorted_Task, 2);]]></update> 
+  </transition> 
+
+  <transition id="30" identifier="Deadline_missesT1" label=""  eft="22" lft="22" eft_param="22" lft_param="22" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="271.0" y="631.0"/> 
+        <deltaLabel deltax="72.0" deltay="-13.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="33.0" deltay="11.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 0);
+need_sched--;
+no_need_scheduler(Sorted_Task, 0);]]></update> 
+  </transition> 
+
+  <transition id="31" identifier="Deadline_missesT4" label=""  eft="22" lft="22" eft_param="22" lft_param="22" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="1081.0" y="631.0"/> 
+        <deltaLabel deltax="72.0" deltay="-14.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[free_core(List_Core, 3);
+need_sched--;
+no_need_scheduler(Sorted_Task, 3);]]></update> 
+  </transition> 
+
   <arc place="2" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
      <nail xnail="0" ynail="0"/> 
      <graphics  color="0"> 
@@ -740,6 +838,55 @@ no_need_scheduler(Sorted_Task, 6);]]></update>
   </arc> 
 
   <arc place="20" transition="24" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="13" transition="25" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="17" transition="26" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="19" transition="27" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="5" transition="28" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="6" transition="29" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="2" transition="30" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="9" transition="31" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
     <nail xnail="0" ynail="0"/> 
     <graphics  color="0"> 
      </graphics> 
