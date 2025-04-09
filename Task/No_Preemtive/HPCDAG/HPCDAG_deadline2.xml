@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/HPCDAG/HPCDAG_deadline.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/HPCDAG/HPCDAG_deadline2.xml">
   <place id="1" identifier="CPU" label="" initialMarking="2" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="841.0" y="151.0"/> 
@@ -25,7 +25,7 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="4" identifier="SuspT1" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="4" identifier="ExecT1" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="361.0" y="571.0"/> 
          <deltaLabel deltax="-3.0" deltay="-25.0"/> 
@@ -105,7 +105,7 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="14" identifier="SuspTind1" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="14" identifier="ExecTind1" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="331.0" y="61.0"/> 
          <deltaLabel deltax="5.0" deltay="-22.0"/> 
@@ -137,7 +137,7 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="18" identifier="SuspTind2" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="18" identifier="ExecTind2" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="331.0" y="211.0"/> 
          <deltaLabel deltax="5.0" deltay="-22.0"/> 
@@ -153,7 +153,7 @@
       <scheduling gamma="0" omega="0"/> 
   </place> 
 
-  <place id="20" identifier="SuspTind3" label="" initialMarking="0" eft="0" lft="inf"> 
+  <place id="20" identifier="ExecTind3" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
          <position x="331.0" y="361.0"/> 
          <deltaLabel deltax="5.0" deltay="-22.0"/> 
@@ -191,7 +191,7 @@ cpu_flag++;
 insert_task(List_Task, Sorted_Task, 0);]]></update> 
   </transition> 
 
-  <transition id="2" identifier="ExecT1" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 0)"> 
+  <transition id="2" identifier="StartT1" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="100" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 0)"> 
      <graphics color="0"> 
         <position x="271.0" y="571.0"/> 
         <deltaLabel deltax="4.0" deltay="-30.0"/> 
@@ -323,7 +323,7 @@ insert_task(List_Task, Sorted_Task, 3);]]></update>
 no_need_scheduler(Sorted_Task, 3);]]></update> 
   </transition> 
 
-  <transition id="12" identifier="TerminateT1" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="12" identifier="TerminateT1" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="451.0" y="571.0"/> 
         <deltaLabel deltax="-8.0" deltay="-26.0"/> 
@@ -350,7 +350,7 @@ cpu_flag++;
 insert_task(List_Task, Sorted_Task, 4);]]></update> 
   </transition> 
 
-  <transition id="14" identifier="ExecTind1" label=""  eft="75" lft="80" eft_param="75" lft_param="80" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 4)"> 
+  <transition id="14" identifier="StartTind" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="100" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 4)"> 
      <graphics color="0"> 
         <position x="241.0" y="61.0"/> 
         <deltaLabel deltax="9.0" deltay="-32.0"/> 
@@ -362,7 +362,7 @@ insert_task(List_Task, Sorted_Task, 4);]]></update>
      <update><![CDATA[free_core(List_Core, 4);]]></update> 
   </transition> 
 
-  <transition id="15" identifier="TerminateTind1" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="15" identifier="TerminateTind1" label=""  eft="75" lft="80" eft_param="75" lft_param="80" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="421.0" y="61.0"/> 
         <deltaLabel deltax="15.0" deltay="-30.0"/> 
@@ -425,7 +425,7 @@ cpu_flag++;
 insert_task(List_Task, Sorted_Task, 5);]]></update> 
   </transition> 
 
-  <transition id="20" identifier="ExecTind2" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 5)"> 
+  <transition id="20" identifier="StartTind2" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="100" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 5)"> 
      <graphics color="0"> 
         <position x="241.0" y="211.0"/> 
         <deltaLabel deltax="9.0" deltay="-32.0"/> 
@@ -437,7 +437,7 @@ insert_task(List_Task, Sorted_Task, 5);]]></update>
      <update><![CDATA[free_core(List_Core, 5);]]></update> 
   </transition> 
 
-  <transition id="21" identifier="TerminateTind2" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="21" identifier="TerminateTind2" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="421.0" y="211.0"/> 
         <deltaLabel deltax="15.0" deltay="-30.0"/> 
@@ -464,7 +464,7 @@ cpu_flag++;
 insert_task(List_Task, Sorted_Task, 6);]]></update> 
   </transition> 
 
-  <transition id="23" identifier="ExecTind3" label=""  eft="45" lft="50" eft_param="45" lft_param="50" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 6)"> 
+  <transition id="23" identifier="StartTind3" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="100" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 6)"> 
      <graphics color="0"> 
         <position x="241.0" y="361.0"/> 
         <deltaLabel deltax="9.0" deltay="-32.0"/> 
@@ -476,7 +476,7 @@ insert_task(List_Task, Sorted_Task, 6);]]></update>
      <update><![CDATA[free_core(List_Core, 6);]]></update> 
   </transition> 
 
-  <transition id="24" identifier="TerminateTind3" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="10" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="24" identifier="TerminateTind3" label=""  eft="45" lft="50" eft_param="45" lft_param="50" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="421.0" y="361.0"/> 
         <deltaLabel deltax="15.0" deltay="-30.0"/> 
