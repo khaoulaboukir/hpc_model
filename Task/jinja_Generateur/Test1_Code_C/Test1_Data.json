@@ -1,0 +1,24 @@
+{
+  "path": "Test1",
+  "cores": [
+    { "id": 0, "type": "CPU", "state": "IDLE", "selected_task": -1 },
+    { "id": 1, "type": "CPU", "state": "IDLE", "selected_task": -1 },
+    { "id": 2, "type": "GPU", "state": "IDLE", "selected_task": -1 }
+  ],
+  "simple_tasks": [
+    { "id": 0, "period": 100, "execution_time": { "BCET": 75, "WCET": 80 }, "priority": 6, "core": "CPU", "state": "SUSPENDED" },
+    { "id": 1, "period": 80, "execution_time": { "BCET": 55, "WCET": 60 }, "priority": 8, "core": "CPU", "state": "SUSPENDED" },
+    { "id": 2, "period": 105, "execution_time": { "BCET": 45, "WCET": 50 }, "priority": -1, "core": "GPU", "state": "SUSPENDED" },
+    { "id": 3, "period": 70, "execution_time": { "BCET": 45, "WCET": 50 }, "priority": -1, "core": "GPU", "state": "SUSPENDED" },
+    { "id": 4, "period": 50, "execution_time": { "BCET": 40, "WCET": 45 }, "priority": 10, "core": "CPU", "state": "SUSPENDED" },
+    { "id": 5, "period": 120, "execution_time": { "BCET": 95, "WCET": 100 }, "priority": 4, "core": "CPU", "state": "SUSPENDED" }
+  ],
+  "globals": {
+    "cpu_flag": 0,
+    "gpu_flag": 0,
+    "need_sched": 0,
+    "no_need_cpu": 0,
+    "no_need_gpu": 0,
+    "selected_task": -1
+  }
+}
