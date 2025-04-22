@@ -2,7 +2,7 @@ import json
 from jinja2 import Environment, FileSystemLoader
 import os
 
-base_path = "/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Test1"
+base_path = "/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Test2"
 
 template_path = os.path.join(base_path, 'Templates')
 result_path = os.path.join(base_path, 'Resultats')
@@ -13,7 +13,7 @@ with open(os.path.join(base_path, 'Test1_Data.json')) as f:
 nmbr_cpu = sum(1 for core in data["cores"] if core["type"] == "CPU")
 nmbr_gpu = sum(1 for core in data["cores"] if core["type"] == "GPU")
 
-env = Environment(loader=FileSystemLoader(template_path))
+env = Environment(loader=FileSystemLoader(template_path), trim_blocks=True, lstrip_blocks=True)
 
 c_template = env.get_template('Test1_Code.c.j2')
 c_code = c_template.render(task_count=len(data["simple_tasks"]), core_count=len(data["cores"]))

@@ -168,15 +168,6 @@ need_sched--;]]></update>
 <!-- Tasks -->
 
 
-
-  
-  
-  
-  
-  
-  
-  
-
   <!-- Transition Start -->
   <transition id="100" identifier="StartT0" label=""
               eft="100" lft="100"
@@ -253,14 +244,6 @@ no_need_scheduler(Sorted_Task, 0);
      </graphics>
   </arc>
 
-
-  
-  
-  
-  
-  
-  
-  
 
   <!-- Transition Start -->
   <transition id="102" identifier="StartT1" label=""
@@ -339,14 +322,6 @@ no_need_scheduler(Sorted_Task, 1);
   </arc>
 
 
-  
-  
-  
-  
-  
-  
-  
-
   <!-- Transition Start -->
   <transition id="104" identifier="StartT2" label=""
               eft="105" lft="105"
@@ -423,14 +398,6 @@ no_need_scheduler(Sorted_Task, 2);
      </graphics>
   </arc>
 
-
-  
-  
-  
-  
-  
-  
-  
 
   <!-- Transition Start -->
   <transition id="106" identifier="StartT3" label=""
@@ -509,14 +476,6 @@ no_need_scheduler(Sorted_Task, 3);
   </arc>
 
 
-  
-  
-  
-  
-  
-  
-  
-
   <!-- Transition Start -->
   <transition id="108" identifier="StartT4" label=""
               eft="50" lft="50"
@@ -593,14 +552,6 @@ no_need_scheduler(Sorted_Task, 4);
      </graphics>
   </arc>
 
-
-  
-  
-  
-  
-  
-  
-  
 
   <!-- Transition Start -->
   <transition id="110" identifier="StartT5" label=""
@@ -679,7 +630,6 @@ no_need_scheduler(Sorted_Task, 5);
   </arc>
 
 
-
   <timedCost></timedCost>
 
   <nbTokenColor>0</nbTokenColor>
@@ -693,54 +643,39 @@ no_need_scheduler(Sorted_Task, 5);
 
 initially {
 
-    
-    
     int cpu_flag = 0;
-    
     int gpu_flag = 0;
-    
     int need_sched = 0;
-    
     int no_need_cpu = 0;
-    
     int no_need_gpu = 0;
-    
     int selected_task = -1;
-    
 
     /* Task Declaration */
     task_descriptor [TASK_COUNT] List_Task;
-    
     List_Task[0].state = SUSPENDED;
     List_Task[0].core = CPU;
     List_Task[0].id = 0;
     List_Task[0].Priority = 6;
-    
     List_Task[1].state = SUSPENDED;
     List_Task[1].core = CPU;
     List_Task[1].id = 1;
     List_Task[1].Priority = 8;
-    
     List_Task[2].state = SUSPENDED;
     List_Task[2].core = GPU;
     List_Task[2].id = 2;
     List_Task[2].Priority = -1;
-    
     List_Task[3].state = SUSPENDED;
     List_Task[3].core = GPU;
     List_Task[3].id = 3;
     List_Task[3].Priority = -1;
-    
     List_Task[4].state = SUSPENDED;
     List_Task[4].core = CPU;
     List_Task[4].id = 4;
     List_Task[4].Priority = 10;
-    
     List_Task[5].state = SUSPENDED;
     List_Task[5].core = CPU;
     List_Task[5].id = 5;
     List_Task[5].Priority = 4;
-    
 
     task_descriptor [TASK_COUNT] Sorted_Task;
     int i;
@@ -753,22 +688,18 @@ initially {
 
     /* Core Declaration */
     core_descriptor [CORE_COUNT] List_Core;
-    
     List_Core[0].state = IDLE;
     List_Core[0].type = CPU;
     List_Core[0].id = 0;
     List_Core[0].selected_task = -1;
-    
     List_Core[1].state = IDLE;
     List_Core[1].type = CPU;
     List_Core[1].id = 1;
     List_Core[1].selected_task = -1;
-    
     List_Core[2].state = IDLE;
     List_Core[2].type = GPU;
     List_Core[2].id = 2;
     List_Core[2].selected_task = -1;
-    
 
 }
 
