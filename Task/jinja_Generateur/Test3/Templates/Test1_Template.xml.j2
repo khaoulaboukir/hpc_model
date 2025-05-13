@@ -165,7 +165,7 @@ need_sched--;]]></update>
   </arc>
 
 
-<!-- Tasks -->
+<!-- Simples_Tasks -->
 
 {% set x_start = [91.0, 511.0, 931.0] %}
 {% for task in simple_tasks %}
@@ -174,8 +174,9 @@ need_sched--;]]></update>
   {% set col = task_index % 3 %}
   {% set x = x_start[col] %}
   {% set y = 271.0 + row * 120 %}
-  {% set place_id = 10 + task_index * 2 %}
-  {% set transition_id = 100 + task_index * 2 %}
+  {% set total_tasks = simple_tasks | length %}
+  {% set place_id = 10 + loop.index0 * 2 %}
+  {% set transition_id = 2 * 10 + total_tasks + loop.index0 * 2 %}
 
   <!-- Transition Start -->
   <transition id="{{ transition_id }}" identifier="StartT{{task_index}}" label=""
@@ -188,8 +189,7 @@ need_sched--;]]></update>
         <deltaGuard deltax="20" deltay="-20"/>
         <deltaUpdate deltax="38.0" deltay="11.0"/>
      </graphics>
-     <update><![CDATA[
-need_sched++;
+     <update><![CDATA[need_sched++;
 {{ "cpu_flag" if task.core == "CPU" else "gpu_flag" }}++;
 insert_task(List_Task, Sorted_Task, {{ task.id }});
      ]]></update>
@@ -216,8 +216,7 @@ insert_task(List_Task, Sorted_Task, {{ task.id }});
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
      </graphics>
-     <update><![CDATA[
-free_core(List_Core, {{ task.id }});
+     <update><![CDATA[free_core(List_Core, {{ task.id }});
 {{ "no_need_cpu" if task.core == "CPU" else "no_need_gpu" }}++;
 no_need_scheduler(Sorted_Task, {{ task.id }});
      ]]></update>
@@ -253,7 +252,161 @@ no_need_scheduler(Sorted_Task, {{ task.id }});
      </graphics>
   </arc>
 
+{% set last_transition_id = 10 + 2 * total_tasks - 1 %}
 {% endfor %}
+
+
+<!-- DAG_Tasks -->
+
+{% set last_task_index = simple_tasks | length - 1 %}
+{% set last_row = last_task_index // 3 %}
+{% set last_y = 271.0 + last_row * 120 %}
+{% set dag_start_y = last_y + 120 %}
+{% set total_tasks = simple_tasks | length %}
+{% set last_transition_id = 10 + 2 * total_tasks - 1 %}
+{% set transitionDAG_id = last_transition_id + 1 %}
+
+{% set dag_row = 0 %}
+{% for dag in tasks %}
+  {% set x = 91.0 %}
+  {% set y = dag_start_y + dag_row * 120 %}
+  {% set transition_id = transitionDAG_id + loop.index0 %}
+
+  <!-- Transition StartTDAG -->
+  <transition id="{{ transition_id }}" identifier="StartTDAG{{ loop.index0 }}" label=""
+              eft="{{ dag.period }}" lft="{{ dag.period }}"
+              eft_param="{{ dag.period }}" lft_param="{{ dag.period }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1" guard="">
+     <graphics color="0">
+        <position x="{{ x }}" y="{{ y }}"/>
+        <deltaLabel deltax="4.0" deltay="-30.0"/>
+        <deltaGuard deltax="20" deltay="-20"/>
+        <deltaUpdate deltax="38.0" deltay="11.0"/>
+     </graphics>
+     <update><![CDATA[need_sched++;
+{% for subtask in dag.subtasks %}
+  {% if subtask.predecessors | length == 0 %}
+    {% for succ_id in subtask.successors %}
+      {% set successor = dag.subtasks | selectattr("id", "equalto", succ_id) | first %}
+      {% if successor.core == "CPU" %}
+cpu_flag++;
+      {% else %}
+gpu_flag++;
+      {% endif %}
+insert_task(List_Task, Sorted_Task, {{ successor.id }});
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+     ]]></update>
+  </transition>
+
+  {% set x_place = x + 90.0 %}
+  {% set x_exec = x_place + 90.0 %}
+
+  {% set src_nodes = dag.subtasks | selectattr("predecessors", "equalto", []) | list %}
+  {% for subtask in src_nodes %}
+    {% set index = loop.index0 %}
+    {% set y_src = y + index * 120.0 %}
+    {% set place_id = 3000 + subtask.id %}
+    {% set exec_transition_id = 4000 + subtask.id %}
+
+    <!-- Place Ready for Source Node {{ subtask.id }} -->
+    <place id="{{ place_id }}" identifier="ReadyT{{ subtask.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ x_place }}" y="{{ y_src }}"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    <!-- Transition Exec for Source Node {{ subtask.id }} -->
+    <transition id="{{ exec_transition_id }}" identifier="ExecT{{ subtask.id }}" label=""
+                eft="{{ subtask.execution_time.BCET }}" lft="{{ subtask.execution_time.WCET }}"
+                eft_param="{{ subtask.execution_time.BCET }}" lft_param="{{ subtask.execution_time.WCET }}"
+                speed="1" priority="0" cost="0" unctrl="0" obs="1"
+                guard="is_selected_task(List_Core, {{ subtask.id }})">
+      <graphics color="0">
+        <position x="{{ x_exec }}" y="{{ y_src }}"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+      </graphics>
+      <update><![CDATA[
+free_core(List_Core, {{ subtask.id }});
+{{ "no_need_cpu" if subtask.core == "CPU" else "no_need_gpu" }}++;
+no_need_scheduler(Sorted_Task, {{ subtask.id }});
+      ]]></update>
+    </transition>
+
+    <!-- Arcs for Source Node {{ subtask.id }} -->
+    <arc place="{{ place_id }}" transition="{{ exec_transition_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"> </graphics>
+    </arc>
+
+    <arc place="{{ place_id }}" transition="{{ transition_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"> </graphics>
+    </arc>
+
+    {% set x_placeint = x_place + 180.0 %}
+  {% set x_execint = x_placeint + 90.0 %}
+
+      {% set interns_node = dag.subtasks | selectattr("predecessors", "defined") | selectattr("successors", "defined") | selectattr("predecessors", "!=", []) | selectattr("successors", "!=", []) | list %}
+  {% for intern_node in interns_node %}
+    {% if subtask.id in intern_node.predecessors %}
+    {% set index = loop.index0 %}
+    {% set y_intern = y + index * 120.0 %}
+    {% set placeint_id = 5000 + intern_node.id %}
+    {% set exec_transitionint_id = 6000 + intern_node.id %}
+
+    <!-- Place Ready for intern Node {{ intern_node.id }} -->
+    <place id="{{ placeint_id }}" identifier="ReadyT{{ intern_node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ x_placeint }}" y="{{ y_intern }}"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+        <!-- Transition Exec for intern Node {{ intern_node.id }} -->
+    <transition id="{{ exec_transitionint_id }}" identifier="ExecT{{ intern_node.id }}" label=""
+                eft="{{ intern_node.execution_time.BCET }}" lft="{{ intern_node.execution_time.WCET }}"
+                eft_param="{{ intern_node.execution_time.BCET }}" lft_param="{{ intern_node.execution_time.WCET }}"
+                speed="1" priority="0" cost="0" unctrl="0" obs="1"
+                guard="is_selected_task(List_Core, {{ intern_node.id }})">
+      <graphics color="0">
+        <position x="{{ x_execint }}" y="{{ y_intern }}"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+      </graphics>
+      <update><![CDATA[
+free_core(List_Core, {{ intern_node.id }});
+{{ "no_need_cpu" if intern_node.core == "CPU" else "no_need_gpu" }}++;
+no_need_scheduler(Sorted_Task, {{ intern_node.id }});
+      ]]></update>
+    </transition>
+
+        <!-- Arcs for Source Node {{ intern_node.id }} -->
+    <arc place="{{ placeint_id }}" transition="{{ exec_transitionint_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"> </graphics>
+    </arc>
+
+    <arc place="{{ placeint_id }}" transition="{{ exec_transition_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"> </graphics>
+    </arc>
+    {% endif %}
+
+  {% endfor %}
+
+  {% endfor %}
+
+  {% set dag_row = dag_row + 1 %}
+{% endfor %}
+
 
   <timedCost></timedCost>
 

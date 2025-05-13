@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Test4/DAG.xml">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Test3/DAG.xml">
   <place id="2" identifier="ReadyT1" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="331.0" y="181.0"/> 
+         <position x="331.0" y="211.0"/> 
          <deltaLabel deltax="-2.0" deltay="-21.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
@@ -11,7 +11,7 @@
 
   <place id="4" identifier="ReadyT4" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="871.0" y="181.0"/> 
+         <position x="871.0" y="211.0"/> 
          <deltaLabel deltax="0" deltay="-22"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
@@ -19,7 +19,7 @@
 
   <place id="5" identifier="ReadyT2" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="511.0" y="61.0"/> 
+         <position x="511.0" y="91.0"/> 
          <deltaLabel deltax="0.0" deltay="-22.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
@@ -27,7 +27,7 @@
 
   <place id="6" identifier="ReadyT3" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="511.0" y="301.0"/> 
+         <position x="511.0" y="331.0"/> 
          <deltaLabel deltax="-1.0" deltay="-25.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
@@ -35,7 +35,7 @@
 
   <place id="7" identifier="AttendT3" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="691.0" y="61.0"/> 
+         <position x="691.0" y="91.0"/> 
          <deltaLabel deltax="-1.0" deltay="-22.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
@@ -43,7 +43,7 @@
 
   <place id="8" identifier="AttendT2" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="691.0" y="301.0"/> 
+         <position x="691.0" y="331.0"/> 
          <deltaLabel deltax="-9.0" deltay="-20.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
@@ -51,7 +51,7 @@
 
   <place id="10" identifier="SuspT4" label="" initialMarking="0" eft="0" lft="inf"> 
       <graphics color="0"> 
-         <position x="1051.0" y="181.0"/> 
+         <position x="1051.0" y="211.0"/> 
          <deltaLabel deltax="-1.0" deltay="-22.0"/> 
       </graphics> 
       <scheduling gamma="0" omega="0"/> 
@@ -59,7 +59,7 @@
 
   <transition id="1" identifier="T1ARR" label=""  eft="100" lft="100" eft_param="100" lft_param="100" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="241.0" y="181.0"/> 
+        <position x="241.0" y="211.0"/> 
         <deltaLabel deltax="0.0" deltay="-33.0"/> 
         <deltaGuard deltax="20" deltay="-20"/> 
         <deltaUpdate deltax="20" deltay="10"/> 
@@ -73,7 +73,7 @@ insert_task(List_Task, Sorted_Task, 0);]]></update>
 
   <transition id="2" identifier="ExecT1" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 0)"> 
      <graphics color="0"> 
-        <position x="421.0" y="181.0"/> 
+        <position x="421.0" y="211.0"/> 
         <deltaLabel deltax="4.0" deltay="-30.0"/> 
         <deltaGuard deltax="110.0" deltay="-58.0"/> 
         <deltaUpdate deltax="129.0" deltay="-45.0"/> 
@@ -91,7 +91,7 @@ insert_task(List_Task, Sorted_Task, 2);]]></update>
 
   <transition id="3" identifier="StartT4" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="70" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
-        <position x="781.0" y="181.0"/> 
+        <position x="781.0" y="211.0"/> 
         <deltaLabel deltax="-39" deltay="-17"/> 
         <deltaGuard deltax="20" deltay="-20"/> 
         <deltaUpdate deltax="20" deltay="10"/> 
@@ -105,7 +105,7 @@ insert_task(List_Task, Sorted_Task, 3);]]></update>
 
   <transition id="7" identifier="ExecT2" label=""  eft="25" lft="30" eft_param="25" lft_param="30" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 1)"> 
      <graphics color="0"> 
-        <position x="601.0" y="61.0"/> 
+        <position x="601.0" y="91.0"/> 
         <deltaLabel deltax="4.0" deltay="-30.0"/> 
         <deltaGuard deltax="8.0" deltay="10.0"/> 
         <deltaUpdate deltax="30.0" deltay="23.0"/> 
@@ -119,7 +119,7 @@ no_need_scheduler(Sorted_Task, 1);]]></update>
 
   <transition id="8" identifier="ExecT3" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 2)"> 
      <graphics color="0"> 
-        <position x="601.0" y="301.0"/> 
+        <position x="601.0" y="331.0"/> 
         <deltaLabel deltax="3.0" deltay="-30.0"/> 
         <deltaGuard deltax="8.0" deltay="8.0"/> 
         <deltaUpdate deltax="24.0" deltay="19.0"/> 
@@ -133,7 +133,7 @@ no_need_scheduler(Sorted_Task, 2);]]></update>
 
   <transition id="10" identifier="ExecT4" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task(List_Core, 3)"> 
      <graphics color="0"> 
-        <position x="961.0" y="181.0"/> 
+        <position x="961.0" y="211.0"/> 
         <deltaLabel deltax="2.0" deltay="-29.0"/> 
         <deltaGuard deltax="5.0" deltay="8.0"/> 
         <deltaUpdate deltax="10.0" deltay="18.0"/> 

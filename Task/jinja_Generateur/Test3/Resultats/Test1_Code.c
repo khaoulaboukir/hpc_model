@@ -1,4 +1,4 @@
-const int TASK_COUNT = 6;
+const int TASK_COUNT = 14;
 const int CORE_COUNT = 3;
 
 
