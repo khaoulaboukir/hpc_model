@@ -520,10 +520,13 @@ need_sched--;]]></update>
 <!-- DAG_Tasks -->
 
 
+
+
+
   <!-- Transition Period -->
-  <transition id="28" identifier="StartTDAG0" label=""
-              eft="300" lft="300"
-              eft_param="300" lft_param="300"
+  <transition id="35" identifier="StartTDAG0" label=""
+              eft="500" lft="500"
+              eft_param="500" lft_param="500"
               speed="1" priority="0" cost="0" unctrl="0" obs="1" guard="">
      <graphics color="0">
         <position x="91" y="541.0"/>
@@ -535,170 +538,864 @@ need_sched--;]]></update>
      ]]></update>
   </transition>
 
+    
 
-    <!-- Place Ready_SRC_Node -->
-    <place id="29" identifier="ReadyTsub6" label="" initialMarking="0" eft="0" lft="inf">
-        <graphics color="0">
-           <position x="91" y="631.0"/>
-           <deltaLabel deltax="5.0" deltay="-20.0"/>
-        </graphics>
-        <scheduling gamma="0" omega="0"/>
-    </place>
 
-    <!-- Transition Exec_SRC_Node -->
-    <transition id="30" identifier="ExecTsub6" label=""
-                eft="10" lft="15"
-                eft_param="10" lft_param="15"
-                speed="1" priority="0" cost="0" unctrl="0" obs="1"
-                guard="is_selected_task(List_Core, 6)">
-       <graphics color="0">
-          <position x="91" y="721.0"/>
-          <deltaLabel deltax="9.0" deltay="-32.0"/>
-          <deltaGuard deltax="15.0" deltay="10.0"/>
-          <deltaUpdate deltax="17.0" deltay="26.0"/>
-       </graphics>
-       <update><![CDATA[
-       ]]></update>
-    </transition>
 
-  <!-- Arc Task -->
 
-  <arc place="29" transition="28" type="TransitionPlace" weight="1" tokenColor="-1">
-     <nail xnail="0" ynail="0"/>
-     <graphics  color="0">
+  <!-- Place -->
+  <place id="35" identifier="ReadyTsub6" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="91" y="631.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="36" identifier="ExecTsub6" label=""
+              eft="10" lft="15"
+              eft_param="10" lft_param="15"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="91" y="721.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
      </graphics>
-  </arc>
-
-  <arc place="29" transition="30" type="PlaceTransition" weight="1" tokenColor="-1">
-     <nail xnail="0" ynail="0"/>
-     <graphics  color="0">
-     </graphics>
-  </arc>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
 
 
+    <!-- Arc from parent to ready -->
+    <arc place="35" transition="35" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
 
-    <!-- Place Ready_Next_Node -->
-
-    <place id="31" identifier="ReadyTsub8" label="" initialMarking="0" eft="0" lft="inf">
-        <graphics color="0">
-           <position x="91" y="811.0"/>
-           <deltaLabel deltax="5.0" deltay="-20.0"/>
-        </graphics>
-        <scheduling gamma="0" omega="0"/>
-    </place>
-
-    <!-- Transition Exec_Next_Node -->
-    <transition id="32" identifier="ExecTsub8" label=""
-                eft="30" lft="35"
-                eft_param="30" lft_param="35"
-                speed="1" priority="0" cost="0" unctrl="0" obs="1"
-                guard="">
-       <graphics color="0">
-          <position x="91" y="901.0"/>
-          <deltaLabel deltax="9.0" deltay="-32.0"/>
-          <deltaGuard deltax="15.0" deltay="10.0"/>
-          <deltaUpdate deltax="17.0" deltay="26.0"/>
-       </graphics>
-       <update><![CDATA[
-       ]]></update>
-    </transition>
-
-
-
-    <!-- Place Ready_Next_Node -->
-
-    <place id="33" identifier="ReadyTsub9" label="" initialMarking="0" eft="0" lft="inf">
-        <graphics color="0">
-           <position x="241" y="811.0"/>
-           <deltaLabel deltax="5.0" deltay="-20.0"/>
-        </graphics>
-        <scheduling gamma="0" omega="0"/>
-    </place>
-
-    <!-- Transition Exec_Next_Node -->
-    <transition id="34" identifier="ExecTsub9" label=""
-                eft="40" lft="45"
-                eft_param="40" lft_param="45"
-                speed="1" priority="0" cost="0" unctrl="0" obs="1"
-                guard="">
-       <graphics color="0">
-          <position x="241" y="901.0"/>
-          <deltaLabel deltax="9.0" deltay="-32.0"/>
-          <deltaGuard deltax="15.0" deltay="10.0"/>
-          <deltaUpdate deltax="17.0" deltay="26.0"/>
-       </graphics>
-       <update><![CDATA[
-       ]]></update>
-    </transition>
-
-
-
-    <!-- Place Ready_SRC_Node -->
-    <place id="35" identifier="ReadyTsub7" label="" initialMarking="0" eft="0" lft="inf">
-        <graphics color="0">
-           <position x="391" y="631.0"/>
-           <deltaLabel deltax="5.0" deltay="-20.0"/>
-        </graphics>
-        <scheduling gamma="0" omega="0"/>
-    </place>
-
-    <!-- Transition Exec_SRC_Node -->
-    <transition id="36" identifier="ExecTsub7" label=""
-                eft="20" lft="25"
-                eft_param="20" lft_param="25"
-                speed="1" priority="0" cost="0" unctrl="0" obs="1"
-                guard="is_selected_task(List_Core, 7)">
-       <graphics color="0">
-          <position x="391" y="721.0"/>
-          <deltaLabel deltax="9.0" deltay="-32.0"/>
-          <deltaGuard deltax="15.0" deltay="10.0"/>
-          <deltaUpdate deltax="17.0" deltay="26.0"/>
-       </graphics>
-       <update><![CDATA[
-       ]]></update>
-    </transition>
-
-  <!-- Arc Task -->
-
-  <arc place="35" transition="28" type="TransitionPlace" weight="1" tokenColor="-1">
-     <nail xnail="0" ynail="0"/>
-     <graphics  color="0">
-     </graphics>
-  </arc>
-
+  <!-- Arc from ready to exec -->
   <arc place="35" transition="36" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
-     <graphics  color="0">
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="37" identifier="ReadyTsub8" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="91" y="811.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="38" identifier="ExecTsub8" label=""
+              eft="30" lft="35"
+              eft_param="30" lft_param="35"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="91" y="901.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
      </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="37" transition="36" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="37" transition="38" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="39" identifier="ReadyTsub10" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="91" y="991.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="40" identifier="ExecTsub10" label=""
+              eft="50" lft="55"
+              eft_param="50" lft_param="55"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="91" y="1081.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="39" transition="38" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="39" transition="40" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="41" identifier="ReadyTsub14" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="91" y="1171.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="42" identifier="ExecTsub14" label=""
+              eft="90" lft="95"
+              eft_param="90" lft_param="95"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="91" y="1261.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="41" transition="40" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="41" transition="42" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+        <!-- Place Wait from pred 14 -->
+        <place id="45" identifier="Wait_from_14_to_16" label="" initialMarking="0" eft="0" lft="inf">
+            <graphics color="0">
+               <position x="91" y="1381.0"/>
+               <deltaLabel deltax="5.0" deltay="-20.0"/>
+            </graphics>
+            <scheduling gamma="0" omega="0"/>
+        </place>
+
+
+        <!-- Place Wait from pred 15 -->
+        <place id="46" identifier="Wait_from_15_to_16" label="" initialMarking="0" eft="0" lft="inf">
+            <graphics color="0">
+               <position x="271" y="1381.0"/>
+               <deltaLabel deltax="5.0" deltay="-20.0"/>
+            </graphics>
+            <scheduling gamma="0" omega="0"/>
+        </place>
+
+
+
+
+      <!-- Transition StartTsub -->
+      <transition id="47" identifier="StartTsub16" label=""
+                  eft="0" lft="inf" eft_param="0" lft_param="inf"
+                  speed="1" priority="0" cost="0" unctrl="0" obs="1" guard="">
+         <graphics color="0">
+            <position x="181" y="1381.0"/>
+            <deltaLabel deltax="9.0" deltay="-32.0"/>
+            <deltaGuard deltax="15.0" deltay="10.0"/>
+            <deltaUpdate deltax="17.0" deltay="26.0"/>
+         </graphics>
+         <update><![CDATA[]]></update>
+      </transition>
+
+      <!-- Arc Wait → Start -->
+        <arc place="45" transition="47" type="PlaceTransition" weight="1" tokenColor="-1">
+           <nail xnail="0" ynail="0"/>
+           <graphics  color="0"/>
+        </arc>
+        <arc place="46" transition="47" type="PlaceTransition" weight="1" tokenColor="-1">
+           <nail xnail="0" ynail="0"/>
+           <graphics  color="0"/>
+        </arc>
+
+  <!-- Place -->
+  <place id="43" identifier="ReadyTsub16" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="181" y="1501.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="44" identifier="ExecTsub16" label=""
+              eft="20" lft="25"
+              eft_param="20" lft_param="25"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="181" y="1621.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+    <!-- Arc Exec to Wait -->
+    <arc place="45" transition="42" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+    <!-- Arc Exec to Wait -->
+    <arc place="46" transition="43" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+    <!-- Arc start to ready -->
+    <arc place="43" transition="47" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="43" transition="44" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
   </arc>
 
 
 
-    <!-- Place Ready_Next_Node -->
 
-    <place id="37" identifier="ReadyTsub12" label="" initialMarking="0" eft="0" lft="inf">
-        <graphics color="0">
-           <position x="391" y="811.0"/>
-           <deltaLabel deltax="5.0" deltay="-20.0"/>
-        </graphics>
-        <scheduling gamma="0" omega="0"/>
-    </place>
+    
 
-    <!-- Transition Exec_Next_Node -->
-    <transition id="38" identifier="ExecTsub12" label=""
-                eft="30" lft="35"
-                eft_param="30" lft_param="35"
-                speed="1" priority="0" cost="0" unctrl="0" obs="1"
-                guard="">
-       <graphics color="0">
-          <position x="391" y="901.0"/>
-          <deltaLabel deltax="9.0" deltay="-32.0"/>
-          <deltaGuard deltax="15.0" deltay="10.0"/>
-          <deltaUpdate deltax="17.0" deltay="26.0"/>
-       </graphics>
-       <update><![CDATA[
-       ]]></update>
-    </transition>
+
+
+
+  <!-- Place -->
+  <place id="48" identifier="ReadyTsub15" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="391" y="1171.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="49" identifier="ExecTsub15" label=""
+              eft="60" lft="65"
+              eft_param="60" lft_param="65"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="391" y="1261.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+    <!-- Arc Exec to Wait -->
+    <arc place="46" transition="49" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+    <!-- Arc from parent to ready -->
+    <arc place="48" transition="40" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="48" transition="49" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="50" identifier="ReadyTsub9" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="991" y="811.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="51" identifier="ExecTsub9" label=""
+              eft="40" lft="45"
+              eft_param="40" lft_param="45"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="991" y="901.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="50" transition="36" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="50" transition="51" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="52" identifier="ReadyTsub11" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="991" y="991.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="53" identifier="ExecTsub11" label=""
+              eft="10" lft="15"
+              eft_param="10" lft_param="15"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="991" y="1081.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="52" transition="51" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="52" transition="53" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+
+
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="54" identifier="ReadyTsub7" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="1441" y="631.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="55" identifier="ExecTsub7" label=""
+              eft="20" lft="25"
+              eft_param="20" lft_param="25"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="1441" y="721.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="54" transition="35" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="54" transition="55" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="56" identifier="ReadyTsub12" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="1441" y="811.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="57" identifier="ExecTsub12" label=""
+              eft="30" lft="35"
+              eft_param="30" lft_param="35"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="1441" y="901.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="56" transition="55" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="56" transition="57" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="58" identifier="ReadyTsub13" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="1441" y="991.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="59" identifier="ExecTsub13" label=""
+              eft="70" lft="75"
+              eft_param="70" lft_param="75"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="1441" y="1081.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="58" transition="57" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="58" transition="59" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+
+
+
+
+  <!-- Transition Period -->
+  <transition id="60" identifier="StartTDAG1" label=""
+              eft="100" lft="100"
+              eft_param="100" lft_param="100"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1" guard="">
+     <graphics color="0">
+        <position x="1891" y="541.0"/>
+        <deltaLabel deltax="4.0" deltay="-30.0"/>
+        <deltaGuard deltax="20" deltay="-20"/>
+        <deltaUpdate deltax="38.0" deltay="11.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="60" identifier="ReadyTsub20" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="1891" y="631.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="61" identifier="ExecTsub20" label=""
+              eft="10" lft="15"
+              eft_param="10" lft_param="15"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="1891" y="721.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="60" transition="60" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="60" transition="61" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="62" identifier="ReadyTsub19" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="1891" y="811.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="63" identifier="ExecTsub19" label=""
+              eft="40" lft="45"
+              eft_param="40" lft_param="45"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="1891" y="901.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="62" transition="61" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="62" transition="63" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+        <!-- Place Wait from pred 19 -->
+        <place id="66" identifier="Wait_from_19_to_21" label="" initialMarking="0" eft="0" lft="inf">
+            <graphics color="0">
+               <position x="1891" y="1021.0"/>
+               <deltaLabel deltax="5.0" deltay="-20.0"/>
+            </graphics>
+            <scheduling gamma="0" omega="0"/>
+        </place>
+
+
+        <!-- Place Wait from pred 18 -->
+        <place id="67" identifier="Wait_from_18_to_21" label="" initialMarking="0" eft="0" lft="inf">
+            <graphics color="0">
+               <position x="2071" y="1021.0"/>
+               <deltaLabel deltax="5.0" deltay="-20.0"/>
+            </graphics>
+            <scheduling gamma="0" omega="0"/>
+        </place>
+
+
+
+
+      <!-- Transition StartTsub -->
+      <transition id="68" identifier="StartTsub21" label=""
+                  eft="0" lft="inf" eft_param="0" lft_param="inf"
+                  speed="1" priority="0" cost="0" unctrl="0" obs="1" guard="">
+         <graphics color="0">
+            <position x="1981" y="1021.0"/>
+            <deltaLabel deltax="9.0" deltay="-32.0"/>
+            <deltaGuard deltax="15.0" deltay="10.0"/>
+            <deltaUpdate deltax="17.0" deltay="26.0"/>
+         </graphics>
+         <update><![CDATA[]]></update>
+      </transition>
+
+      <!-- Arc Wait → Start -->
+        <arc place="66" transition="68" type="PlaceTransition" weight="1" tokenColor="-1">
+           <nail xnail="0" ynail="0"/>
+           <graphics  color="0"/>
+        </arc>
+        <arc place="67" transition="68" type="PlaceTransition" weight="1" tokenColor="-1">
+           <nail xnail="0" ynail="0"/>
+           <graphics  color="0"/>
+        </arc>
+
+  <!-- Place -->
+  <place id="64" identifier="ReadyTsub21" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="1981" y="1141.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="65" identifier="ExecTsub21" label=""
+              eft="40" lft="45"
+              eft_param="40" lft_param="45"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="1981" y="1261.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+    <!-- Arc Exec to Wait -->
+    <arc place="45" transition="42" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+    <!-- Arc Exec to Wait -->
+    <arc place="46" transition="43" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+    <!-- Arc Exec to Wait -->
+    <arc place="66" transition="63" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+    <!-- Arc Exec to Wait -->
+    <arc place="67" transition="64" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+    <!-- Arc start to ready -->
+    <arc place="64" transition="68" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="64" transition="65" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+
+
+
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="69" identifier="ReadyTsub17" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="2341" y="631.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="70" identifier="ExecTsub17" label=""
+              eft="20" lft="25"
+              eft_param="20" lft_param="25"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="2341" y="721.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="69" transition="60" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="69" transition="70" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+  <!-- Place -->
+  <place id="71" identifier="ReadyTsub18" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="2341" y="811.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition -->
+  <transition id="72" identifier="ExecTsub18" label=""
+              eft="30" lft="35"
+              eft_param="30" lft_param="35"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="">
+     <graphics color="0">
+        <position x="2341" y="901.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[
+     ]]></update>
+  </transition>
+
+    <!-- Arc Exec to Wait -->
+    <arc place="67" transition="72" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+    <!-- Arc from parent to ready -->
+    <arc place="71" transition="70" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="71" transition="72" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
 
 
 

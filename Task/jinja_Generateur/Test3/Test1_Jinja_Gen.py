@@ -76,7 +76,7 @@ for entry in src:
     other_nodes = [st for st in task["subtasks"] if st not in sources]
     entry["other_nodes"] = other_nodes
 
-template = env.get_template('Test2_Template.xml.j2')
+template = env.get_template('Test5_Template.xml.j2')
 output = template.render(
     path=data["path"],
     cores=data["cores"],

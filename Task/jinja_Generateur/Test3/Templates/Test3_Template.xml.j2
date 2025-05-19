@@ -249,12 +249,16 @@ need_sched--;]]></update>
 
 <!-- DAG_Tasks -->
 
-{% set base_id = count_src_node * 3 + 4 %}
+{% set ns = namespace( base_id = count_src_node * 3 + 4 ) %}
+{% set ns2 = namespace( x_start = 91 ) %}
 {% for dag in src %}
-  {% set x_start = 91 %}
   {% set y = last_y %}
-  {% set x = x_start %}
-  {% set period_id = base_id + loop.index0  %}
+  {% if loop.index0 == 0 %}
+  {% set period_id = ns.base_id %}
+  {% else %}
+  {% set period_id = ns.base_id +1 %}
+  {% endif %}
+  {% set x = ns2.x_start %}
 
   <!-- Transition Period -->
   <transition id="{{ period_id }}" identifier="StartTDAG{{ loop.index0 }}" label=""
@@ -273,14 +277,12 @@ need_sched--;]]></update>
 
   {% for src in dag.src_nodes %}
   {% if loop.index0 == 0 %}
-  {% set next_src_id = 0 %}
-  {% set x = x + 150 * loop.index0 %}
+  {% set ready_id = period_id + 1 %}
   {% else %}
-  {% set next_src_id = 2 * dag.src_nodes[loop.index0 - 1].successors|length * loop.index0 %}
-  {% set x = x + 150 * dag.src_nodes[loop.index0 - 1].successors|length %}
+  {% set ready_id = ns.base_id + 1 %}
   {% endif %}
-  {% set ready_id = period_id + 1 + 2 * loop.index0 + next_src_id %}
   {% set exec_id = ready_id + 1 %}
+  {% set x = ns2.x_start %}
 
     <!-- Place Ready_SRC_Node -->
     <place id="{{ ready_id }}" identifier="ReadyTsub{{ src.id }}" label="" initialMarking="0" eft="0" lft="inf">
@@ -322,9 +324,13 @@ need_sched--;]]></update>
   </arc>
 
   {% for next in dag.other_nodes if next.id in src.successors %}
+  {% if loop.index0 == 0 %}
   {% set ready_next_id = exec_id + 1 + 2 * loop.index0 %}
+  {% else %}
+  {% set ready_next_id = ns.base_id + 1 %}
+  {% endif %}
+  {% set x = ns2.x_start %}
   {% set exec_next_id = ready_next_id + 1 %}
-  {% set x = x + 150 * loop.index0 %}
   {% set y = y + 180 %}
 
 
@@ -371,7 +377,9 @@ need_sched--;]]></update>
   {% for other in dag.other_nodes if other.id in next.successors %}
   {% set ready_other_id = exec_next_id + 1 + 2 * loop.index0 %}
   {% set exec_other_id = ready_other_id + 1 %}
+  {% set ns.base_id = exec_other_id %}
   {% set x = x + 150 * loop.index0 %}
+  {% set ns2.x_start = x + 150 %}
   {% set y = y + 180 %}
 
       <!-- Place Ready_Other_Node -->
@@ -399,6 +407,20 @@ need_sched--;]]></update>
        <update><![CDATA[
        ]]></update>
     </transition>
+
+    <!-- Arc Other_Node -->
+
+  <arc place="{{ ready_other_id }}" transition="{{ exec_next_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <arc place="{{ ready_other_id }}" transition="{{ exec_other_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
 
 
   {% endfor %}

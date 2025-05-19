@@ -43,16 +43,29 @@
       ]
     },
     {
-      "period": 300,
+      "period": 500,
       "subtasks": [
         { "id": 6, "priority": 1, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [], "successors": [8, 9] },
         { "id": 7, "priority": 7, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 20, "WCET": 25 }, "predecessors": [], "successors": [12] },
         { "id": 8, "priority": -1, "core": "GPU", "state": "SUSPENDED", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [6], "successors": [10] },
         { "id": 9, "priority": 3, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 40, "WCET": 45 }, "predecessors": [6], "successors": [11] },
-        { "id": 10, "priority": 5, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 50, "WCET": 55 }, "predecessors": [8], "successors": [11] },
-        { "id": 11, "priority": -1, "core": "GPU", "state": "SUSPENDED", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [10, 9], "successors": [] },
+        { "id": 10, "priority": 5, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 50, "WCET": 55 }, "predecessors": [8], "successors": [14, 15] },
+        { "id": 11, "priority": -1, "core": "GPU", "state": "SUSPENDED", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [9], "successors": [] },
         { "id": 12, "priority": 9, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [7], "successors": [13] },
-        { "id": 13, "priority": -1, "core": "GPU", "state": "SUSPENDED", "execution_time": { "BCET": 70, "WCET": 75 }, "predecessors": [12], "successors": [] }
+        { "id": 13, "priority": -1, "core": "GPU", "state": "SUSPENDED", "execution_time": { "BCET": 70, "WCET": 75 }, "predecessors": [12], "successors": [] },
+        { "id": 14, "priority": 8, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 90, "WCET": 95 }, "predecessors": [10], "successors": [16] },
+        { "id": 15, "priority": -1, "core": "GPU", "state": "SUSPENDED", "execution_time": { "BCET": 60, "WCET": 65 }, "predecessors": [10], "successors": [16] },
+        { "id": 16, "priority": 2, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 20, "WCET": 25 }, "predecessors": [14, 15], "successors": [] }
+      ]
+    },
+    {
+      "period": 100,
+      "subtasks": [
+        { "id": 20, "priority": 1, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [], "successors": [19] },
+        { "id": 17, "priority": 7, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 20, "WCET": 25 }, "predecessors": [], "successors": [18] },
+        { "id": 18, "priority": -1, "core": "GPU", "state": "SUSPENDED", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [17], "successors": [21] },
+        { "id": 19, "priority": 3, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 40, "WCET": 45 }, "predecessors": [20], "successors": [21] },
+        { "id": 21, "priority": 3, "core": "CPU", "state": "SUSPENDED", "execution_time": { "BCET": 40, "WCET": 45 }, "predecessors": [19, 18], "successors": [] }
       ]
     }
   ],
