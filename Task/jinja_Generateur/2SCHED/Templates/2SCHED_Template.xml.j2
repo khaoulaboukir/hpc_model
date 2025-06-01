@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<romeo version="Romeo v3.10.2">
+<TPN name="{{ path }}">
+
+
+<!-- Scheduler -->
+
+{% set ns = namespace(x_start_sched = 301, y_start_sched = 61, id = 1) %}
+
+{% for (core_type, policy), count in scheduler_models.items() %}
+{% set x = ns.x_start_sched + loop.index0 * 670 %}
+{% set y = ns.y_start_sched %}
+
+
+<place id="{{ ns.id }}" identifier="{{ core_type }}" label="" initialMarking="{{ count }}" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ x }}" y="{{ y }}"/>
+         <deltaLabel deltax="-2.0" deltay="-26.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  {% set core_place = ns.id %}
+  {% set ns.id = ns.id + 1 %}
+
+
+  <place id="{{ ns.id }}" identifier="Exec_{{ core_type }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ x }}" y="{{ y + 90 }}"/>
+         <deltaLabel deltax="-1.0" deltay="-25.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  {% set exec_place = ns.id %}
+  {% set ns.id = ns.id + 1 %}
+
+
+  <transition id="{{ ns.id }}" identifier="SCHED_{{ policy }}" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="need_sched[{{ policy }}] #greater 0">
+     <graphics color="0">
+        <position x="{{ x - 210 }}" y="{{ y + 90 }}"/>
+        <deltaLabel deltax="-18.0" deltay="-22.0"/>
+        <deltaGuard deltax="13.0" deltay="10.0"/>
+        <deltaUpdate deltax="75.0" deltay="23.0"/>
+        <deltaSpeed deltax="-20" deltay="5"/>
+        <deltaCost deltax="-20" deltay="5"/>
+     </graphics>
+     <update><![CDATA[need_sched[{{ policy }}]--;
+     {% if policy == "FP" %}
+scheduler_fp(Ready_Task_{{ core_type }}, List_{{ core_type }});
+    {% elif policy == "FIFO" %}
+scheduler_fifo(Ready_Task_{{ core_type }}, List_{{ core_type }});
+    {% else %}
+    // Politique inconnue
+{% endif %}]]></update>
+  </transition>
+
+  {% set sched_transition = ns.id %}
+  {% set ns.id = ns.id + 1 %}
+
+  <transition id="{{ ns.id }}" identifier="Free_{{ core_type }}" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="no_need_sched[{{ policy }}] #greater 0">
+     <graphics color="0">
+        <position x="{{ x + 210 }}" y="{{ y + 90 }}"/>
+        <deltaLabel deltax="-21.0" deltay="-28.0"/>
+        <deltaGuard deltax="21.0" deltay="11.0"/>
+        <deltaUpdate deltax="20.0" deltay="32.0"/>
+        <deltaSpeed deltax="-20" deltay="5"/>
+        <deltaCost deltax="-20" deltay="5"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[{{ policy }}]--;]]></update>
+  </transition>
+
+  {% set free_core = ns.id %}
+  {% set ns.id = ns.id + 1 %}
+
+  <arc place="{{ core_place }}" transition="{{ sched_transition }}" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition="">
+    <nail xnail="0" ynail="0"/>
+    <graphics  color="0">
+     </graphics>
+  </arc>
+
+
+  <arc place="{{ exec_place }}" transition="{{ sched_transition }}" type="TransitionPlace" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <arc place="{{ exec_place }}" transition="{{ free_core }}" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition="">
+    <nail xnail="0" ynail="0"/>
+    <graphics  color="0">
+     </graphics>
+  </arc>
+
+
+  <arc place="{{ core_place }}" transition="{{ free_core }}" type="TransitionPlace" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+{% endfor %}
+
+
+<!-- Simples_Tasks -->
+
+{% set x_start = [] %}
+{% set base = 91 %}
+{% for i in range(9) %}
+    {% set _ = x_start.append(base + i * 240) %}
+{% endfor %}
+{% set base_id = core_count * 4 + 1 %}
+{% for task in simple_tasks %}
+  {% set task_index = loop.index0 %}
+  {% set row = task_index // 9 %}
+  {% set col = task_index % 9 %}
+  {% set x = x_start[col] %}
+  {% set y = 271.0 + row * 300 %}
+  {% set offset = task_index * 3 %}
+  {% set start_id = base_id + offset %}
+  {% set ready_id = start_id + 1 %}
+  {% set exec_id = start_id + 2 %}
+
+  <!-- Transition Period -->
+
+  <transition id="{{ start_id }}" identifier="StartT{{ task.subtasks[0].id }}" label=""
+              eft="{{ task.period }}" lft="{{ task.period }}"
+              eft_param="{{ task.period }}" lft_param="{{ task.period }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1" guard="">
+     <graphics color="0">
+        <position x="{{ x }}" y="{{ y }}"/>
+        <deltaLabel deltax="4.0" deltay="-30.0"/>
+        <deltaGuard deltax="20" deltay="-20"/>
+        <deltaUpdate deltax="38.0" deltay="11.0"/>
+     </graphics>
+     <update><![CDATA[need_sched[{{ task.subtasks[0].P_Ord }}]++;
+insert_{{ task.subtasks[0].core }}_task(List_Task,
+Ready_Task_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id }});]]></update>
+  </transition>
+
+    <!-- Place Ready -->
+
+  <place id="{{ ready_id }}" identifier="ReadyT{{ task.subtasks[0].id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ x }}" y="{{ y + 90 }}"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition Execution -->
+
+  <transition id="{{ exec_id }}" identifier="ExecT{{task_index}}" label=""
+              eft="{{ task.subtasks[0].execution_time.BCET }}" lft="{{ task.subtasks[0].execution_time.WCET }}"
+              eft_param="{{ task.subtasks[0].execution_time.BCET }}" lft_param="{{ task.subtasks[0].execution_time.WCET }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="is_selected_task_{{ task.subtasks[0].core }}(List_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id   }})">
+     <graphics color="0">
+        <position x="{{ x }}" y="{{ y + 180 }}"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[{{ task.subtasks[0].P_Ord }}]++;
+     {% if task.subtasks[0].core == "CPU" %}
+no_need_scheduler_fp(Ready_Task_{{ task.subtasks[0].core }},
+List_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id }});
+    {% elif task.subtasks[0].core == "GPU" %}
+no_need_scheduler_fifo(Ready_Task_{{ task.subtasks[0].core }},
+List_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id }});
+    {% else %}
+// Core inconnue
+    {% endif %}
+     ]]></update>
+  </transition>
+
+  <!-- Arc Task -->
+
+  <arc place="{{ ready_id }}" transition="{{ start_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <arc place="{{ ready_id }}" transition="{{ exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+{% endfor %}
+
+{% set last_task_index = simple_tasks|length - 1 %}
+{% set last_row = last_task_index // 10 + 1 %}
+{% set last_y = 271.0 + last_row * 300 %}
+
+<!-- DAG_Tasks -->
+
+{% set wait_table = namespace(value=[]) %}
+{% set already_inserted = namespace(value=[]) %}
+{% macro draw_node(node, x, y, parent_transition_id, base_id_ns, x_ns, dag, drawn) %}
+
+  {% if node.id in drawn.nodes %}
+
+  {% else %}
+
+  {% set _ = drawn.nodes.update({ node.id: true }) %}
+
+  {% set ready_id = base_id_ns.base_id + 1 %}
+  {% set exec_id = ready_id + 1 %}
+  {% set base_id_ns.base_id = exec_id %}
+  {% if node.type == "Cond" %}
+  {% set ready_id = base_id_ns.base_id + 1 %}
+  {% set exec_id = ready_id + 1 %}
+  {% set cond_place_id = exec_id + 1 %}
+  {% set base_id_ns.base_id = cond_place_id %}
+
+  <!-- Place Ready -->
+  <place id="{{ ready_id }}" identifier="ReadyTsub{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="{{ x }}" y="{{ y + 90 }}"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition Exec -->
+  <transition id="{{ exec_id }}" identifier="ExecTsub{{ node.id }}" label=""
+              eft="{{ node.execution_time.BCET }}" lft="{{ node.execution_time.WCET }}"
+              eft_param="{{ node.execution_time.BCET }}" lft_param="{{ node.execution_time.WCET }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="is_selected_task_{{ node.core }}(List_{{ node.core }}, {{ node.id }})">
+    <graphics color="0">
+      <position x="{{ x }}" y="{{ y + 180 }}"/>
+      <deltaLabel deltax="9.0" deltay="-32.0"/>
+      <deltaGuard deltax="15.0" deltay="10.0"/>
+      <deltaUpdate deltax="17.0" deltay="26.0"/>
+    </graphics>
+    <update><![CDATA[no_need_sched[{{ node.P_Ord }}]++;
+{% if node.P_Ord == "FP" %}
+no_need_scheduler_fp(Ready_Task_{{ node.core }}, List_{{ node.core }}, {{ node.id }});
+{% elif node.P_Ord == "FIFO" %}
+no_need_scheduler_fifo(Ready_Task_{{ node.core }}, List_{{ node.core }}, {{ node.id }});
+{% else %}
+// Politique inconnue
+{% endif %}
+{% for succ in dag.other_nodes if succ.id in node.successors %}
+  {% if [succ.id] not in already_inserted.value %}
+    {% set _ = already_inserted.value.append([succ.id]) %}
+need_sched[{{ succ.P_Ord }}]++;
+insert_{{ succ.core }}_task(List_Task,
+Ready_Task_{{ succ.core }}, {{ succ.id }});
+  {% endif %}
+{% endfor %}]]></update>
+  </transition>
+
+  <!-- Place Condition -->
+  <place id="{{ cond_place_id }}" identifier="ConditionTsub{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="{{ x }}" y="{{ y + 360 }}"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  {% if parent_transition_id is not none %}
+    <!-- Arc parent → Ready -->
+    <arc place="{{ ready_id }}" transition="{{ parent_transition_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+  {% endif %}
+
+  <!-- Arc Ready → Exec -->
+  <arc place="{{ ready_id }}" transition="{{ exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+  <!-- Arc Exec → Condition -->
+  <arc place="{{ cond_place_id }}" transition="{{ exec_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+  {% for succ in dag.other_nodes if succ.id in node.successors %}
+    {% set succ_exec_id = base_id_ns.base_id + 1 %}
+    {% set base_id_ns.base_id = succ_exec_id %}
+    <transition id="{{ succ_exec_id }}" identifier="ExecTsub{{ succ.id }}" label=""
+              eft="{{ node.execution_time.BCET }}" lft="{{ node.execution_time.WCET }}"
+              eft_param="{{ node.execution_time.BCET }}" lft_param="{{ node.execution_time.WCET }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="is_selected_task_{{ succ.core }}(List_{{ succ.core }}, {{ succ.id }})">
+     <graphics color="0">
+        <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 450 }}"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[{{ succ.P_Ord }}]++;
+    {% if succ.P_Ord == "FP" %}
+no_need_scheduler_fp(Ready_Task_{{ succ.core }},
+List_{{ succ.core }}, {{ succ.id }});
+    {% elif succ.P_Ord == "FIFO" %}
+no_need_scheduler_fifo(Ready_Task_{{ succ.core }},
+List_{{ succ.core }}, {{ succ.id }});
+{% else %}
+    // Politique inconnue
+{% endif %}
+{% for succ2 in dag.other_nodes if succ2.id in succ.successors %}
+  {% if [succ2.id] not in already_inserted.value %}
+    {% set _ = already_inserted.value.append([succ2.id]) %}
+need_sched[{{ succ2.P_Ord }}]++;
+insert_{{ succ2.core }}_task(List_Task,
+Ready_Task_{{ succ2.core }}, {{ succ2.id }});
+  {% endif %}
+{% endfor %}]]></update>
+  </transition>
+
+    <!-- Arc Cond → Successor Exec -->
+    <arc place="{{ cond_place_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+    {% for succ2 in dag.other_nodes if succ2.id in succ.successors %}
+    {{ draw_node(succ2, x_ns.x_start, y + 540, succ_exec_id, base_id_ns, x_ns, dag, drawn) }}
+    {% set x_ns.x_start = x_ns.x_start + 150 %}
+  {% endfor %}
+{% endfor %}
+
+  {% else %}
+
+  {% if node.predecessors | length > 1 %}
+  {% set wait_ids = [] %}
+
+  {% for pred_id in node.predecessors %}
+        {% set wait_id = base_id_ns.base_id + 1 %}
+        {% set base_id_ns.base_id = wait_id %}
+        {% set _ = wait_ids.append(wait_id) %}
+        <!-- Place Wait from pred {{ pred_id }} -->
+        <place id="{{ wait_id }}" identifier="Wait_from_{{ pred_id }}_to_{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+            <graphics color="0">
+               <position x="{{ x + 180 * loop.index0 }}" y="{{ y + 120 }}"/>
+               <deltaLabel deltax="5.0" deltay="-20.0"/>
+            </graphics>
+            <scheduling gamma="0" omega="0"/>
+        </place>
+
+        {% set _ = wait_table.value.append([node.id, pred_id, wait_id]) %}
+
+      {% endfor %}
+
+      {% set start_id = base_id_ns.base_id + 1 %}
+      {% set base_id_ns.base_id = start_id %}
+
+      <!-- Transition StartTsub -->
+      <transition id="{{ start_id }}" identifier="StartTsub{{ node.id }}" label=""
+            eft="0" lft="0" lft_param="0"
+            speed="1" priority="30" cost="0" unctrl="0" obs="1" guard="">
+         <graphics color="0">
+            <position x="{{ x + 90 }}" y="{{ y + 120 }}"/>
+            <deltaLabel deltax="9.0" deltay="-32.0"/>
+            <deltaGuard deltax="15.0" deltay="10.0"/>
+            <deltaUpdate deltax="17.0" deltay="26.0"/>
+         </graphics>
+         <update><![CDATA[]]></update>
+      </transition>
+
+      <!-- Arc Wait → Start -->
+      {% for wait_id in wait_ids %}
+        <arc place="{{ wait_id }}" transition="{{ start_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+           <nail xnail="0" ynail="0"/>
+           <graphics  color="0"/>
+        </arc>
+      {% endfor %}
+
+  <!-- Place -->
+  <place id="{{ ready_id }}" identifier="ReadyTsub{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ x + 90 }}" y="{{ y + 240 }}"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition Execution -->
+  <transition id="{{ exec_id }}" identifier="ExecTsub{{ node.id }}" label=""
+              eft="{{ node.execution_time.BCET }}" lft="{{ node.execution_time.WCET }}"
+              eft_param="{{ node.execution_time.BCET }}" lft_param="{{ node.execution_time.WCET }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="is_selected_task_{{ node.core }}(List_{{ node.core }}, {{ node.id }})">
+     <graphics color="0">
+        <position x="{{ x + 90 }}" y="{{ y + 360 }}"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[{{ node.P_Ord }}]++;
+    {% if node.P_Ord == "FP" %}
+no_need_scheduler_fp(Ready_Task_{{ node.core }},
+List_{{ node.core }}, {{ node.id }});
+    {% elif node.P_Ord == "FIFO" %}
+no_need_scheduler_fifo(Ready_Task_{{ node.core }},
+List_{{ node.core }}, {{ node.id }});
+{% else %}
+    // Politique inconnue
+{% endif %}
+{% for succ in dag.other_nodes if succ.id in node.successors %}
+  {% if [succ.id] not in already_inserted.value %}
+    {% set _ = already_inserted.value.append([succ.id]) %}
+need_sched[{{ succ.P_Ord }}]++;
+insert_{{ succ.core }}_task(List_Task,
+Ready_Task_{{ succ.core }}, {{ succ.id }});
+  {% endif %}
+{% endfor %}]]></update>
+  </transition>
+
+  {% for entry in wait_table.value %}
+    <!-- Arc Exec to Wait -->
+    <arc place="{{ entry[2] }}" transition="{{ entry[2] - 3 }}" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+  {% endfor %}
+
+    <!-- Arc start to ready -->
+    <arc place="{{ ready_id }}" transition="{{ start_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="{{ ready_id }}" transition="{{ exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+  {% set new_y = y + 270 %}
+  {% for succ in dag.other_nodes if succ.id in node.successors %}
+    {{ draw_node(succ, x_ns.x_start, new_y, exec_id, base_id_ns, x_ns, dag, drawn) }}
+    {% set x_ns.x_start = x_ns.x_start + 150 %}
+  {% endfor %}
+
+  {% else %}
+
+  <!-- Place -->
+  <place id="{{ ready_id }}" identifier="ReadyTsub{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ x }}" y="{{ y + 90 }}"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition Execution -->
+  <transition id="{{ exec_id }}" identifier="ExecTsub{{ node.id }}" label=""
+              eft="{{ node.execution_time.BCET }}" lft="{{ node.execution_time.WCET }}"
+              eft_param="{{ node.execution_time.BCET }}" lft_param="{{ node.execution_time.WCET }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="is_selected_task_{{ node.core }}(List_{{ node.core }}, {{ node.id }})">
+     <graphics color="0">
+        <position x="{{ x }}" y="{{ y + 180 }}"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[{{ node.P_Ord }}]++;
+    {% if node.P_Ord == "FP" %}
+no_need_scheduler_fp(Ready_Task_{{ node.core }},
+List_{{ node.core }}, {{ node.id }});
+    {% elif node.P_Ord == "FIFO" %}
+no_need_scheduler_fifo(Ready_Task_{{ node.core }},
+List_{{ node.core }}, {{ node.id }});
+{% else %}
+    // Politique inconnue
+{% endif %}
+{% for succ in dag.other_nodes if succ.id in node.successors %}
+  {% if [succ.id] not in already_inserted.value %}
+    {% set _ = already_inserted.value.append([succ.id]) %}
+need_sched[{{ succ.P_Ord }}]++;
+insert_{{ succ.core }}_task(List_Task,
+Ready_Task_{{ succ.core }}, {{ succ.id }});
+  {% endif %}
+{% endfor %}]]></update>
+  </transition>
+
+  {% for entry in wait_table.value %}
+  {% if entry[1] == node.id %}
+    <!-- Arc Exec to Wait -->
+    <arc place="{{ entry[2] }}" transition="{{ exec_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+  {% endif %}
+  {% endfor %}
+
+  {% if parent_transition_id is not none %}
+    <!-- Arc from parent to ready -->
+    <arc place="{{ ready_id }}" transition="{{ parent_transition_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+  {% endif %}
+
+  <!-- Arc from ready to exec -->
+  <arc place="{{ ready_id }}" transition="{{ exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+  {% set new_y = y + 270 %}
+  {% for succ in dag.other_nodes if succ.id in node.successors %}
+    {{ draw_node(succ, x_ns.x_start, new_y, exec_id, base_id_ns, x_ns, dag, drawn) }}
+    {% set x_ns.x_start = x_ns.x_start + 150 %}
+  {% endfor %}
+  {% endif %}
+  {% endif %}
+  {% endif %}
+{% endmacro %}
+
+
+{% set ns = namespace(base_id = count_src_node * 3 + 4) %}
+{% set ns2 = namespace(x_start = 91) %}
+{% set drawn = namespace(nodes = {}) %}
+
+{% for dag in src %}
+  {% set y = last_y + 30 %}
+  {% set period_id = ns.base_id + 1 %}
+  {% set x = ns2.x_start %}
+
+  <!-- Transition Period -->
+  <transition id="{{ period_id }}" identifier="StartTDAG{{ loop.index0 }}" label=""
+              eft="{{ dag.task.period }}" lft="{{ dag.task.period }}"
+              eft_param="{{ dag.task.period }}" lft_param="{{ dag.task.period }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1" guard="">
+     <graphics color="0">
+        <position x="{{ x }}" y="{{ y }}"/>
+        <deltaLabel deltax="4.0" deltay="-30.0"/>
+        <deltaGuard deltax="20" deltay="-20"/>
+        <deltaUpdate deltax="38.0" deltay="11.0"/>
+     </graphics>
+     <update><![CDATA[{% for src in dag.src_nodes %}
+need_sched[{{ src.P_Ord }}]++;
+insert_{{ src.core }}_task(List_Task, Ready_Task_{{ src.core }}, {{ src.id }});
+{% endfor %}]]></update>
+  </transition>
+
+  {% for src in dag.src_nodes %}
+    {{ draw_node(src, ns2.x_start, y, period_id, ns, ns2, dag, drawn) }}
+    {% set ns2.x_start = ns2.x_start + 150 %}
+  {% endfor %}
+{% endfor %}
+
+
+  <timedCost></timedCost>
+
+  <nbTokenColor>0</nbTokenColor>
+
+  <declaration><![CDATA[// insert here your type definitions using C-like syntax
+
+// insert here your function definitions
+// using C-like syntax
+
+const int TASK_COUNT = {{ task_count }};
+// const int CORE_COUNT = {{ core_count }};
+const int CPU_COUNT = {{ cpu_count }};
+const int GPU_COUNT = {{ gpu_count }};
+{% for ord in P_Ord %}
+const int {{ ord }} = {{ loop.index0 }};
+{% endfor %}
+
+
+/* Task data structures */
+
+typedef enum{
+    SUSPENDED,
+    READY,
+    RUNNING
+}task_state;
+
+typedef enum{
+{% for core in core_types %}
+    {{ core }},
+{% endfor %}
+    UNKOWN
+}task_core;
+
+typedef struct{
+	task_state state;
+    task_core core;
+	int id;
+	int Priority;
+}task_descriptor;
+
+
+typedef enum{
+    ACTIVE,
+    IDLE
+}core_state;
+
+typedef enum{
+{% for core in core_types %}
+    {{ core }},
+{% endfor %}
+    UNKOWN
+}core_type;
+
+typedef struct{
+    core_state state;
+    core_type type;
+    int id;
+    int selected_task;
+}core_descriptor;
+
+
+/* Task lists + mainting functions*/
+
+task_descriptor tri_fp(task_descriptor [TASK_COUNT] Ready_Task_CPU) {
+    task_descriptor [TASK_COUNT] cpu_tasks;
+    int cpu_count = 0;
+
+    // Récupération des tâches CPU
+    for (int i = 0; i < TASK_COUNT; i++) {
+        if (Ready_Task_CPU[i].id != -1 && Ready_Task_CPU[i].core == CPU) {
+            cpu_tasks[cpu_count] = Ready_Task_CPU[i];
+            cpu_count++;
+        }
+    }
+
+    // Tri FP (priorité décroissante) sur les tâches CPU
+    for (int i = 0; i < cpu_count - 1; i++) {
+        for (int j = i + 1; j < cpu_count; j++) {
+            if (cpu_tasks[i].Priority < cpu_tasks[j].Priority) {
+                task_descriptor tmp = cpu_tasks[i];
+                cpu_tasks[i] = cpu_tasks[j];
+                cpu_tasks[j] = tmp;
+            }
+        }
+    }
+
+    // Réécriture dans Ready_Task[0] (CPU)
+    for (int i = 0; i < TASK_COUNT; i++) {
+        if (i < cpu_count) {
+            Ready_Task_CPU[i] = cpu_tasks[i];
+        } else {
+            Ready_Task_CPU[i].id = -1;
+            Ready_Task_CPU[i].Priority = -1;
+            Ready_Task_CPU[i].state = SUSPENDED;
+            Ready_Task_CPU[i].core = UNKOWN;
+        }
+    }
+    return Ready_Task_CPU;
+}
+
+task_descriptor list_fifo(task_descriptor [TASK_COUNT] Ready_Task_GPU) {
+    task_descriptor [TASK_COUNT] gpu_tasks;
+    int gpu_count = 0;
+
+    // Récupération des tâches GPU
+    for (int i = 0; i < TASK_COUNT; i++) {
+        if (Ready_Task_GPU[i].id != -1 && Ready_Task_GPU[i].core == GPU) {
+            gpu_tasks[gpu_count] = Ready_Task_GPU[i];
+            gpu_count++;
+        }
+    }
+
+    // Mettre d’abord les tâches READY
+
+    int ready_index = 0;
+    for (int i = 0; i < gpu_count; i++) {
+        if (gpu_tasks[i].state == READY) {
+            Ready_Task_GPU[ready_index] = gpu_tasks[i];
+            ready_index++;
+        }
+    }
+
+    // Réécriture dans Ready_Task[1] (GPU) : FIFO => pas de tri
+    for (int i = ready_index; i < TASK_COUNT; i++) {
+        Ready_Task_GPU[i].id = -1;
+        Ready_Task_GPU[i].Priority = -1;
+        Ready_Task_GPU[i].state = SUSPENDED;
+        Ready_Task_GPU[i].core = UNKOWN;
+    }
+    return Ready_Task_GPU;
+}
+
+void insert_CPU_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Ready_Task_CPU, int id) {
+    int i;
+    int index = -1;
+    int null_index = -1;
+    int already_exists = 0;
+
+    i = 0;
+    while (i < TASK_COUNT && index == -1) {
+        if (List_Task[i].id == id) {
+            index = i;
+        }
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < TASK_COUNT && already_exists == 0) {
+        if (Ready_Task_CPU[i].id == id) {
+            already_exists = 1;
+        }
+        i = i + 1;
+    }
+
+    if (already_exists == 0 && index != -1) {
+        i = 0;
+        while (i < TASK_COUNT && null_index == -1) {
+            if (Ready_Task_CPU[i].id == -1) {
+                null_index = i;
+            }
+            i = i + 1;
+        }
+
+        if (null_index != -1) {
+            i = null_index;
+            while (i < TASK_COUNT - 1) {
+                Ready_Task_CPU[i] = Ready_Task_CPU[i + 1];
+                i = i + 1;
+            }
+            Ready_Task_CPU[TASK_COUNT - 1].id = -1;
+        }
+
+        i = 0;
+        int position_insertion = -1;
+        while (i < TASK_COUNT && position_insertion == -1) {
+            if (Ready_Task_CPU[i].id == -1) {
+                position_insertion = i;
+            }
+            i = i + 1;
+        }
+        if (position_insertion != -1) {
+            Ready_Task_CPU[position_insertion] = List_Task[index];
+            Ready_Task_CPU[position_insertion].state = READY;
+        }
+    }
+}
+
+void insert_GPU_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Ready_Task_GPU, int id) {
+    int i;
+    int index = -1;
+    int null_index = -1;
+    int already_exists = 0;
+
+    i = 0;
+    while (i < TASK_COUNT && index == -1) {
+        if (List_Task[i].id == id) {
+            index = i;
+        }
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < TASK_COUNT && already_exists == 0) {
+        if (Ready_Task_GPU[i].id == id) {
+            already_exists = 1;
+        }
+        i = i + 1;
+    }
+
+    if (already_exists == 0 && index != -1) {
+        i = 0;
+        while (i < TASK_COUNT && null_index == -1) {
+            if (Ready_Task_GPU[i].id == -1) {
+                null_index = i;
+            }
+            i = i + 1;
+        }
+
+        if (null_index != -1) {
+            i = null_index;
+            while (i < TASK_COUNT - 1) {
+                Ready_Task_GPU[i] = Ready_Task_GPU[i + 1];
+                i = i + 1;
+            }
+            Ready_Task_GPU[TASK_COUNT - 1].id = -1;
+        }
+
+        i = 0;
+        int position_insertion = -1;
+        while (i < TASK_COUNT && position_insertion == -1) {
+            if (Ready_Task_GPU[i].id == -1) {
+                position_insertion = i;
+            }
+            i = i + 1;
+        }
+        if (position_insertion != -1) {
+            Ready_Task_GPU[position_insertion] = List_Task[index];
+            Ready_Task_GPU[position_insertion].state = READY;
+        }
+    }
+}
+
+/* Core API */
+
+int is_selected_task_CPU(core_descriptor [CPU_COUNT] &List_CPU, int id){
+    int i;
+    for(i=0; i < CPU_COUNT; i++){
+        if(List_CPU[i].selected_task == id){
+            return 1;
+        }
+    }
+return 0;
+}
+
+int is_selected_task_GPU(core_descriptor [GPU_COUNT] &List_GPU, int id){
+    int i;
+    for(i=0; i < GPU_COUNT; i++){
+        if(List_GPU[i].selected_task == id){
+            return 1;
+        }
+    }
+return 0;
+}
+
+/* Scheduler functions */
+
+void scheduler_fp(task_descriptor [TASK_COUNT] &Ready_Task_CPU, core_descriptor [CPU_COUNT] &List_CPU){
+    Ready_Task_CPU = tri_fp(Ready_Task_CPU);
+
+    int task_found = 0;
+    int i = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Ready_Task_CPU[i].id;
+        int j = 0;
+        int already_assigned = 0;
+
+        while (j < CPU_COUNT) {
+            if (List_CPU[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        if (already_assigned == 0 && task_id != -1) {
+            int assigned = 0;
+            j = 0;
+
+            while (j < CPU_COUNT && assigned == 0) {
+
+                if (List_CPU[j].selected_task == -1) {
+                    List_CPU[j].state = ACTIVE;
+                    List_CPU[j].selected_task = task_id;
+                    assigned = 1;
+                    task_found = 1;
+                }
+                j++;
+            }
+        }
+        i++;
+    }
+}
+
+void scheduler_fifo(task_descriptor [TASK_COUNT] &Ready_Task_GPU, core_descriptor [GPU_COUNT] &List_GPU){
+    Ready_Task_GPU = list_fifo(Ready_Task_GPU);
+
+    int task_found = 0;
+    int i = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Ready_Task_GPU[i].id;
+        int j = 0;
+        int already_assigned = 0;
+
+        while (j < GPU_COUNT) {
+            if (List_GPU[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        if (already_assigned == 0 && task_id != -1) {
+            int assigned = 0;
+            j = 0;
+
+            while (j < GPU_COUNT && assigned == 0) {
+
+                if (List_GPU[j].selected_task == -1) {
+                    List_GPU[j].state = ACTIVE;
+                    List_GPU[j].selected_task = task_id;
+                    assigned = 1;
+                    task_found = 1;
+                }
+                j++;
+            }
+        }
+        i++;
+    }
+}
+
+void no_need_scheduler_fp(task_descriptor [TASK_COUNT] &Ready_Task_CPU, core_descriptor [CPU_COUNT] &List_CPU, int id){
+    int i;
+
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Ready_Task_CPU[i].id == id){
+            Ready_Task_CPU[i].state = SUSPENDED;
+            Ready_Task_CPU[i].id = -1;
+            Ready_Task_CPU[i].Priority = -1;
+        }
+    }
+
+    for(i = 0; i < CPU_COUNT; i++){
+        if(List_CPU[i].selected_task == id){
+            List_CPU[i].state = IDLE;
+            List_CPU[i].selected_task = -1;
+        }
+    }
+
+    Ready_Task_CPU = tri_fp(Ready_Task_CPU);
+}
+
+void no_need_scheduler_fifo(task_descriptor [TASK_COUNT] &Ready_Task_GPU, core_descriptor [GPU_COUNT] &List_GPU, int id){
+    int i;
+
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Ready_Task_GPU[i].id == id){
+            Ready_Task_GPU[i].state = SUSPENDED;
+            Ready_Task_GPU[i].id = -1;
+            Ready_Task_GPU[i].Priority = -1;
+        }
+    }
+
+    for(i=0; i < GPU_COUNT; i++){
+        if(List_GPU[i].selected_task == id){
+            List_GPU[i].state = IDLE;
+            List_GPU[i].selected_task = -1;
+        }
+    }
+
+    Ready_Task_GPU = list_fifo(Ready_Task_GPU);
+}
+
+
+initially {
+
+    {# === Variables globales === #}
+    {% for name, value in globals.items() %}
+    int {{ name }} = {{ value }};
+    {% endfor %}
+
+    {% for global_dict in globals_tab %}
+    {% for name, values in global_dict.items() %}
+        int [{{ values | length }}] {{ name }} = { {{ values | join(', ') }} };
+    {% endfor %}
+    {% endfor %}
+
+
+    /* Task Declaration */
+    task_descriptor [TASK_COUNT] List_Task;
+
+    {% set ns = namespace( index = 0 ) %}
+    {% for task in tasks %}
+    {% for subtask in task.subtasks %}
+    List_Task[{{ ns.index }}].state = {{ subtask.state }};
+    List_Task[{{ ns.index }}].core = {{ subtask.core }};
+    List_Task[{{ ns.index }}].id = {{ subtask.id }};
+    List_Task[{{ ns.index }}].Priority = {{ subtask.priority }};
+
+    {% set ns.index = ns.index + 1 %}
+    {% endfor %}
+    {% endfor %}
+
+    int i;
+    {% for core in core_types %}
+
+    task_descriptor [TASK_COUNT] Ready_Task_{{ core }};
+
+    for(i = 0; i < TASK_COUNT; i++){
+            Ready_Task_{{ core }}[i].state = SUSPENDED;
+            Ready_Task_{{ core }}[i].core = {{ core }};
+		    Ready_Task_{{ core }}[i].id = -1;
+		    Ready_Task_{{ core }}[i].Priority = -1;
+	}
+	{% endfor %}
+
+    {% set core_map = {} %}
+    {% for core in cores %}
+    {% set _ = core_map.setdefault(core.type, []).append(core) %}
+    {% endfor %}
+
+    {% for core_type, core_list in core_map.items() %}
+    core_descriptor [{{ core_type }}_COUNT] List_{{ core_type }};
+    {% for core in core_list %}
+
+    List_{{ core_type }}[{{ loop.index0 }}].state = {{ core.state }};
+    List_{{ core_type }}[{{ loop.index0 }}].type = {{ core.type }};
+    List_{{ core_type }}[{{ loop.index0 }}].id = {{ core.id }};
+    List_{{ core_type }}[{{ loop.index0 }}].selected_task = {{ core.selected_task }};
+
+    {% endfor %}
+    {% endfor %}
+
+
+
+}
+
+]]></declaration>
+
+  <project nbinput="0" openinput="0" nbinclude="0" >
+  <include id="1" file=""/>
+ </project>
+
+  <preferences>
+      <colorPlace  c0="SkyBlue2"  c1="#ffbebe"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" />
+
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" />
+
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" />
+
+  </preferences>
+ </TPN>
+
+  </romeo>

@@ -1,0 +1,1065 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<romeo version="Romeo v3.10.2">
+<TPN name="/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test/SCHED/No_Preemtive/HPCDAG/HPCDAG_2SCHED.xml">
+  <place id="2" identifier="ReadyT1" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="301.0" y="571.0"/> 
+         <deltaLabel deltax="-2.0" deltay="-21.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="4" identifier="ReadyT4" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="841.0" y="571.0"/> 
+         <deltaLabel deltax="0" deltay="-22"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="5" identifier="ReadyT2" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="481.0" y="451.0"/> 
+         <deltaLabel deltax="0.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="6" identifier="ReadyT3" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="481.0" y="691.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-25.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="7" identifier="AttendT3" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="661.0" y="451.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="8" identifier="AttendT2" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="661.0" y="691.0"/> 
+         <deltaLabel deltax="-9.0" deltay="-20.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="9" identifier="CPU" label="" initialMarking="2" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="811.0" y="61.0"/> 
+         <deltaLabel deltax="-2.0" deltay="-26.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="10" identifier="SuspT4" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="1021.0" y="571.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="11" identifier="Exec_CPU" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="811.0" y="151.0"/> 
+         <deltaLabel deltax="-1.0" deltay="-25.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="12" identifier="Exec_GPU" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="811.0" y="241.0"/> 
+         <deltaLabel deltax="2.0" deltay="-26.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="13" identifier="ReadyTind1" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="151.0" y="61.0"/> 
+         <deltaLabel deltax="5.0" deltay="-20.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="14" identifier="SuspTind1" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="331.0" y="61.0"/> 
+         <deltaLabel deltax="5.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="17" identifier="ReadyTind2" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="151.0" y="211.0"/> 
+         <deltaLabel deltax="5.0" deltay="-20.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="18" identifier="SuspTind2" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="331.0" y="211.0"/> 
+         <deltaLabel deltax="5.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="19" identifier="ReadyTind3" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="151.0" y="361.0"/> 
+         <deltaLabel deltax="5.0" deltay="-20.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="20" identifier="SuspTind3" label="" initialMarking="0" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="331.0" y="361.0"/> 
+         <deltaLabel deltax="5.0" deltay="-22.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <place id="21" identifier="GPU" label="" initialMarking="1" eft="0" lft="inf"> 
+      <graphics color="0"> 
+         <position x="811.0" y="331.0"/> 
+         <deltaLabel deltax="-2.0" deltay="13.0"/> 
+      </graphics> 
+      <scheduling gamma="0" omega="0"/> 
+  </place> 
+
+  <transition id="1" identifier="T1ARR" label=""  eft="100" lft="100" eft_param="100" lft_param="100" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="211.0" y="571.0"/> 
+        <deltaLabel deltax="0.0" deltay="-33.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched[0]++;
+insert_cpu_task(List_Task, 
+Ready_Task_CPU, 0);]]></update> 
+  </transition> 
+
+  <transition id="2" identifier="ExecT1" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task_cpu(List_CPU, 0)"> 
+     <graphics color="0"> 
+        <position x="391.0" y="571.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="110.0" deltay="-58.0"/> 
+        <deltaUpdate deltax="165.0" deltay="-43.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler_fp(Ready_Task_CPU, List_CPU, 0);
+no_need_sched[0]++;
+need_sched[0]++;
+need_sched[1]++;
+insert_cpu_task(List_Task, 
+Ready_Task_CPU, 1);
+insert_gpu_task(List_Task, 
+Ready_Task_GPU, 2);]]></update> 
+  </transition> 
+
+  <transition id="3" identifier="StartT4" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="70" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="751.0" y="571.0"/> 
+        <deltaLabel deltax="-39" deltay="-17"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="20" deltay="10"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched[0]++;
+insert_cpu_task(List_Task, 
+Ready_Task_CPU, 3);]]></update> 
+  </transition> 
+
+  <transition id="6" identifier="SCHED_FP" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="need_sched[0] #greater 0"> 
+     <graphics color="0"> 
+        <position x="601.0" y="151.0"/> 
+        <deltaLabel deltax="-18.0" deltay="-22.0"/> 
+        <deltaGuard deltax="13.0" deltay="10.0"/> 
+        <deltaUpdate deltax="75.0" deltay="23.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched[0]--;
+scheduler_fp(Ready_Task_CPU, List_CPU);]]></update> 
+  </transition> 
+
+  <transition id="7" identifier="ExecT2" label=""  eft="25" lft="30" eft_param="25" lft_param="30" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task_cpu(List_CPU, 1)"> 
+     <graphics color="0"> 
+        <position x="571.0" y="451.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="8.0" deltay="10.0"/> 
+        <deltaUpdate deltax="61.0" deltay="23.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler_fp(Ready_Task_CPU, List_CPU, 1);
+no_need_sched[0]++;]]></update> 
+  </transition> 
+
+  <transition id="8" identifier="ExecT3" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task_gpu(List_GPU, 2)"> 
+     <graphics color="0"> 
+        <position x="571.0" y="691.0"/> 
+        <deltaLabel deltax="3.0" deltay="-30.0"/> 
+        <deltaGuard deltax="8.0" deltay="8.0"/> 
+        <deltaUpdate deltax="66.0" deltay="22.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler_fifo(Ready_Task_GPU, List_GPU, 2);
+no_need_sched[1]++;]]></update> 
+  </transition> 
+
+  <transition id="9" identifier="Free_CPU" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="no_need_sched[0] #greater 0"> 
+     <graphics color="0"> 
+        <position x="1021.0" y="151.0"/> 
+        <deltaLabel deltax="-21.0" deltay="-28.0"/> 
+        <deltaGuard deltax="21.0" deltay="11.0"/> 
+        <deltaUpdate deltax="20.0" deltay="32.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_sched[0]--;]]></update> 
+  </transition> 
+
+  <transition id="10" identifier="ExecT4" label=""  eft="15" lft="20" eft_param="15" lft_param="20" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task_cpu(List_CPU, 3)"> 
+     <graphics color="0"> 
+        <position x="931.0" y="571.0"/> 
+        <deltaLabel deltax="2.0" deltay="-29.0"/> 
+        <deltaGuard deltax="5.0" deltay="8.0"/> 
+        <deltaUpdate deltax="59.0" deltay="18.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler_fp(Ready_Task_CPU, List_CPU, 3);
+no_need_sched[0]++;]]></update> 
+  </transition> 
+
+  <transition id="12" identifier="SCHED_FIFO" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="need_sched[1] #greater 0"> 
+     <graphics color="0"> 
+        <position x="601.0" y="241.0"/> 
+        <deltaLabel deltax="-14.0" deltay="-21.0"/> 
+        <deltaGuard deltax="12.0" deltay="14.0"/> 
+        <deltaUpdate deltax="81.0" deltay="31.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched[1]--;
+scheduler_fifo(Ready_Task_GPU, List_GPU);]]></update> 
+  </transition> 
+
+  <transition id="13" identifier="Tind1" label=""  eft="100" lft="100" eft_param="100" lft_param="100" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="61.0" y="61.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="38.0" deltay="11.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched[0]++;
+insert_cpu_task(List_Task, 
+Ready_Task_CPU, 4);]]></update> 
+  </transition> 
+
+  <transition id="14" identifier="ExecTind1" label=""  eft="75" lft="80" eft_param="75" lft_param="80" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task_cpu(List_CPU, 4)"> 
+     <graphics color="0"> 
+        <position x="241.0" y="61.0"/> 
+        <deltaLabel deltax="9.0" deltay="-32.0"/> 
+        <deltaGuard deltax="15.0" deltay="10.0"/> 
+        <deltaUpdate deltax="72.0" deltay="25.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler_fp(Ready_Task_CPU, List_CPU, 4);
+no_need_sched[0]++;]]></update> 
+  </transition> 
+
+  <transition id="19" identifier="Tind2" label=""  eft="80" lft="80" eft_param="80" lft_param="80" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="61.0" y="211.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="38.0" deltay="11.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched[0]++;
+insert_cpu_task(List_Task, 
+Ready_Task_CPU, 5);]]></update> 
+  </transition> 
+
+  <transition id="20" identifier="ExecTind2" label=""  eft="55" lft="60" eft_param="55" lft_param="60" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task_cpu(List_CPU, 5)"> 
+     <graphics color="0"> 
+        <position x="241.0" y="211.0"/> 
+        <deltaLabel deltax="9.0" deltay="-32.0"/> 
+        <deltaGuard deltax="15.0" deltay="10.0"/> 
+        <deltaUpdate deltax="70.0" deltay="24.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler_fp(Ready_Task_CPU, List_CPU, 5);
+no_need_sched[0]++;]]></update> 
+  </transition> 
+
+  <transition id="22" identifier="Tind3" label=""  eft="105" lft="105" eft_param="105" lft_param="105" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard=""> 
+     <graphics color="0"> 
+        <position x="61.0" y="361.0"/> 
+        <deltaLabel deltax="4.0" deltay="-30.0"/> 
+        <deltaGuard deltax="20" deltay="-20"/> 
+        <deltaUpdate deltax="38.0" deltay="11.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[need_sched[1]++;
+insert_gpu_task(List_Task, 
+Ready_Task_GPU, 6);]]></update> 
+  </transition> 
+
+  <transition id="23" identifier="ExecTind3" label=""  eft="45" lft="50" eft_param="45" lft_param="50" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="is_selected_task_gpu(List_GPU, 6)"> 
+     <graphics color="0"> 
+        <position x="241.0" y="361.0"/> 
+        <deltaLabel deltax="9.0" deltay="-32.0"/> 
+        <deltaGuard deltax="15.0" deltay="10.0"/> 
+        <deltaUpdate deltax="75.0" deltay="23.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_scheduler_fifo(Ready_Task_GPU, List_GPU, 6);
+no_need_sched[1]++;]]></update> 
+  </transition> 
+
+  <transition id="25" identifier="Free_GPU" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="30" cost="0" unctrl="0" obs="1"  guard="no_need_sched[1] #greater 0"> 
+     <graphics color="0"> 
+        <position x="1021.0" y="241.0"/> 
+        <deltaLabel deltax="-18.0" deltay="-24.0"/> 
+        <deltaGuard deltax="19.0" deltay="13.0"/> 
+        <deltaUpdate deltax="16.0" deltay="31.0"/> 
+        <deltaSpeed deltax="-20" deltay="5"/> 
+        <deltaCost deltax="-20" deltay="5"/> 
+     </graphics> 
+     <update><![CDATA[no_need_sched[1]--;]]></update> 
+  </transition> 
+
+  <arc place="2" transition="1" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="2" transition="2" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="5" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="6" transition="2" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="7" transition="3" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="8" transition="3" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="4" transition="3" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="9" transition="6" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="11" transition="6" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="5" transition="7" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="7" transition="7" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="6" transition="8" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="8" transition="8" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="11" transition="9" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="9" transition="9" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="4" transition="10" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="10" transition="10" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="21" transition="12" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="12" transition="12" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="13" transition="13" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="13" transition="14" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="14" transition="14" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="17" transition="19" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="17" transition="20" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="18" transition="20" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="19" transition="22" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="19" transition="23" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="20" transition="23" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <arc place="12" transition="25" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition=""> 
+    <nail xnail="0" ynail="0"/> 
+    <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+ 
+
+  <arc place="21" transition="25" type="TransitionPlace" weight="1" tokenColor="-1"> 
+     <nail xnail="0" ynail="0"/> 
+     <graphics  color="0"> 
+     </graphics> 
+  </arc> 
+
+  <timedCost></timedCost>
+
+  <nbTokenColor>0</nbTokenColor>
+
+  <declaration><![CDATA[// insert here your type definitions using C-like syntax
+
+// insert here your function definitions 
+// using C-like syntax
+
+
+/* Const */
+
+const int TASK_COUNT = 7;
+// const int CORE_COUNT = 3;
+const int CPU_COUNT = 2;
+const int GPU_COUNT = 1;
+const int NULL = -1;
+
+
+/* Task data structures */
+
+typedef enum{
+    SUSPENDED,
+    READY,
+    RUNNING
+}task_state;
+
+typedef enum{
+    CPU,
+    GPU,
+    UNKOWN
+}task_core;
+
+typedef struct{
+	task_state state;
+    task_core core;
+	int id;
+	int Priority;
+}task_descriptor;
+
+
+typedef enum{
+    ACTIVE,
+    IDLE
+}core_state;
+
+typedef enum{
+    GPU,
+    CPU
+}core_type;
+
+typedef struct{
+    core_state state;
+    core_type type;
+    int id;
+    int selected_task;
+}core_descriptor;
+
+
+/* Task lists + mainting functions*/
+
+task_descriptor tri_fp(task_descriptor [TASK_COUNT] Ready_Task_CPU) {
+    task_descriptor [TASK_COUNT] cpu_tasks;
+    int cpu_count = 0;
+
+    // Récupération des tâches CPU
+    for (int i = 0; i < TASK_COUNT; i++) {
+        if (Ready_Task_CPU[i].id != NULL && Ready_Task_CPU[i].core == CPU) {
+            cpu_tasks[cpu_count] = Ready_Task_CPU[i];
+            cpu_count++;
+        }
+    }
+
+    // Tri FP (priorité décroissante) sur les tâches CPU
+    for (int i = 0; i < cpu_count - 1; i++) {
+        for (int j = i + 1; j < cpu_count; j++) {
+            if (cpu_tasks[i].Priority < cpu_tasks[j].Priority) {
+                task_descriptor tmp = cpu_tasks[i];
+                cpu_tasks[i] = cpu_tasks[j];
+                cpu_tasks[j] = tmp;
+            }
+        }
+    }
+
+    // Réécriture dans Ready_Task[0] (CPU)
+    for (int i = 0; i < TASK_COUNT; i++) {
+        if (i < cpu_count) {
+            Ready_Task_CPU[i] = cpu_tasks[i];
+        } else {
+            Ready_Task_CPU[i].id = NULL;
+            Ready_Task_CPU[i].Priority = NULL;
+            Ready_Task_CPU[i].state = SUSPENDED;
+            Ready_Task_CPU[i].core = UNKOWN;
+        }
+    }
+    return Ready_Task_CPU;
+}
+
+task_descriptor list_fifo(task_descriptor [TASK_COUNT] Ready_Task_GPU) {
+    task_descriptor [TASK_COUNT] gpu_tasks;
+    int gpu_count = 0;
+
+    // Récupération des tâches GPU
+    for (int i = 0; i < TASK_COUNT; i++) {
+        if (Ready_Task_GPU[i].id != NULL && Ready_Task_GPU[i].core == GPU) {
+            gpu_tasks[gpu_count] = Ready_Task_GPU[i];
+            gpu_count++;
+        }
+    }
+
+    // Mettre d’abord les tâches READY
+    
+    int ready_index = 0;
+    for (int i = 0; i < gpu_count; i++) {
+        if (gpu_tasks[i].state == READY) {
+            Ready_Task_GPU[ready_index] = gpu_tasks[i];
+            ready_index++;
+        }
+    }
+
+    // Réécriture dans Ready_Task[1] (GPU) : FIFO => pas de tri
+    for (int i = ready_index; i < TASK_COUNT; i++) {
+        Ready_Task_GPU[i].id = NULL;
+        Ready_Task_GPU[i].Priority = NULL;
+        Ready_Task_GPU[i].state = SUSPENDED;
+        Ready_Task_GPU[i].core = UNKOWN;
+    }
+    return Ready_Task_GPU;
+}
+
+void insert_cpu_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Ready_Task_CPU, int id) {
+    int i;
+    int index = -1;
+    int null_index = -1;
+    int already_exists = 0;
+
+    i = 0;
+    while (i < TASK_COUNT && index == -1) {
+        if (List_Task[i].id == id) {
+            index = i;
+        }
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < TASK_COUNT && already_exists == 0) {
+        if (Ready_Task_CPU[i].id == id) {
+            already_exists = 1;
+        }
+        i = i + 1;
+    }
+
+    if (already_exists == 0 && index != -1) {
+        i = 0;
+        while (i < TASK_COUNT && null_index == -1) {
+            if (Ready_Task_CPU[i].id == NULL) {
+                null_index = i;
+            }
+            i = i + 1;
+        }
+
+        if (null_index != -1) {
+            i = null_index;
+            while (i < TASK_COUNT - 1) {
+                Ready_Task_CPU[i] = Ready_Task_CPU[i + 1];
+                i = i + 1;
+            }
+            Ready_Task_CPU[TASK_COUNT - 1].id = NULL;
+        }
+
+        i = 0;
+        int position_insertion = -1;
+        while (i < TASK_COUNT && position_insertion == -1) {
+            if (Ready_Task_CPU[i].id == NULL) {
+                position_insertion = i;
+            }
+            i = i + 1;
+        }
+        if (position_insertion != -1) {
+            Ready_Task_CPU[position_insertion] = List_Task[index];
+            Ready_Task_CPU[position_insertion].state = READY;
+        }
+    }
+}
+
+void insert_gpu_task(task_descriptor [TASK_COUNT] &List_Task, task_descriptor [TASK_COUNT] &Ready_Task_GPU, int id) {
+    int i;
+    int index = -1;
+    int null_index = -1;
+    int already_exists = 0;
+
+    i = 0;
+    while (i < TASK_COUNT && index == -1) {
+        if (List_Task[i].id == id) {
+            index = i;
+        }
+        i = i + 1;
+    }
+
+    i = 0;
+    while (i < TASK_COUNT && already_exists == 0) {
+        if (Ready_Task_GPU[i].id == id) {
+            already_exists = 1;
+        }
+        i = i + 1;
+    }
+
+    if (already_exists == 0 && index != -1) {
+        i = 0;
+        while (i < TASK_COUNT && null_index == -1) {
+            if (Ready_Task_GPU[i].id == NULL) {
+                null_index = i;
+            }
+            i = i + 1;
+        }
+
+        if (null_index != -1) {
+            i = null_index;
+            while (i < TASK_COUNT - 1) {
+                Ready_Task_GPU[i] = Ready_Task_GPU[i + 1];
+                i = i + 1;
+            }
+            Ready_Task_GPU[TASK_COUNT - 1].id = NULL;
+        }
+
+        i = 0;
+        int position_insertion = -1;
+        while (i < TASK_COUNT && position_insertion == -1) {
+            if (Ready_Task_GPU[i].id == NULL) {
+                position_insertion = i;
+            }
+            i = i + 1;
+        }
+        if (position_insertion != -1) {
+            Ready_Task_GPU[position_insertion] = List_Task[index];
+            Ready_Task_GPU[position_insertion].state = READY;
+        }
+    }
+}
+
+/* Core API */
+
+int is_selected_task_cpu(core_descriptor [CPU_COUNT] &List_CPU, int id){
+    int i;
+    for(i=0; i < CPU_COUNT; i++){
+        if(List_CPU[i].selected_task == id){
+            return 1;
+        }
+    }
+return 0;
+}
+
+int is_selected_task_gpu(core_descriptor [GPU_COUNT] &List_GPU, int id){
+    int i;
+    for(i=0; i < GPU_COUNT; i++){
+        if(List_GPU[i].selected_task == id){
+            return 1;
+        }
+    }
+return 0;
+}
+
+/* Scheduler functions */
+
+void scheduler_fp(task_descriptor [TASK_COUNT] &Ready_Task_CPU, core_descriptor [CPU_COUNT] &List_CPU){
+    Ready_Task_CPU = tri_fp(Ready_Task_CPU);
+    
+    int task_found = 0;
+    int i = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Ready_Task_CPU[i].id;
+        int j = 0;
+        int already_assigned = 0;
+
+        while (j < CPU_COUNT) {
+            if (List_CPU[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        if (already_assigned == 0 && task_id != NULL) {
+            int assigned = 0;
+            j = 0;
+
+            while (j < CPU_COUNT && assigned == 0) {
+                
+                if (List_CPU[j].selected_task == NULL) {
+                    List_CPU[j].state = ACTIVE;
+                    List_CPU[j].selected_task = task_id;
+                    assigned = 1;
+                    task_found = 1;
+                }
+                j++;
+            }
+        }
+        i++;
+    }
+}
+
+void scheduler_fifo(task_descriptor [TASK_COUNT] &Ready_Task_GPU, core_descriptor [GPU_COUNT] &List_GPU){
+    Ready_Task_GPU = list_fifo(Ready_Task_GPU);
+    
+    int task_found = 0;
+    int i = 0;
+
+    while (i < TASK_COUNT && task_found == 0) {
+        int task_id = Ready_Task_GPU[i].id;
+        int j = 0;
+        int already_assigned = 0;
+
+        while (j < GPU_COUNT) {
+            if (List_GPU[j].selected_task == task_id) {
+                already_assigned = 1;
+            }
+            j++;
+        }
+
+        if (already_assigned == 0 && task_id != NULL) {
+            int assigned = 0;
+            j = 0;
+
+            while (j < GPU_COUNT && assigned == 0) {
+                
+                if (List_GPU[j].selected_task == NULL) {
+                    List_GPU[j].state = ACTIVE;
+                    List_GPU[j].selected_task = task_id;
+                    assigned = 1;
+                    task_found = 1;
+                }
+                j++;
+            }
+        }
+        i++;
+    }
+}
+
+void no_need_scheduler_fp(task_descriptor [TASK_COUNT] &Ready_Task_CPU, core_descriptor [CPU_COUNT] &List_CPU, int id){
+    int i;
+
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Ready_Task_CPU[i].id == id){
+            Ready_Task_CPU[i].state = SUSPENDED;
+            Ready_Task_CPU[i].id = NULL;
+            Ready_Task_CPU[i].Priority = NULL;
+        }
+    }
+
+    for(i = 0; i < CPU_COUNT; i++){
+        if(List_CPU[i].selected_task == id){
+            List_CPU[i].state = IDLE;
+            List_CPU[i].selected_task = NULL;
+        }
+    }
+
+    Ready_Task_CPU = tri_fp(Ready_Task_CPU);
+}
+
+void no_need_scheduler_fifo(task_descriptor [TASK_COUNT] &Ready_Task_GPU, core_descriptor [GPU_COUNT] &List_GPU, int id){
+    int i;
+
+    for(i = 0; i < TASK_COUNT; i++){
+        if(Ready_Task_GPU[i].id == id){
+            Ready_Task_GPU[i].state = SUSPENDED;
+            Ready_Task_GPU[i].id = NULL;
+            Ready_Task_GPU[i].Priority = NULL;
+        }
+    }
+
+    for(i=0; i < GPU_COUNT; i++){
+        if(List_GPU[i].selected_task == id){
+            List_GPU[i].state = IDLE;
+            List_GPU[i].selected_task = NULL;
+        }
+    }
+
+    Ready_Task_GPU = list_fifo(Ready_Task_GPU);
+}
+
+initially {
+    
+    // int need_sched = 0;
+    // int no_need_cpu = 0;
+    // int no_need_gpu = 0;
+    // int cpu_flag = 0;
+    // int gpu_flag = 0;
+    int selected_task = NULL;
+
+    int [2] need_sched = {0, 0};
+    int [2] no_need_sched = {0, 0};
+
+    /* Task Declaration */
+    
+    /* Task_form = {state, id, priority, period, execution_time} */
+    task_descriptor [TASK_COUNT] List_Task;
+		List_Task[0].state = SUSPENDED;
+        List_Task[0].core = CPU;
+		List_Task[0].id = 0;
+		List_Task[0].Priority = 1;
+
+		List_Task[1].state = SUSPENDED;
+        List_Task[1].core = CPU;
+		List_Task[1].id = 1;
+		List_Task[1].Priority = 2;
+
+        List_Task[2].state = SUSPENDED;
+        List_Task[2].core = GPU;
+		List_Task[2].id = 2;
+		List_Task[2].Priority = 3;
+
+        List_Task[3].state = SUSPENDED;
+        List_Task[3].core = CPU;
+		List_Task[3].id = 3;
+		List_Task[3].Priority = 4;
+
+        List_Task[4].state = SUSPENDED;
+        List_Task[4].core = CPU;
+		List_Task[4].id = 4;
+		List_Task[4].Priority = 5;
+
+        List_Task[5].state = SUSPENDED;
+        List_Task[5].core = CPU;
+		List_Task[5].id = 5;
+		List_Task[5].Priority = 6;
+
+        List_Task[6].state = SUSPENDED;
+        List_Task[6].core = GPU;
+		List_Task[6].id = 6;
+		List_Task[6].Priority = 0;
+
+    task_descriptor [TASK_COUNT] Ready_Task_CPU;
+	int i;
+    
+    for(i = 0; i < TASK_COUNT; i++){
+            Ready_Task_CPU[i].state = SUSPENDED;
+            Ready_Task_CPU[i].core = CPU;
+		    Ready_Task_CPU[i].id = NULL;
+		    Ready_Task_CPU[i].Priority = NULL;
+	}
+
+    task_descriptor [TASK_COUNT] Ready_Task_GPU;
+    
+    for(i = 0; i < TASK_COUNT; i++){
+            Ready_Task_GPU[i].state = SUSPENDED;
+            Ready_Task_GPU[i].core = GPU;
+		    Ready_Task_GPU[i].id = NULL;
+		    Ready_Task_GPU[i].Priority = NULL;
+	}
+
+    /* CPU Declaration */
+    
+    /* CPU_form = {state, id, selected_task} */
+    core_descriptor [CPU_COUNT] List_CPU;
+		List_CPU[0].state = IDLE;
+        List_CPU[0].type = CPU;
+		List_CPU[0].id = 0;
+		List_CPU[0].selected_task = NULL;
+		
+        List_CPU[1].state = IDLE;
+        List_CPU[1].type = CPU;
+		List_CPU[1].id = 1;
+		List_CPU[1].selected_task = NULL;
+
+    core_descriptor [GPU_COUNT] List_GPU;    
+        
+        List_GPU[0].state = IDLE;
+        List_GPU[0].type = GPU;
+		List_GPU[0].id = 0;
+		List_GPU[0].selected_task = NULL;
+
+
+// insert here the state variables declarations 
+// and possibly some code to initialize them 
+// using C-like syntax
+ 
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></declaration>
+
+  <project nbinput="0" openinput="0" nbinclude="0" >
+ </project>
+
+  <preferences> 
+      <colorPlace  c0="SkyBlue2"  c1="#ffbebe"  c2="cyan"  c3="green"  c4="yellow"  c5="brown" /> 
+ 
+      <colorTransition  c0="yellow"  c1="gray"  c2="cyan"  c3="green"  c4="SkyBlue2"  c5="brown" /> 
+ 
+      <colorArc  c0="black"  c1="gray"  c2="blue"  c3="#beb760"  c4="#be5c7e"  c5="#46be90" /> 
+ 
+  </preferences> 
+ </TPN> 
+
+  </romeo>

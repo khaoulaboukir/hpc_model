@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <romeo version="Romeo v3.10.2">
-<TPN name="Test1">
+<TPN name="1SCHED">
 
 
 <!-- Place Scheduler -->
@@ -1475,7 +1475,7 @@ initially {
 ]]></declaration>
 
   <project nbinput="0" openinput="0" nbinclude="0" >
-  <include id="1" file="Test1_Code.c"/>
+  <include id="1" file="1SCHED_Code.c"/>
  </project>
 
   <preferences>

@@ -1,5 +1,5 @@
 {
-  "path": "Test1",
+  "path": "1SCHED",
   "cores": [
     { "id": 0, "type": "CPU", "state": "IDLE", "selected_task": -1 },
     { "id": 1, "type": "CPU", "state": "IDLE", "selected_task": -1 },

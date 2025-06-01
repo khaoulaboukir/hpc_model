@@ -2,11 +2,11 @@ import json
 from jinja2 import Environment, FileSystemLoader
 import os
 
-base_path = "/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Test3"
+base_path = "/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Done_Test/1SCHED"
 template_path = os.path.join(base_path, 'Templates')
 result_path = os.path.join(base_path, 'Resultats')
 
-with open(os.path.join(base_path, 'Test1_Data.json')) as f:
+with open(os.path.join(base_path, '1SCHED_Data.json')) as f:
     data = json.load(f)
 
 # Calcul du nombre de CPU et GPU
@@ -18,7 +18,7 @@ env = Environment(loader=FileSystemLoader(template_path), trim_blocks=True, lstr
 
 # Rendu du fichier C
 task_list = [subtask for task in data["tasks"] for subtask in task["subtasks"]]
-c_template = env.get_template('Test1_Code.c.j2')
+c_template = env.get_template('1SCHED_Code.c.j2')
 c_code = c_template.render(task_count=len(task_list), core_count=len(data["cores"]))
 
 c_filename = f"{data['path']}_Code.c"
@@ -76,7 +76,7 @@ for entry in src:
     other_nodes = [st for st in task["subtasks"] if st not in sources]
     entry["other_nodes"] = other_nodes
 
-template = env.get_template('Test5_Template.xml.j2')
+template = env.get_template('1SCHED_Template.xml.j2')
 output = template.render(
     path=data["path"],
     cores=data["cores"],
