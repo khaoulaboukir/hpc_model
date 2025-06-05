@@ -29,6 +29,9 @@ with open(os.path.join(result_path, c_filename), 'w') as f:
 # Vérification des tâches (unicité et champs nécessaires)
 seen_ids = {}
 for i, task in enumerate(task_list):
+    if task.get("type") == "endcond":
+        continue
+
     assert "id" in task, f"La tâche à l'index {i} n'a pas de champ 'id'"
     task_id = task["id"]
     if task_id in seen_ids:
@@ -108,7 +111,8 @@ output = template.render(
     task_count=len(task_list),
     core_count=len(data["cores"]),
     cpu_count=nmbr_cpu,
-    gpu_count=nmbr_gpu
+    gpu_count=nmbr_gpu,
+    exec_ids={"map": {}}
 )
 
 xml_filename = f"{data['path']}_out.xml"

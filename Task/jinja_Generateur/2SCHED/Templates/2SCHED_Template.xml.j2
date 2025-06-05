@@ -198,6 +198,8 @@ List_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id }});
 
 {% set wait_table = namespace(value=[]) %}
 {% set already_inserted = namespace(value=[]) %}
+{% set exec_trans_table = namespace(value=[]) %}
+{% set endcond_place_table = namespace(value=[]) %}
 {% macro draw_node(node, x, y, parent_transition_id, base_id_ns, x_ns, dag, drawn) %}
 
   {% if node.id in drawn.nodes %}
@@ -209,7 +211,111 @@ List_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id }});
   {% set ready_id = base_id_ns.base_id + 1 %}
   {% set exec_id = ready_id + 1 %}
   {% set base_id_ns.base_id = exec_id %}
-  {% if node.type == "Cond" %}
+
+  {% if node.type == "endcond" %}
+  {% set end_cond_id = base_id_ns.base_id + 1 %}
+  {% set base_id_ns.base_id = end_cond_id %}
+
+  <!-- Place End Condition -->
+  <place id="{{ end_cond_id }}" identifier="EndCond" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="{{ x + 90 }}" y="{{ y + 60 }}"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  {% set _ = endcond_place_table.value.append({'node_id': node.id, 'romeo_id': end_cond_id, 'pred_ids': node.predecessors}) %}
+
+  {% for succ in dag.other_nodes if succ.id in node.successors %}
+    {% set start_cond_succ_id = base_id_ns.base_id + 1 %}
+    {% set ready_cond_succ_id = start_cond_succ_id + 1 %}
+    {% set cond_succ_exec_id = start_cond_succ_id + 2 %}
+    {% set base_id_ns.base_id = cond_succ_exec_id %}
+
+    <!-- Transition Start -->
+  <transition id="{{ start_cond_succ_id }}" identifier="StartTsub{{ succ.id }}" label=""
+              eft="0" lft="0"
+              eft_param="0" lft_param="0"
+              speed="1" priority="70" cost="0" unctrl="0" obs="1"
+              guard="">
+    <graphics color="0">
+      <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 150 }}"/>
+      <deltaLabel deltax="9.0" deltay="-32.0"/>
+      <deltaGuard deltax="15.0" deltay="10.0"/>
+      <deltaUpdate deltax="17.0" deltay="26.0"/>
+    </graphics>
+    <update><![CDATA[need_sched[{{ succ.P_Ord }}]++;
+insert_{{ succ.core }}_task(List_Task,
+Ready_Task_{{ succ.core }}, {{ succ.id }});]]></update>
+  </transition>
+
+  <!-- Place Ready -->
+  <place id="{{ ready_cond_succ_id }}" identifier="ReadyTsub{{ succ.id }}" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 240 }}"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+    <!-- Transition Execution -->
+    <transition id="{{ cond_succ_exec_id }}" identifier="ExecTsub{{ succ.id }}" label=""
+              eft="{{ succ.execution_time.BCET }}" lft="{{ succ.execution_time.WCET }}"
+              eft_param="{{ succ.execution_time.BCET }}" lft_param="{{ succ.execution_time.WCET }}"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
+              guard="is_selected_task_{{ succ.core }}(List_{{ succ.core }}, {{ succ.id }})">
+     <graphics color="0">
+        <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 330 }}"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[{{ succ.P_Ord }}]++;
+    {% if succ.P_Ord == "FP" %}
+no_need_scheduler_fp(Ready_Task_{{ succ.core }},
+List_{{ succ.core }}, {{ succ.id }});
+    {% elif succ.P_Ord == "FIFO" %}
+no_need_scheduler_fifo(Ready_Task_{{ succ.core }},
+List_{{ succ.core }}, {{ succ.id }});
+{% else %}
+    // Politique inconnue
+{% endif %}
+{% for succ2 in dag.other_nodes if succ2.id in succ.successors %}
+{% if succ2.type != "endcond" and succ2.predecessors | length == 1 %}
+  {% if [succ2.id] not in already_inserted.value %}
+    {% set _ = already_inserted.value.append([succ2.id]) %}
+need_sched[{{ succ2.P_Ord }}]++;
+insert_{{ succ2.core }}_task(List_Task,
+Ready_Task_{{ succ2.core }}, {{ succ2.id }});
+  {% endif %}
+{% endif %}
+{% endfor %}]]></update>
+  </transition>
+
+  {% set _ = exec_trans_table.value.append({'node_id': succ.id, 'romeo_id': cond_succ_exec_id}) %}
+
+  <!-- Arc Cond → Successor Start -->
+    <arc place="{{ end_cond_id }}" transition="{{ start_cond_succ_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+  <!-- Arc Start → Successor Ready -->
+    <arc place="{{ ready_cond_succ_id }}" transition="{{ start_cond_succ_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+    <!-- Arc Ready → Successor Exec -->
+    <arc place="{{ ready_cond_succ_id }}" transition="{{ cond_succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+  {% endfor %}
+
+  {% elif node.type == "Cond" %}
   {% set ready_id = base_id_ns.base_id + 1 %}
   {% set exec_id = ready_id + 1 %}
   {% set cond_place_id = exec_id + 1 %}
@@ -224,7 +330,7 @@ List_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id }});
     <scheduling gamma="0" omega="0"/>
   </place>
 
-  <!-- Transition Exec -->
+  <!-- Transition Execution -->
   <transition id="{{ exec_id }}" identifier="ExecTsub{{ node.id }}" label=""
               eft="{{ node.execution_time.BCET }}" lft="{{ node.execution_time.WCET }}"
               eft_param="{{ node.execution_time.BCET }}" lft_param="{{ node.execution_time.WCET }}"
@@ -243,21 +349,15 @@ no_need_scheduler_fp(Ready_Task_{{ node.core }}, List_{{ node.core }}, {{ node.i
 no_need_scheduler_fifo(Ready_Task_{{ node.core }}, List_{{ node.core }}, {{ node.id }});
 {% else %}
 // Politique inconnue
-{% endif %}
-{% for succ in dag.other_nodes if succ.id in node.successors %}
-  {% if [succ.id] not in already_inserted.value %}
-    {% set _ = already_inserted.value.append([succ.id]) %}
-need_sched[{{ succ.P_Ord }}]++;
-insert_{{ succ.core }}_task(List_Task,
-Ready_Task_{{ succ.core }}, {{ succ.id }});
-  {% endif %}
-{% endfor %}]]></update>
+{% endif %}]]></update>
   </transition>
+
+  {% set _ = exec_trans_table.value.append({'node_id': node.id, 'romeo_id': exec_id}) %}
 
   <!-- Place Condition -->
   <place id="{{ cond_place_id }}" identifier="ConditionTsub{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
     <graphics color="0">
-      <position x="{{ x }}" y="{{ y + 360 }}"/>
+      <position x="{{ x }}" y="{{ y + 270 }}"/>
       <deltaLabel deltax="5.0" deltay="-20.0"/>
     </graphics>
     <scheduling gamma="0" omega="0"/>
@@ -284,15 +384,45 @@ Ready_Task_{{ succ.core }}, {{ succ.id }});
   </arc>
 
   {% for succ in dag.other_nodes if succ.id in node.successors %}
-    {% set succ_exec_id = base_id_ns.base_id + 1 %}
+    {% set start_cond_id = base_id_ns.base_id + 1 %}
+    {% set ready_cond_id = start_cond_id + 1 %}
+    {% set succ_exec_id = start_cond_id + 2 %}
     {% set base_id_ns.base_id = succ_exec_id %}
+
+    <!-- Transition Start -->
+  <transition id="{{ start_cond_id }}" identifier="StartTsub{{ succ.id }}" label=""
+              eft="0" lft="0"
+              eft_param="0" lft_param="0"
+              speed="1" priority="70" cost="0" unctrl="0" obs="1"
+              guard="">
+    <graphics color="0">
+      <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 360 }}"/>
+      <deltaLabel deltax="9.0" deltay="-32.0"/>
+      <deltaGuard deltax="15.0" deltay="10.0"/>
+      <deltaUpdate deltax="17.0" deltay="26.0"/>
+    </graphics>
+    <update><![CDATA[need_sched[{{ succ.P_Ord }}]++;
+insert_{{ succ.core }}_task(List_Task,
+Ready_Task_{{ succ.core }}, {{ succ.id }});]]></update>
+  </transition>
+
+  <!-- Place Ready -->
+  <place id="{{ ready_cond_id }}" identifier="ReadyTsub{{ succ.id }}" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 450 }}"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+    <!-- Transition Execution -->
     <transition id="{{ succ_exec_id }}" identifier="ExecTsub{{ succ.id }}" label=""
-              eft="{{ node.execution_time.BCET }}" lft="{{ node.execution_time.WCET }}"
-              eft_param="{{ node.execution_time.BCET }}" lft_param="{{ node.execution_time.WCET }}"
+              eft="{{ succ.execution_time.BCET }}" lft="{{ succ.execution_time.WCET }}"
+              eft_param="{{ succ.execution_time.BCET }}" lft_param="{{ succ.execution_time.WCET }}"
               speed="1" priority="0" cost="0" unctrl="0" obs="1"
               guard="is_selected_task_{{ succ.core }}(List_{{ succ.core }}, {{ succ.id }})">
      <graphics color="0">
-        <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 450 }}"/>
+        <position x="{{ x + 240 * loop.index0 }}" y="{{ y + 540 }}"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -308,23 +438,39 @@ List_{{ succ.core }}, {{ succ.id }});
     // Politique inconnue
 {% endif %}
 {% for succ2 in dag.other_nodes if succ2.id in succ.successors %}
+{% if succ2.type != "endcond" and succ2.predecessors | length == 1 %}
   {% if [succ2.id] not in already_inserted.value %}
     {% set _ = already_inserted.value.append([succ2.id]) %}
 need_sched[{{ succ2.P_Ord }}]++;
 insert_{{ succ2.core }}_task(List_Task,
 Ready_Task_{{ succ2.core }}, {{ succ2.id }});
   {% endif %}
+  {% endif %}
 {% endfor %}]]></update>
   </transition>
 
-    <!-- Arc Cond → Successor Exec -->
-    <arc place="{{ cond_place_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+  {% set _ = exec_trans_table.value.append({'node_id': succ.id, 'romeo_id': succ_exec_id}) %}
+
+  <!-- Arc Cond → Successor Start -->
+    <arc place="{{ cond_place_id }}" transition="{{ start_cond_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+  <!-- Arc Start → Successor Ready -->
+    <arc place="{{ ready_cond_id }}" transition="{{ start_cond_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+    <!-- Arc Ready → Successor Exec -->
+    <arc place="{{ ready_cond_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
 
     {% for succ2 in dag.other_nodes if succ2.id in succ.successors %}
-    {{ draw_node(succ2, x_ns.x_start, y + 540, succ_exec_id, base_id_ns, x_ns, dag, drawn) }}
+    {{ draw_node(succ2, x_ns.x_start, y + 630, succ_exec_id, base_id_ns, x_ns, dag, drawn) }}
     {% set x_ns.x_start = x_ns.x_start + 150 %}
   {% endfor %}
 {% endfor %}
@@ -341,7 +487,7 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
         <!-- Place Wait from pred {{ pred_id }} -->
         <place id="{{ wait_id }}" identifier="Wait_from_{{ pred_id }}_to_{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
             <graphics color="0">
-               <position x="{{ x + 180 * loop.index0 }}" y="{{ y + 120 }}"/>
+               <position x="{{ x + 180 * loop.index0 }}" y="{{ y + 60 }}"/>
                <deltaLabel deltax="5.0" deltay="-20.0"/>
             </graphics>
             <scheduling gamma="0" omega="0"/>
@@ -359,12 +505,14 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
             eft="0" lft="0" lft_param="0"
             speed="1" priority="30" cost="0" unctrl="0" obs="1" guard="">
          <graphics color="0">
-            <position x="{{ x + 90 }}" y="{{ y + 120 }}"/>
+            <position x="{{ x + 90 }}" y="{{ y + 60 }}"/>
             <deltaLabel deltax="9.0" deltay="-32.0"/>
             <deltaGuard deltax="15.0" deltay="10.0"/>
             <deltaUpdate deltax="17.0" deltay="26.0"/>
          </graphics>
-         <update><![CDATA[]]></update>
+         <update><![CDATA[need_sched[{{ node.P_Ord }}]++;
+insert_{{ node.core }}_task(List_Task,
+Ready_Task_{{ node.core }}, {{ node.id }});]]></update>
       </transition>
 
       <!-- Arc Wait → Start -->
@@ -378,7 +526,7 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
   <!-- Place -->
   <place id="{{ ready_id }}" identifier="ReadyTsub{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="{{ x + 90 }}" y="{{ y + 240 }}"/>
+         <position x="{{ x + 90 }}" y="{{ y + 150 }}"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
@@ -391,7 +539,7 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
               speed="1" priority="0" cost="0" unctrl="0" obs="1"
               guard="is_selected_task_{{ node.core }}(List_{{ node.core }}, {{ node.id }})">
      <graphics color="0">
-        <position x="{{ x + 90 }}" y="{{ y + 360 }}"/>
+        <position x="{{ x + 90 }}" y="{{ y + 240 }}"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -407,14 +555,18 @@ List_{{ node.core }}, {{ node.id }});
     // Politique inconnue
 {% endif %}
 {% for succ in dag.other_nodes if succ.id in node.successors %}
+{% if succ.type != "endcond" and succ.predecessors | length == 1 %}
   {% if [succ.id] not in already_inserted.value %}
     {% set _ = already_inserted.value.append([succ.id]) %}
 need_sched[{{ succ.P_Ord }}]++;
 insert_{{ succ.core }}_task(List_Task,
 Ready_Task_{{ succ.core }}, {{ succ.id }});
   {% endif %}
+{% endif %}
 {% endfor %}]]></update>
   </transition>
+
+  {% set _ = exec_trans_table.value.append({'node_id': node.id, 'romeo_id': exec_id}) %}
 
   {% for entry in wait_table.value %}
     <!-- Arc Exec to Wait -->
@@ -476,14 +628,18 @@ List_{{ node.core }}, {{ node.id }});
     // Politique inconnue
 {% endif %}
 {% for succ in dag.other_nodes if succ.id in node.successors %}
+{% if succ.type != "endcond" and succ.predecessors | length == 1 %}
   {% if [succ.id] not in already_inserted.value %}
     {% set _ = already_inserted.value.append([succ.id]) %}
 need_sched[{{ succ.P_Ord }}]++;
 insert_{{ succ.core }}_task(List_Task,
 Ready_Task_{{ succ.core }}, {{ succ.id }});
   {% endif %}
+{% endif %}
 {% endfor %}]]></update>
   </transition>
+
+  {% set _ = exec_trans_table.value.append({'node_id': node.id, 'romeo_id': exec_id}) %}
 
   {% for entry in wait_table.value %}
   {% if entry[1] == node.id %}
@@ -549,6 +705,24 @@ insert_{{ src.core }}_task(List_Task, Ready_Task_{{ src.core }}, {{ src.id }});
   {% for src in dag.src_nodes %}
     {{ draw_node(src, ns2.x_start, y, period_id, ns, ns2, dag, drawn) }}
     {% set ns2.x_start = ns2.x_start + 150 %}
+  {% endfor %}
+
+  {% for node in dag.other_nodes if node.type == "endcond" %}
+  {{ draw_node(node, ns2.x_start, y + 60, none, ns, ns2, dag, drawn) }}
+{% endfor %}
+
+{% endfor %}
+
+{% for endcond in endcond_place_table.value %}
+  {% for pred_id in endcond.pred_ids %}
+    {% for entry in exec_trans_table.value %}
+      {% if entry.node_id == pred_id %}
+        <arc place="{{ endcond.romeo_id }}" transition="{{ entry.romeo_id }}" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+      {% endif %}
+    {% endfor %}
   {% endfor %}
 {% endfor %}
 
