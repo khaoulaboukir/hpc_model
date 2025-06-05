@@ -2778,15 +2778,10 @@ initially {
     List_Task[30].id = 30;
     List_Task[30].Priority = -1;
 
-    List_Task[31].state = ;
-    List_Task[31].core = ;
-    List_Task[31].id = 31;
-    List_Task[31].Priority = ;
-
-    List_Task[32].state = SUSPENDED;
-    List_Task[32].core = GPU;
-    List_Task[32].id = 32;
-    List_Task[32].Priority = -1;
+    List_Task[31].state = SUSPENDED;
+    List_Task[31].core = GPU;
+    List_Task[31].id = 32;
+    List_Task[31].Priority = -1;
 
 
     int i;
