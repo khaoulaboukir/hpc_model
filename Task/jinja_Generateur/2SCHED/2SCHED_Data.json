@@ -45,8 +45,9 @@
     {
       "period": 500,
       "subtasks": [
-        { "id": 6, "priority": 1, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [], "successors": [8, 9] },
-        { "id": 7, "priority": 7, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 20, "WCET": 25 }, "predecessors": [], "successors": [12] },
+        { "id": 34, "type": "Alt", "predecessors": [], "successors": [6, 7] },
+        { "id": 6, "priority": 1, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [34], "successors": [8, 9] },
+        { "id": 7, "priority": 7, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "calc", "execution_time": { "BCET": 20, "WCET": 25 }, "predecessors": [34], "successors": [12] },
         { "id": 8, "priority": -1, "core": "GPU", "P_Ord": "FIFO", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [6], "successors": [10] },
         { "id": 9, "priority": 3, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 40, "WCET": 45 }, "predecessors": [6], "successors": [11] },
         { "id": 10, "priority": 5, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 50, "WCET": 55 }, "predecessors": [8], "successors": [14, 15] },
@@ -59,19 +60,10 @@
       ]
     },
     {
-      "period": 100,
-      "subtasks": [
-        { "id": 20, "priority": 1, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [], "successors": [19] },
-        { "id": 17, "priority": 7, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 20, "WCET": 25 }, "predecessors": [], "successors": [18] },
-        { "id": 18, "priority": -1, "core": "GPU", "P_Ord": "FIFO", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [17], "successors": [21] },
-        { "id": 19, "priority": 3, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 40, "WCET": 45 }, "predecessors": [20], "successors": [21] },
-        { "id": 21, "priority": 3, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 40, "WCET": 45 }, "predecessors": [19, 18], "successors": [] }
-      ]
-    },
-    {
       "period": 250,
       "subtasks": [
-        { "id": 22, "priority": 1, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Cond", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [], "successors": [23, 24, 30] },
+        { "id": 22, "priority": 1, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 10, "WCET": 15 }, "predecessors": [], "successors": [33] },
+        { "id": 33, "type": "Cond", "predecessors": [22], "successors": [23, 24, 30] },
         { "id": 23, "priority": 7, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 20, "WCET": 25 }, "predecessors": [22], "successors": [25] },
         { "id": 24, "priority": -1, "core": "GPU", "P_Ord": "FIFO", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [22], "successors": [26] },
         { "id": 25, "priority": 10, "core": "CPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [23], "successors": [27, 28] },
@@ -80,7 +72,7 @@
         { "id": 28, "priority": 11, "core": "GPU", "P_Ord": "FP", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [25], "successors": [29] },
         { "id": 29, "priority": -1, "core": "GPU", "P_Ord": "FIFO", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 30, "WCET": 35 }, "predecessors": [27, 28], "successors": [31] },
         { "id": 30, "priority": -1, "core": "GPU", "P_Ord": "FIFO", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 50, "WCET": 55 }, "predecessors": [22], "successors": [31] },
-        { "id": 31, "type": "endcond", "predecessors": [26, 29, 30], "successors": [32] },
+        { "id": 31, "type": "endCond", "predecessors": [26, 29, 30], "successors": [32] },
         { "id": 32, "priority": -1, "core": "GPU", "P_Ord": "FIFO", "state": "SUSPENDED", "type": "Calc", "execution_time": { "BCET": 50, "WCET": 55 }, "predecessors": [31], "successors": [] }
       ]
     }

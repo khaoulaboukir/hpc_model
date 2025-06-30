@@ -1,4 +1,4 @@
-const int TASK_COUNT = 33;
+const int TASK_COUNT = 30;
 // const int CORE_COUNT = 3;
 const int CPU_COUNT = ;
 const int GPU_COUNT = ;
