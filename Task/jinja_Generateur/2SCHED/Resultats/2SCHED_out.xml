@@ -537,7 +537,7 @@ List_CPU, 5);
 
 
   <!-- Transition Period -->
-  <transition id="29" identifier="StartTDAG0" label=""
+  <transition id="32" identifier="StartTDAG0" label=""
               eft="500" lft="500"
               eft_param="500" lft_param="500"
               speed="1" priority="0" cost="0" unctrl="1" obs="1" guard="">
@@ -547,9 +547,7 @@ List_CPU, 5);
         <deltaGuard deltax="20" deltay="-20"/>
         <deltaUpdate deltax="38.0" deltay="11.0"/>
      </graphics>
-     <update><![CDATA[need_sched[]++;
-insert__task(List_Task, Ready_Task_, 34);
-]]></update>
+     <update><![CDATA[]]></update>
   </transition>
 
     
@@ -559,9 +557,9 @@ insert__task(List_Task, Ready_Task_, 34);
 
 
 
-  <!-- Place Condition -->
-  <place id="33" identifier="Alternatif" label="" initialMarking="0" eft="0" lft="inf">
-    <graphics color="0">
+  <!-- Place Alternatif -->
+  <place id="36" identifier="Alternatif" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="1">
       <position x="91" y="691.0"/>
       <deltaLabel deltax="5.0" deltay="-20.0"/>
     </graphics>
@@ -570,15 +568,18 @@ insert__task(List_Task, Ready_Task_, 34);
 
 
 
+
     <!-- Arc parent → Ready -->
-    <arc place="33" transition="29" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="36" transition="32" type="TransitionPlace" weight="1" tokenColor="-1">
       <nail xnail="0" ynail="0"/>
       <graphics color="0"/>
     </arc>
 
 
+
+
     <!-- Transition Start -->
-  <transition id="34" identifier="StartTsub6" label=""
+  <transition id="37" identifier="StartTsub6" label=""
               eft="0" lft="0"
               eft_param="0" lft_param="0"
               speed="1" priority="70" cost="0" unctrl="0" obs="1"
@@ -591,11 +592,32 @@ insert__task(List_Task, Ready_Task_, 34);
     </graphics>
     <update><![CDATA[need_sched[FP]++;
 insert_CPU_task(List_Task,
-Ready_Task_CPU, 6);]]></update>
+Ready_Task_CPU, 6);
+TragetTsub7 = 0;
+]]></update>
   </transition>
 
+  <!-- Place Traget -->
+  <place id="38" identifier="TragetTsub6" label="" initialMarking="1" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="151" y="781.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Arc Start <==> Traget -->
+    <arc place="38" transition="37" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+  <arc place="38" transition="37" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
   <!-- Place Ready -->
-  <place id="35" identifier="ReadyTsub6" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="39" identifier="ReadyTsub6" label="" initialMarking="0" eft="0" lft="inf">
     <graphics color="0">
       <position x="91" y="871.0"/>
       <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -604,7 +626,7 @@ Ready_Task_CPU, 6);]]></update>
   </place>
 
     <!-- Transition Execution -->
-    <transition id="36" identifier="ExecTsub6" label=""
+    <transition id="39" identifier="ExecTsub6" label=""
               eft="10" lft="15"
               eft_param="10" lft_param="15"
               speed="1" priority="0" cost="0" unctrl="0" obs="1"
@@ -629,19 +651,19 @@ Ready_Task_CPU, 9);
 
 
   <!-- Arc Cond → Successor Start -->
-    <arc place="33" transition="34" type="PlaceTransition" weight="1" tokenColor="-1">
+    <arc place="36" transition="37" type="PlaceTransition" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
 
   <!-- Arc Start → Successor Ready -->
-    <arc place="35" transition="34" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="39" transition="37" type="TransitionPlace" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
 
     <!-- Arc Ready → Successor Exec -->
-    <arc place="35" transition="36" type="PlaceTransition" weight="1" tokenColor="-1">
+    <arc place="39" transition="39" type="PlaceTransition" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
@@ -655,7 +677,7 @@ Ready_Task_CPU, 9);
 
 
   <!-- Place -->
-  <place id="37" identifier="ReadyTsub8" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="40" identifier="ReadyTsub8" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
          <position x="91" y="1141.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -664,7 +686,7 @@ Ready_Task_CPU, 9);
   </place>
 
   <!-- Transition Execution -->
-  <transition id="38" identifier="ExecTsub8" label=""
+  <transition id="41" identifier="ExecTsub8" label=""
               eft="30" lft="35"
               eft_param="30" lft_param="35"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
@@ -687,13 +709,13 @@ Ready_Task_CPU, 10);
 
 
     <!-- Arc from parent to ready -->
-    <arc place="37" transition="36" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="40" transition="39" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="37" transition="38" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="40" transition="41" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -707,7 +729,7 @@ Ready_Task_CPU, 10);
 
 
   <!-- Place -->
-  <place id="39" identifier="ReadyTsub10" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="42" identifier="ReadyTsub10" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
          <position x="91" y="1411.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -716,7 +738,7 @@ Ready_Task_CPU, 10);
   </place>
 
   <!-- Transition Execution -->
-  <transition id="40" identifier="ExecTsub10" label=""
+  <transition id="43" identifier="ExecTsub10" label=""
               eft="50" lft="55"
               eft_param="50" lft_param="55"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
@@ -742,13 +764,13 @@ Ready_Task_GPU, 15);
 
 
     <!-- Arc from parent to ready -->
-    <arc place="39" transition="38" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="42" transition="41" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="39" transition="40" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="42" transition="43" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -762,7 +784,7 @@ Ready_Task_GPU, 15);
 
 
   <!-- Place -->
-  <place id="41" identifier="ReadyTsub14" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="44" identifier="ReadyTsub14" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
          <position x="91" y="1681.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -771,7 +793,7 @@ Ready_Task_GPU, 15);
   </place>
 
   <!-- Transition Execution -->
-  <transition id="42" identifier="ExecTsub14" label=""
+  <transition id="45" identifier="ExecTsub14" label=""
               eft="90" lft="95"
               eft_param="90" lft_param="95"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
@@ -791,13 +813,13 @@ List_CPU, 14);
 
 
     <!-- Arc from parent to ready -->
-    <arc place="41" transition="40" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="44" transition="43" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="41" transition="42" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="44" transition="45" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -811,7 +833,7 @@ List_CPU, 14);
 
 
         <!-- Place Wait from pred 14 -->
-        <place id="45" identifier="Wait_from_14_to_16" label="" initialMarking="0" eft="0" lft="inf">
+        <place id="48" identifier="Wait_from_14_to_16" label="" initialMarking="0" eft="0" lft="inf">
             <graphics color="0">
                <position x="91" y="1921.0"/>
                <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -821,7 +843,7 @@ List_CPU, 14);
 
 
         <!-- Place Wait from pred 15 -->
-        <place id="46" identifier="Wait_from_15_to_16" label="" initialMarking="0" eft="0" lft="inf">
+        <place id="49" identifier="Wait_from_15_to_16" label="" initialMarking="0" eft="0" lft="inf">
             <graphics color="0">
                <position x="271" y="1921.0"/>
                <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -833,7 +855,7 @@ List_CPU, 14);
 
 
       <!-- Transition StartTsub -->
-      <transition id="47" identifier="StartTsub16" label=""
+      <transition id="50" identifier="StartTsub16" label=""
             eft="0" lft="0" lft_param="0"
             speed="1" priority="30" cost="0" unctrl="1" obs="1" guard="">
          <graphics color="0">
@@ -848,17 +870,17 @@ Ready_Task_CPU, 16);]]></update>
       </transition>
 
       <!-- Arc Wait → Start -->
-        <arc place="45" transition="47" type="PlaceTransition" weight="1" tokenColor="-1">
+        <arc place="48" transition="50" type="PlaceTransition" weight="1" tokenColor="-1">
            <nail xnail="0" ynail="0"/>
            <graphics  color="0"/>
         </arc>
-        <arc place="46" transition="47" type="PlaceTransition" weight="1" tokenColor="-1">
+        <arc place="49" transition="50" type="PlaceTransition" weight="1" tokenColor="-1">
            <nail xnail="0" ynail="0"/>
            <graphics  color="0"/>
         </arc>
 
   <!-- Place -->
-  <place id="43" identifier="ReadyTsub16" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="46" identifier="ReadyTsub16" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
          <position x="181" y="2011.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -867,7 +889,7 @@ Ready_Task_CPU, 16);]]></update>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="44" identifier="ExecTsub16" label=""
+  <transition id="47" identifier="ExecTsub16" label=""
               eft="20" lft="25"
               eft_param="20" lft_param="25"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
@@ -886,24 +908,24 @@ List_CPU, 16);
 
 
     <!-- Arc Exec to Wait -->
-    <arc place="45" transition="42" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="48" transition="45" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
     <!-- Arc Exec to Wait -->
-    <arc place="46" transition="43" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="49" transition="46" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
     <!-- Arc start to ready -->
-    <arc place="43" transition="47" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="46" transition="50" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="43" transition="44" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="46" transition="47" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -920,7 +942,7 @@ List_CPU, 16);
 
 
   <!-- Place -->
-  <place id="48" identifier="ReadyTsub15" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="51" identifier="ReadyTsub15" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
          <position x="391" y="1681.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -929,7 +951,7 @@ List_CPU, 16);
   </place>
 
   <!-- Transition Execution -->
-  <transition id="49" identifier="ExecTsub15" label=""
+  <transition id="52" identifier="ExecTsub15" label=""
               eft="60" lft="65"
               eft_param="60" lft_param="65"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
@@ -948,25 +970,22 @@ List_GPU, 15);
 
 
     <!-- Arc Exec to Wait -->
-    <arc place="46" transition="49" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="49" transition="52" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
     <!-- Arc from parent to ready -->
-    <arc place="48" transition="40" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="51" transition="43" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="48" transition="49" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="51" transition="52" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
-
-    
-
 
 
 
@@ -980,22 +999,22 @@ List_GPU, 15);
 
 
   <!-- Place -->
-  <place id="50" identifier="ReadyTsub9" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="53" identifier="ReadyTsub9" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="991" y="1141.0"/>
+         <position x="841" y="1141.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="51" identifier="ExecTsub9" label=""
+  <transition id="54" identifier="ExecTsub9" label=""
               eft="40" lft="45"
               eft_param="40" lft_param="45"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
               guard="is_selected_task_CPU(List_CPU, 9)">
      <graphics color="0">
-        <position x="991" y="1231.0"/>
+        <position x="841" y="1231.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1012,13 +1031,13 @@ Ready_Task_GPU, 11);
 
 
     <!-- Arc from parent to ready -->
-    <arc place="50" transition="36" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="53" transition="39" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="50" transition="51" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="53" transition="54" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -1032,22 +1051,22 @@ Ready_Task_GPU, 11);
 
 
   <!-- Place -->
-  <place id="52" identifier="ReadyTsub11" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="55" identifier="ReadyTsub11" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="991" y="1411.0"/>
+         <position x="841" y="1411.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="53" identifier="ExecTsub11" label=""
+  <transition id="56" identifier="ExecTsub11" label=""
               eft="10" lft="15"
               eft_param="10" lft_param="15"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
               guard="is_selected_task_GPU(List_GPU, 11)">
      <graphics color="0">
-        <position x="991" y="1501.0"/>
+        <position x="841" y="1501.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1061,13 +1080,13 @@ List_GPU, 11);
 
 
     <!-- Arc from parent to ready -->
-    <arc place="52" transition="51" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="55" transition="54" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="52" transition="53" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="55" transition="56" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -1075,8 +1094,12 @@ List_GPU, 11);
 
 
 
+
+
+
+
     <!-- Transition Start -->
-  <transition id="54" identifier="StartTsub7" label=""
+  <transition id="57" identifier="StartTsub7" label=""
               eft="0" lft="0"
               eft_param="0" lft_param="0"
               speed="1" priority="70" cost="0" unctrl="0" obs="1"
@@ -1089,11 +1112,32 @@ List_GPU, 11);
     </graphics>
     <update><![CDATA[need_sched[FP]++;
 insert_CPU_task(List_Task,
-Ready_Task_CPU, 7);]]></update>
+Ready_Task_CPU, 7);
+TragetTsub6 = 0;
+]]></update>
   </transition>
 
+  <!-- Place Traget -->
+  <place id="58" identifier="TragetTsub7" label="" initialMarking="1" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="391" y="781.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Arc Start <==> Traget -->
+    <arc place="58" transition="57" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+  <arc place="58" transition="57" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
   <!-- Place Ready -->
-  <place id="55" identifier="ReadyTsub7" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="59" identifier="ReadyTsub7" label="" initialMarking="0" eft="0" lft="inf">
     <graphics color="0">
       <position x="331" y="871.0"/>
       <deltaLabel deltax="5.0" deltay="-20.0"/>
@@ -1102,7 +1146,7 @@ Ready_Task_CPU, 7);]]></update>
   </place>
 
     <!-- Transition Execution -->
-    <transition id="56" identifier="ExecTsub7" label=""
+    <transition id="59" identifier="ExecTsub7" label=""
               eft="20" lft="25"
               eft_param="20" lft_param="25"
               speed="1" priority="0" cost="0" unctrl="0" obs="1"
@@ -1124,19 +1168,19 @@ Ready_Task_CPU, 12);
 
 
   <!-- Arc Cond → Successor Start -->
-    <arc place="33" transition="54" type="PlaceTransition" weight="1" tokenColor="-1">
+    <arc place="36" transition="57" type="PlaceTransition" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
 
   <!-- Arc Start → Successor Ready -->
-    <arc place="55" transition="54" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="59" transition="57" type="TransitionPlace" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
 
     <!-- Arc Ready → Successor Exec -->
-    <arc place="55" transition="56" type="PlaceTransition" weight="1" tokenColor="-1">
+    <arc place="59" transition="59" type="PlaceTransition" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
@@ -1150,22 +1194,22 @@ Ready_Task_CPU, 12);
 
 
   <!-- Place -->
-  <place id="57" identifier="ReadyTsub12" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="60" identifier="ReadyTsub12" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="1291" y="1141.0"/>
+         <position x="1141" y="1141.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="58" identifier="ExecTsub12" label=""
+  <transition id="61" identifier="ExecTsub12" label=""
               eft="30" lft="35"
               eft_param="30" lft_param="35"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
               guard="is_selected_task_CPU(List_CPU, 12)">
      <graphics color="0">
-        <position x="1291" y="1231.0"/>
+        <position x="1141" y="1231.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1182,13 +1226,13 @@ Ready_Task_GPU, 13);
 
 
     <!-- Arc from parent to ready -->
-    <arc place="57" transition="56" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="60" transition="59" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="57" transition="58" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="60" transition="61" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -1202,22 +1246,22 @@ Ready_Task_GPU, 13);
 
 
   <!-- Place -->
-  <place id="59" identifier="ReadyTsub13" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="62" identifier="ReadyTsub13" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="1291" y="1411.0"/>
+         <position x="1141" y="1411.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="60" identifier="ExecTsub13" label=""
+  <transition id="63" identifier="ExecTsub13" label=""
               eft="70" lft="75"
               eft_param="70" lft_param="75"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
               guard="is_selected_task_GPU(List_GPU, 13)">
      <graphics color="0">
-        <position x="1291" y="1501.0"/>
+        <position x="1141" y="1501.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1231,16 +1275,18 @@ List_GPU, 13);
 
 
     <!-- Arc from parent to ready -->
-    <arc place="59" transition="58" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="62" transition="61" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="59" transition="60" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="62" transition="63" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
+
+
 
 
 
@@ -1251,18 +1297,20 @@ List_GPU, 13);
 
 
   <!-- Transition Period -->
-  <transition id="61" identifier="StartTDAG1" label=""
+  <transition id="64" identifier="StartTDAG1" label=""
               eft="250" lft="250"
               eft_param="250" lft_param="250"
               speed="1" priority="0" cost="0" unctrl="1" obs="1" guard="">
      <graphics color="0">
-        <position x="1741" y="601.0"/>
+        <position x="1591" y="601.0"/>
         <deltaLabel deltax="4.0" deltay="-30.0"/>
         <deltaGuard deltax="20" deltay="-20"/>
         <deltaUpdate deltax="38.0" deltay="11.0"/>
      </graphics>
      <update><![CDATA[need_sched[FP]++;
 insert_CPU_task(List_Task, Ready_Task_CPU, 22);
+need_sched[FP]++;
+insert_CPU_task(List_Task, Ready_Task_CPU, 23);
 ]]></update>
   </transition>
 
@@ -1275,22 +1323,22 @@ insert_CPU_task(List_Task, Ready_Task_CPU, 22);
 
 
   <!-- Place -->
-  <place id="61" identifier="ReadyTsub22" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="64" identifier="ReadyTsub22" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="1741" y="691.0"/>
+         <position x="1591" y="691.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="62" identifier="ExecTsub22" label=""
+  <transition id="65" identifier="ExecTsub22" label=""
               eft="10" lft="15"
               eft_param="10" lft_param="15"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
               guard="is_selected_task_CPU(List_CPU, 22)">
      <graphics color="0">
-        <position x="1741" y="781.0"/>
+        <position x="1591" y="781.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1298,22 +1346,19 @@ insert_CPU_task(List_Task, Ready_Task_CPU, 22);
      <update><![CDATA[no_need_sched[FP]++;
 no_need_scheduler_fp(Ready_Task_CPU,
 List_CPU, 22);
-need_sched[]++;
-insert__task(List_Task,
-Ready_Task_, 33);
 ]]></update>
   </transition>
 
 
 
     <!-- Arc from parent to ready -->
-    <arc place="61" transition="61" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="64" transition="64" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="61" transition="62" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="64" transition="65" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -1325,10 +1370,10 @@ Ready_Task_, 33);
 
 
 
-  <!-- Place Condition -->
-  <place id="67" identifier="Condition" label="" initialMarking="0" eft="0" lft="inf">
-    <graphics color="0">
-      <position x="1741" y="961.0"/>
+  <!-- Place Alternatif -->
+  <place id="70" identifier="Alternatif" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="1">
+      <position x="1591" y="961.0"/>
       <deltaLabel deltax="5.0" deltay="-20.0"/>
     </graphics>
     <scheduling gamma="0" omega="0"/>
@@ -1336,104 +1381,71 @@ Ready_Task_, 33);
 
 
 
+
     <!-- Arc parent → Ready -->
-    <arc place="67" transition="62" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="70" transition="65" type="TransitionPlace" weight="1" tokenColor="-1">
       <nail xnail="0" ynail="0"/>
       <graphics color="0"/>
     </arc>
 
 
+
+
     <!-- Transition Start -->
-  <transition id="68" identifier="StartTsub23" label=""
+  <transition id="71" identifier="StartTsub25" label=""
               eft="0" lft="0"
               eft_param="0" lft_param="0"
-              speed="1" priority="70" cost="0" unctrl="1" obs="1"
+              speed="1" priority="70" cost="0" unctrl="0" obs="1"
               guard="">
     <graphics color="0">
-      <position x="1741" y="1051.0"/>
+      <position x="1591" y="1051.0"/>
       <deltaLabel deltax="9.0" deltay="-32.0"/>
       <deltaGuard deltax="15.0" deltay="10.0"/>
       <deltaUpdate deltax="17.0" deltay="26.0"/>
     </graphics>
     <update><![CDATA[need_sched[FP]++;
 insert_CPU_task(List_Task,
-Ready_Task_CPU, 23);]]></update>
+Ready_Task_CPU, 25);
+TragetTsub26 = 0;
+]]></update>
   </transition>
 
-  <!-- Place Ready -->
-  <place id="69" identifier="ReadyTsub23" label="" initialMarking="0" eft="0" lft="inf">
+  <!-- Place Traget -->
+  <place id="72" identifier="TragetTsub25" label="" initialMarking="1" eft="0" lft="inf">
     <graphics color="0">
-      <position x="1741" y="1141.0"/>
+      <position x="1651" y="1051.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Arc Start <==> Traget -->
+    <arc place="72" transition="71" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+  <arc place="72" transition="71" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+  <!-- Place Ready -->
+  <place id="73" identifier="ReadyTsub25" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="1591" y="1141.0"/>
       <deltaLabel deltax="5.0" deltay="-20.0"/>
     </graphics>
     <scheduling gamma="0" omega="0"/>
   </place>
 
     <!-- Transition Execution -->
-    <transition id="70" identifier="ExecTsub23" label=""
+    <transition id="73" identifier="ExecTsub25" label=""
               eft="20" lft="25"
               eft_param="20" lft_param="25"
-              speed="1" priority="0" cost="0" unctrl="1" obs="1"
-              guard="is_selected_task_CPU(List_CPU, 23)">
-     <graphics color="0">
-        <position x="1741" y="1231.0"/>
-        <deltaLabel deltax="9.0" deltay="-32.0"/>
-        <deltaGuard deltax="15.0" deltay="10.0"/>
-        <deltaUpdate deltax="17.0" deltay="26.0"/>
-     </graphics>
-     <update><![CDATA[no_need_sched[FP]++;
-no_need_scheduler_fp(Ready_Task_CPU,
-List_CPU, 23);
-need_sched[FP]++;
-insert_CPU_task(List_Task,
-Ready_Task_CPU, 25);
-]]></update>
-  </transition>
-
-
-  <!-- Arc Cond → Successor Start -->
-    <arc place="67" transition="68" type="PlaceTransition" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-  <!-- Arc Start → Successor Ready -->
-    <arc place="69" transition="68" type="TransitionPlace" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-    <!-- Arc Ready → Successor Exec -->
-    <arc place="69" transition="70" type="PlaceTransition" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-    
-
-
-
-
-
-
-
-  <!-- Place -->
-  <place id="71" identifier="ReadyTsub25" label="" initialMarking="0" eft="0" lft="inf">
-      <graphics color="0">
-         <position x="1741" y="1411.0"/>
-         <deltaLabel deltax="5.0" deltay="-20.0"/>
-      </graphics>
-      <scheduling gamma="0" omega="0"/>
-  </place>
-
-  <!-- Transition Execution -->
-  <transition id="72" identifier="ExecTsub25" label=""
-              eft="30" lft="35"
-              eft_param="30" lft_param="35"
-              speed="1" priority="0" cost="0" unctrl="1" obs="1"
+              speed="1" priority="0" cost="0" unctrl="0" obs="1"
               guard="is_selected_task_CPU(List_CPU, 25)">
      <graphics color="0">
-        <position x="1741" y="1501.0"/>
+        <position x="1591" y="1231.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1444,24 +1456,26 @@ List_CPU, 25);
 need_sched[FIFO]++;
 insert_GPU_task(List_Task,
 Ready_Task_GPU, 27);
-need_sched[FP]++;
-insert_GPU_task(List_Task,
-Ready_Task_GPU, 28);
 ]]></update>
   </transition>
 
 
+  <!-- Arc Cond → Successor Start -->
+    <arc place="70" transition="71" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
 
-    <!-- Arc from parent to ready -->
-    <arc place="71" transition="70" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
+  <!-- Arc Start → Successor Ready -->
+    <arc place="73" transition="71" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
 
-  <!-- Arc from ready to exec -->
-  <arc place="71" transition="72" type="PlaceTransition" weight="1" tokenColor="-1">
-     <nail xnail="0" ynail="0"/>
-     <graphics  color="0"/>
+    <!-- Arc Ready → Successor Exec -->
+    <arc place="73" transition="73" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
   </arc>
 
     
@@ -1473,22 +1487,22 @@ Ready_Task_GPU, 28);
 
 
   <!-- Place -->
-  <place id="73" identifier="ReadyTsub27" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="74" identifier="ReadyTsub27" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="1741" y="1681.0"/>
+         <position x="1591" y="1411.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="74" identifier="ExecTsub27" label=""
+  <transition id="75" identifier="ExecTsub27" label=""
               eft="30" lft="35"
               eft_param="30" lft_param="35"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
               guard="is_selected_task_GPU(List_GPU, 27)">
      <graphics color="0">
-        <position x="1741" y="1771.0"/>
+        <position x="1591" y="1501.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1496,19 +1510,22 @@ Ready_Task_GPU, 28);
      <update><![CDATA[no_need_sched[FIFO]++;
 no_need_scheduler_fifo(Ready_Task_GPU,
 List_GPU, 27);
+need_sched[FP]++;
+insert_CPU_task(List_Task,
+Ready_Task_CPU, 28);
 ]]></update>
   </transition>
 
 
 
     <!-- Arc from parent to ready -->
-    <arc place="73" transition="72" type="TransitionPlace" weight="1" tokenColor="-1">
+    <arc place="74" transition="73" type="TransitionPlace" weight="1" tokenColor="-1">
        <nail xnail="0" ynail="0"/>
        <graphics  color="0"/>
     </arc>
 
   <!-- Arc from ready to exec -->
-  <arc place="73" transition="74" type="PlaceTransition" weight="1" tokenColor="-1">
+  <arc place="74" transition="75" type="PlaceTransition" weight="1" tokenColor="-1">
      <nail xnail="0" ynail="0"/>
      <graphics  color="0"/>
   </arc>
@@ -1521,70 +1538,288 @@ List_GPU, 27);
 
 
 
-        <!-- Place Wait from pred 27 -->
-        <place id="77" identifier="Wait_from_27_to_29" label="" initialMarking="0" eft="0" lft="inf">
-            <graphics color="0">
-               <position x="1741" y="1921.0"/>
-               <deltaLabel deltax="5.0" deltay="-20.0"/>
-            </graphics>
-            <scheduling gamma="0" omega="0"/>
-        </place>
-
-
-        <!-- Place Wait from pred 28 -->
-        <place id="78" identifier="Wait_from_28_to_29" label="" initialMarking="0" eft="0" lft="inf">
-            <graphics color="0">
-               <position x="1921" y="1921.0"/>
-               <deltaLabel deltax="5.0" deltay="-20.0"/>
-            </graphics>
-            <scheduling gamma="0" omega="0"/>
-        </place>
-
-
-
-
-      <!-- Transition StartTsub -->
-      <transition id="79" identifier="StartTsub29" label=""
-            eft="0" lft="0" lft_param="0"
-            speed="1" priority="30" cost="0" unctrl="1" obs="1" guard="">
-         <graphics color="0">
-            <position x="1831" y="1921.0"/>
-            <deltaLabel deltax="9.0" deltay="-32.0"/>
-            <deltaGuard deltax="15.0" deltay="10.0"/>
-            <deltaUpdate deltax="17.0" deltay="26.0"/>
-         </graphics>
-         <update><![CDATA[need_sched[FIFO]++;
-insert_GPU_task(List_Task,
-Ready_Task_GPU, 29);]]></update>
-      </transition>
-
-      <!-- Arc Wait → Start -->
-        <arc place="77" transition="79" type="PlaceTransition" weight="1" tokenColor="-1">
-           <nail xnail="0" ynail="0"/>
-           <graphics  color="0"/>
-        </arc>
-        <arc place="78" transition="79" type="PlaceTransition" weight="1" tokenColor="-1">
-           <nail xnail="0" ynail="0"/>
-           <graphics  color="0"/>
-        </arc>
-
   <!-- Place -->
-  <place id="75" identifier="ReadyTsub29" label="" initialMarking="0" eft="0" lft="inf">
+  <place id="76" identifier="ReadyTsub28" label="" initialMarking="0" eft="0" lft="inf">
       <graphics color="0">
-         <position x="1831" y="2011.0"/>
+         <position x="1591" y="1681.0"/>
          <deltaLabel deltax="5.0" deltay="-20.0"/>
       </graphics>
       <scheduling gamma="0" omega="0"/>
   </place>
 
   <!-- Transition Execution -->
-  <transition id="76" identifier="ExecTsub29" label=""
+  <transition id="77" identifier="ExecTsub28" label=""
+              eft="30" lft="35"
+              eft_param="30" lft_param="35"
+              speed="1" priority="0" cost="0" unctrl="1" obs="1"
+              guard="is_selected_task_CPU(List_CPU, 28)">
+     <graphics color="0">
+        <position x="1591" y="1771.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[FP]++;
+no_need_scheduler_fp(Ready_Task_CPU,
+List_CPU, 28);
+]]></update>
+  </transition>
+
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="76" transition="75" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="76" transition="77" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+    
+
+
+
+
+
+
+  <!-- Place endAlternatif -->
+  <place id="82" identifier="EndAlt" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="5">
+      <position x="1591" y="1891.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+
+    <!-- Arc parent → EndAlt -->
+    <arc place="82" transition="77" type="TransitionPlace" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+
+
+
+    <!-- Transition Start -->
+    <transition id="83" identifier="StartTsub33" label=""
+                eft="0" lft="0"
+                eft_param="0" lft_param="0"
+                speed="1" priority="70" cost="0" unctrl="1" obs="1"
+                guard="">
+      <graphics color="0">
+        <position x="1591" y="1981.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+      </graphics>
+      <update><![CDATA[need_sched[FP]++;
+insert_GPU_task(List_Task, Ready_Task_GPU, 33);]]></update>
+    </transition>
+
+    <!-- Place Ready -->
+    <place id="84" identifier="ReadyTsub33" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="1591" y="2071.0"/>
+        <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    <!-- Transition Execution -->
+    <transition id="85" identifier="ExecTsub33" label=""
+                eft="30" lft="35"
+                eft_param="30" lft_param="35"
+                speed="1" priority="0" cost="0" unctrl="1" obs="1"
+                guard="is_selected_task_GPU(List_GPU, 33)">
+      <graphics color="0">
+        <position x="1591" y="2161.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+      </graphics>
+      <update><![CDATA[no_need_sched[FP]++;
+no_need_scheduler_fp(Ready_Task_GPU,
+List_GPU, 33);
+]]></update>
+    </transition>
+
+
+    <!-- Arcs -->
+    <arc place="82" transition="83" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    <arc place="84" transition="83" type="TransitionPlace" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    <arc place="84" transition="85" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    <!-- Appel récursif vers les successeurs de succ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Transition Passage -->
+    <transition id="86" identifier="TransitionPass" label=""
+                eft="0" lft="0" eft_param="0" lft_param="0"
+                speed="1" priority="70" cost="0" unctrl="0" obs="1" guard="">
+      <graphics color="0">
+        <position x="1831" y="961.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+      </graphics>
+      <update><![CDATA[TragetTsub26 = 0;
+]]></update>
+    </transition>
+
+
+    <!-- Arc: endCond → Passage -->
+    <arc place="70" transition="86" type="PlaceTransition" weight="1" tokenColor="-1">
+      <graphics color="0"/>
+    </arc>
+
+    <!-- Place Traget -->
+  <place id="87" identifier="TragetTsub25" label="" initialMarking="1" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="1831" y="1051.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Arc Start <==> Traget -->
+    <arc place="87" transition="86" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+  <arc place="87" transition="86" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+
+    <!-- Transition Passage -->
+    <transition id="86" identifier="TransitionPass" label=""
+                eft="0" lft="0" eft_param="0" lft_param="0"
+                speed="1" priority="70" cost="0" unctrl="0" obs="1" guard="">
+      <graphics color="0">
+        <position x="1831" y="961.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+      </graphics>
+      <update><![CDATA[TragetTsub25 = 0;
+]]></update>
+    </transition>
+
+
+    <!-- Arc: endCond → Passage -->
+    <arc place="70" transition="86" type="PlaceTransition" weight="1" tokenColor="-1">
+      <graphics color="0"/>
+    </arc>
+
+    <!-- Place Traget -->
+  <place id="87" identifier="TragetTsub26" label="" initialMarking="1" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="1831" y="1051.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Arc Start <==> Traget -->
+    <arc place="87" transition="86" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+  <arc place="87" transition="86" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+
+    
+
+
+
+
+
+
+
+  <!-- Place Condition -->
+  <place id="92" identifier="Condition" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="3">
+      <position x="2041" y="991.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+
+    <!-- Arc parent → Ready -->
+    <arc place="92" transition="86" type="TransitionPlace" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+
+
+
+    <!-- Transition Start -->
+  <transition id="93" identifier="StartTsub29" label=""
+              eft="0" lft="0"
+              eft_param="0" lft_param="0"
+              speed="1" priority="70" cost="0" unctrl="1" obs="1"
+              guard="">
+    <graphics color="0">
+      <position x="2041" y="1081.0"/>
+      <deltaLabel deltax="9.0" deltay="-32.0"/>
+      <deltaGuard deltax="15.0" deltay="10.0"/>
+      <deltaUpdate deltax="17.0" deltay="26.0"/>
+    </graphics>
+    <update><![CDATA[need_sched[FIFO]++;
+insert_GPU_task(List_Task,
+Ready_Task_GPU, 29);]]></update>
+  </transition>
+
+  <!-- Place Ready -->
+  <place id="94" identifier="ReadyTsub29" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="2041" y="1171.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+    <!-- Transition Execution -->
+    <transition id="95" identifier="ExecTsub29" label=""
               eft="30" lft="35"
               eft_param="30" lft_param="35"
               speed="1" priority="0" cost="0" unctrl="1" obs="1"
               guard="is_selected_task_GPU(List_GPU, 29)">
      <graphics color="0">
-        <position x="1831" y="2101.0"/>
+        <position x="2041" y="1261.0"/>
         <deltaLabel deltax="9.0" deltay="-32.0"/>
         <deltaGuard deltax="15.0" deltay="10.0"/>
         <deltaUpdate deltax="17.0" deltay="26.0"/>
@@ -1596,352 +1831,8 @@ List_GPU, 29);
   </transition>
 
 
-    <!-- Arc Exec to Wait -->
-    <arc place="45" transition="42" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-    <!-- Arc Exec to Wait -->
-    <arc place="46" transition="43" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-    <!-- Arc Exec to Wait -->
-    <arc place="77" transition="74" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-    <!-- Arc Exec to Wait -->
-    <arc place="78" transition="75" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-
-    <!-- Arc start to ready -->
-    <arc place="75" transition="79" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-
-  <!-- Arc from ready to exec -->
-  <arc place="75" transition="76" type="PlaceTransition" weight="1" tokenColor="-1">
-     <nail xnail="0" ynail="0"/>
-     <graphics  color="0"/>
-  </arc>
-
-    
-
-
-
-
-
-
-  <!-- Place End Condition -->
-  <place id="82" identifier="EndCond" label="" initialMarking="0" eft="0" lft="inf">
-    <graphics color="0">
-      <position x="1831" y="2191.0"/>
-      <deltaLabel deltax="5.0" deltay="-20.0"/>
-    </graphics>
-    <scheduling gamma="0" omega="0"/>
-  </place>
-
-
-
-    <!-- Transition Start -->
-  <transition id="83" identifier="StartTsub32" label=""
-              eft="0" lft="0"
-              eft_param="0" lft_param="0"
-              speed="1" priority="70" cost="0" unctrl="1" obs="1"
-              guard="">
-    <graphics color="0">
-      <position x="1741" y="2281.0"/>
-      <deltaLabel deltax="9.0" deltay="-32.0"/>
-      <deltaGuard deltax="15.0" deltay="10.0"/>
-      <deltaUpdate deltax="17.0" deltay="26.0"/>
-    </graphics>
-    <update><![CDATA[need_sched[FIFO]++;
-insert_GPU_task(List_Task,
-Ready_Task_GPU, 32);]]></update>
-  </transition>
-
-  <!-- Place Ready -->
-  <place id="84" identifier="ReadyTsub32" label="" initialMarking="0" eft="0" lft="inf">
-    <graphics color="0">
-      <position x="1741" y="2371.0"/>
-      <deltaLabel deltax="5.0" deltay="-20.0"/>
-    </graphics>
-    <scheduling gamma="0" omega="0"/>
-  </place>
-
-    <!-- Transition Execution -->
-    <transition id="85" identifier="ExecTsub32" label=""
-              eft="50" lft="55"
-              eft_param="50" lft_param="55"
-              speed="1" priority="0" cost="0" unctrl="1" obs="1"
-              guard="is_selected_task_GPU(List_GPU, 32)">
-     <graphics color="0">
-        <position x="1741" y="2461.0"/>
-        <deltaLabel deltax="9.0" deltay="-32.0"/>
-        <deltaGuard deltax="15.0" deltay="10.0"/>
-        <deltaUpdate deltax="17.0" deltay="26.0"/>
-     </graphics>
-     <update><![CDATA[no_need_sched[FIFO]++;
-no_need_scheduler_fifo(Ready_Task_GPU,
-List_GPU, 32);
-]]></update>
-  </transition>
-
-
   <!-- Arc Cond → Successor Start -->
-    <arc place="82" transition="83" type="PlaceTransition" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-  <!-- Arc Start → Successor Ready -->
-    <arc place="84" transition="83" type="TransitionPlace" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-    <!-- Arc Ready → Successor Exec -->
-    <arc place="84" transition="85" type="PlaceTransition" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-  <!-- Place -->
-  <place id="86" identifier="ReadyTsub28" label="" initialMarking="0" eft="0" lft="inf">
-      <graphics color="0">
-         <position x="2191" y="1681.0"/>
-         <deltaLabel deltax="5.0" deltay="-20.0"/>
-      </graphics>
-      <scheduling gamma="0" omega="0"/>
-  </place>
-
-  <!-- Transition Execution -->
-  <transition id="87" identifier="ExecTsub28" label=""
-              eft="30" lft="35"
-              eft_param="30" lft_param="35"
-              speed="1" priority="0" cost="0" unctrl="1" obs="1"
-              guard="is_selected_task_GPU(List_GPU, 28)">
-     <graphics color="0">
-        <position x="2191" y="1771.0"/>
-        <deltaLabel deltax="9.0" deltay="-32.0"/>
-        <deltaGuard deltax="15.0" deltay="10.0"/>
-        <deltaUpdate deltax="17.0" deltay="26.0"/>
-     </graphics>
-     <update><![CDATA[no_need_sched[FP]++;
-no_need_scheduler_fp(Ready_Task_GPU,
-List_GPU, 28);
-]]></update>
-  </transition>
-
-
-    <!-- Arc Exec to Wait -->
-    <arc place="78" transition="87" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-
-    <!-- Arc from parent to ready -->
-    <arc place="86" transition="72" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-
-  <!-- Arc from ready to exec -->
-  <arc place="86" transition="87" type="PlaceTransition" weight="1" tokenColor="-1">
-     <nail xnail="0" ynail="0"/>
-     <graphics  color="0"/>
-  </arc>
-
-    
-
-
-
-
-
-    <!-- Transition Start -->
-  <transition id="88" identifier="StartTsub24" label=""
-              eft="0" lft="0"
-              eft_param="0" lft_param="0"
-              speed="1" priority="70" cost="0" unctrl="1" obs="1"
-              guard="">
-    <graphics color="0">
-      <position x="1981" y="1051.0"/>
-      <deltaLabel deltax="9.0" deltay="-32.0"/>
-      <deltaGuard deltax="15.0" deltay="10.0"/>
-      <deltaUpdate deltax="17.0" deltay="26.0"/>
-    </graphics>
-    <update><![CDATA[need_sched[FIFO]++;
-insert_GPU_task(List_Task,
-Ready_Task_GPU, 24);]]></update>
-  </transition>
-
-  <!-- Place Ready -->
-  <place id="89" identifier="ReadyTsub24" label="" initialMarking="0" eft="0" lft="inf">
-    <graphics color="0">
-      <position x="1981" y="1141.0"/>
-      <deltaLabel deltax="5.0" deltay="-20.0"/>
-    </graphics>
-    <scheduling gamma="0" omega="0"/>
-  </place>
-
-    <!-- Transition Execution -->
-    <transition id="90" identifier="ExecTsub24" label=""
-              eft="30" lft="35"
-              eft_param="30" lft_param="35"
-              speed="1" priority="0" cost="0" unctrl="1" obs="1"
-              guard="is_selected_task_GPU(List_GPU, 24)">
-     <graphics color="0">
-        <position x="1981" y="1231.0"/>
-        <deltaLabel deltax="9.0" deltay="-32.0"/>
-        <deltaGuard deltax="15.0" deltay="10.0"/>
-        <deltaUpdate deltax="17.0" deltay="26.0"/>
-     </graphics>
-     <update><![CDATA[no_need_sched[FIFO]++;
-no_need_scheduler_fifo(Ready_Task_GPU,
-List_GPU, 24);
-need_sched[FIFO]++;
-insert_GPU_task(List_Task,
-Ready_Task_GPU, 26);
-]]></update>
-  </transition>
-
-
-  <!-- Arc Cond → Successor Start -->
-    <arc place="67" transition="88" type="PlaceTransition" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-  <!-- Arc Start → Successor Ready -->
-    <arc place="89" transition="88" type="TransitionPlace" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-    <!-- Arc Ready → Successor Exec -->
-    <arc place="89" transition="90" type="PlaceTransition" weight="1" tokenColor="-1">
-    <nail xnail="0" ynail="0"/>
-    <graphics color="0"/>
-  </arc>
-
-    
-
-
-
-
-
-
-
-  <!-- Place -->
-  <place id="91" identifier="ReadyTsub26" label="" initialMarking="0" eft="0" lft="inf">
-      <graphics color="0">
-         <position x="2641" y="1411.0"/>
-         <deltaLabel deltax="5.0" deltay="-20.0"/>
-      </graphics>
-      <scheduling gamma="0" omega="0"/>
-  </place>
-
-  <!-- Transition Execution -->
-  <transition id="92" identifier="ExecTsub26" label=""
-              eft="30" lft="35"
-              eft_param="30" lft_param="35"
-              speed="1" priority="0" cost="0" unctrl="1" obs="1"
-              guard="is_selected_task_GPU(List_GPU, 26)">
-     <graphics color="0">
-        <position x="2641" y="1501.0"/>
-        <deltaLabel deltax="9.0" deltay="-32.0"/>
-        <deltaGuard deltax="15.0" deltay="10.0"/>
-        <deltaUpdate deltax="17.0" deltay="26.0"/>
-     </graphics>
-     <update><![CDATA[no_need_sched[FIFO]++;
-no_need_scheduler_fifo(Ready_Task_GPU,
-List_GPU, 26);
-]]></update>
-  </transition>
-
-
-
-    <!-- Arc from parent to ready -->
-    <arc place="91" transition="90" type="TransitionPlace" weight="1" tokenColor="-1">
-       <nail xnail="0" ynail="0"/>
-       <graphics  color="0"/>
-    </arc>
-
-  <!-- Arc from ready to exec -->
-  <arc place="91" transition="92" type="PlaceTransition" weight="1" tokenColor="-1">
-     <nail xnail="0" ynail="0"/>
-     <graphics  color="0"/>
-  </arc>
-
-    
-
-
-
-
-    <!-- Transition Start -->
-  <transition id="93" identifier="StartTsub30" label=""
-              eft="0" lft="0"
-              eft_param="0" lft_param="0"
-              speed="1" priority="70" cost="0" unctrl="1" obs="1"
-              guard="">
-    <graphics color="0">
-      <position x="2221" y="1051.0"/>
-      <deltaLabel deltax="9.0" deltay="-32.0"/>
-      <deltaGuard deltax="15.0" deltay="10.0"/>
-      <deltaUpdate deltax="17.0" deltay="26.0"/>
-    </graphics>
-    <update><![CDATA[need_sched[FIFO]++;
-insert_GPU_task(List_Task,
-Ready_Task_GPU, 30);]]></update>
-  </transition>
-
-  <!-- Place Ready -->
-  <place id="94" identifier="ReadyTsub30" label="" initialMarking="0" eft="0" lft="inf">
-    <graphics color="0">
-      <position x="2221" y="1141.0"/>
-      <deltaLabel deltax="5.0" deltay="-20.0"/>
-    </graphics>
-    <scheduling gamma="0" omega="0"/>
-  </place>
-
-    <!-- Transition Execution -->
-    <transition id="95" identifier="ExecTsub30" label=""
-              eft="50" lft="55"
-              eft_param="50" lft_param="55"
-              speed="1" priority="0" cost="0" unctrl="1" obs="1"
-              guard="is_selected_task_GPU(List_GPU, 30)">
-     <graphics color="0">
-        <position x="2221" y="1231.0"/>
-        <deltaLabel deltax="9.0" deltay="-32.0"/>
-        <deltaGuard deltax="15.0" deltay="10.0"/>
-        <deltaUpdate deltax="17.0" deltay="26.0"/>
-     </graphics>
-     <update><![CDATA[no_need_sched[FIFO]++;
-no_need_scheduler_fifo(Ready_Task_GPU,
-List_GPU, 30);
-]]></update>
-  </transition>
-
-
-  <!-- Arc Cond → Successor Start -->
-    <arc place="67" transition="93" type="PlaceTransition" weight="1" tokenColor="-1">
+    <arc place="92" transition="93" type="PlaceTransition" weight="1" tokenColor="-1">
     <nail xnail="0" ynail="0"/>
     <graphics color="0"/>
   </arc>
@@ -1965,18 +1856,224 @@ List_GPU, 30);
 
 
 
+  <!-- Place endCondition -->
+  <place id="100" identifier="EndCond" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="5">
+      <position x="2131" y="1411.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+
+    <!-- Arc parent → EndCond -->
+    <arc place="100" transition="95" type="TransitionPlace" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
 
 
 
-        <arc place="82" transition="92" type="TransitionPlace" weight="1" tokenColor="-1">
+
+    <!-- Transition Passage -->
+    <transition id="101" identifier="TransitionPass" label=""
+                eft="0" lft="0" eft_param="0" lft_param="0"
+                speed="1" priority="70" cost="0" unctrl="1" obs="1" guard="">
+      <graphics color="0">
+        <position x="2131" y="1471.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+      </graphics>
+      <update><![CDATA[]]></update>
+    </transition>
+
+
+    <!-- Arc: endCond → Passage -->
+    <arc place="100" transition="101" type="PlaceTransition" weight="1" tokenColor="-1">
+      <graphics color="0"/>
+    </arc>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Transition Start -->
+  <transition id="102" identifier="StartTsub30" label=""
+              eft="0" lft="0"
+              eft_param="0" lft_param="0"
+              speed="1" priority="70" cost="0" unctrl="1" obs="1"
+              guard="">
+    <graphics color="0">
+      <position x="2281" y="1081.0"/>
+      <deltaLabel deltax="9.0" deltay="-32.0"/>
+      <deltaGuard deltax="15.0" deltay="10.0"/>
+      <deltaUpdate deltax="17.0" deltay="26.0"/>
+    </graphics>
+    <update><![CDATA[need_sched[FIFO]++;
+insert_GPU_task(List_Task,
+Ready_Task_GPU, 30);]]></update>
+  </transition>
+
+  <!-- Place Ready -->
+  <place id="103" identifier="ReadyTsub30" label="" initialMarking="0" eft="0" lft="inf">
+    <graphics color="0">
+      <position x="2281" y="1171.0"/>
+      <deltaLabel deltax="5.0" deltay="-20.0"/>
+    </graphics>
+    <scheduling gamma="0" omega="0"/>
+  </place>
+
+    <!-- Transition Execution -->
+    <transition id="104" identifier="ExecTsub30" label=""
+              eft="30" lft="35"
+              eft_param="30" lft_param="35"
+              speed="1" priority="0" cost="0" unctrl="1" obs="1"
+              guard="is_selected_task_GPU(List_GPU, 30)">
+     <graphics color="0">
+        <position x="2281" y="1261.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[FIFO]++;
+no_need_scheduler_fifo(Ready_Task_GPU,
+List_GPU, 30);
+]]></update>
+  </transition>
+
+
+  <!-- Arc Cond → Successor Start -->
+    <arc place="92" transition="102" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+  <!-- Arc Start → Successor Ready -->
+    <arc place="103" transition="102" type="TransitionPlace" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+    <!-- Arc Ready → Successor Exec -->
+    <arc place="103" transition="104" type="PlaceTransition" weight="1" tokenColor="-1">
+    <nail xnail="0" ynail="0"/>
+    <graphics color="0"/>
+  </arc>
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+  <!-- Place -->
+  <place id="105" identifier="ReadyTsub23" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="2791" y="691.0"/>
+         <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <!-- Transition Execution -->
+  <transition id="106" identifier="ExecTsub23" label=""
+              eft="10" lft="15"
+              eft_param="10" lft_param="15"
+              speed="1" priority="0" cost="0" unctrl="1" obs="1"
+              guard="is_selected_task_CPU(List_CPU, 23)">
+     <graphics color="0">
+        <position x="2791" y="781.0"/>
+        <deltaLabel deltax="9.0" deltay="-32.0"/>
+        <deltaGuard deltax="15.0" deltay="10.0"/>
+        <deltaUpdate deltax="17.0" deltay="26.0"/>
+     </graphics>
+     <update><![CDATA[no_need_sched[FP]++;
+no_need_scheduler_fp(Ready_Task_CPU,
+List_CPU, 23);
+]]></update>
+  </transition>
+
+
+
+    <!-- Arc from parent to ready -->
+    <arc place="105" transition="64" type="TransitionPlace" weight="1" tokenColor="-1">
+       <nail xnail="0" ynail="0"/>
+       <graphics  color="0"/>
+    </arc>
+
+  <!-- Arc from ready to exec -->
+  <arc place="105" transition="106" type="PlaceTransition" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0"/>
+  </arc>
+
+
+
+
+
+        <arc place="100" transition="95" type="TransitionPlace" weight="1" tokenColor="-1">
           <nail xnail="0" ynail="0"/>
           <graphics color="0"/>
         </arc>
-        <arc place="82" transition="76" type="TransitionPlace" weight="1" tokenColor="-1">
+        <arc place="100" transition="104" type="TransitionPlace" weight="1" tokenColor="-1">
           <nail xnail="0" ynail="0"/>
           <graphics color="0"/>
         </arc>
-        <arc place="82" transition="95" type="TransitionPlace" weight="1" tokenColor="-1">
+
+        <arc place="70" transition="65" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+        <arc place="70" transition="106" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+
+        <arc place="82" transition="77" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+        <arc place="82" transition="99" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+        <arc place="82" transition="101" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+
+        <arc place="92" transition="69" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+        <arc place="92" transition="86" type="TransitionPlace" weight="1" tokenColor="-1">
+          <nail xnail="0" ynail="0"/>
+          <graphics color="0"/>
+        </arc>
+        <arc place="92" transition="86" type="TransitionPlace" weight="1" tokenColor="-1">
           <nail xnail="0" ynail="0"/>
           <graphics color="0"/>
         </arc>
@@ -1995,8 +2092,8 @@ const int TASK_COUNT = 30;
 // const int CORE_COUNT = 3;
 const int CPU_COUNT = 2;
 const int GPU_COUNT = 1;
-const int FP = 0;
-const int FIFO = 1;
+const int FIFO = 0;
+const int FP = 1;
 
 
 /* Task data structures */
@@ -2468,60 +2565,60 @@ initially {
     List_Task[18].id = 22;
     List_Task[18].Priority = 1;
 
-    List_Task[19].state = ;
-    List_Task[19].core = ;
-    List_Task[19].id = 33;
-    List_Task[19].Priority = ;
+    List_Task[19].state = SUSPENDED;
+    List_Task[19].core = CPU;
+    List_Task[19].id = 23;
+    List_Task[19].Priority = 1;
 
-    List_Task[20].state = SUSPENDED;
-    List_Task[20].core = CPU;
-    List_Task[20].id = 23;
-    List_Task[20].Priority = 7;
+    List_Task[20].state = ;
+    List_Task[20].core = ;
+    List_Task[20].id = 24;
+    List_Task[20].Priority = ;
 
     List_Task[21].state = SUSPENDED;
-    List_Task[21].core = GPU;
-    List_Task[21].id = 24;
-    List_Task[21].Priority = -1;
+    List_Task[21].core = CPU;
+    List_Task[21].id = 25;
+    List_Task[21].Priority = 7;
 
-    List_Task[22].state = SUSPENDED;
-    List_Task[22].core = CPU;
-    List_Task[22].id = 25;
-    List_Task[22].Priority = 10;
+    List_Task[22].state = ;
+    List_Task[22].core = ;
+    List_Task[22].id = 26;
+    List_Task[22].Priority = ;
 
     List_Task[23].state = SUSPENDED;
     List_Task[23].core = GPU;
-    List_Task[23].id = 26;
+    List_Task[23].id = 27;
     List_Task[23].Priority = -1;
 
     List_Task[24].state = SUSPENDED;
-    List_Task[24].core = GPU;
-    List_Task[24].id = 27;
-    List_Task[24].Priority = -1;
+    List_Task[24].core = CPU;
+    List_Task[24].id = 28;
+    List_Task[24].Priority = 10;
 
     List_Task[25].state = SUSPENDED;
     List_Task[25].core = GPU;
-    List_Task[25].id = 28;
-    List_Task[25].Priority = 11;
+    List_Task[25].id = 29;
+    List_Task[25].Priority = -1;
 
     List_Task[26].state = SUSPENDED;
     List_Task[26].core = GPU;
-    List_Task[26].id = 29;
+    List_Task[26].id = 30;
     List_Task[26].Priority = -1;
 
-    List_Task[27].state = SUSPENDED;
-    List_Task[27].core = GPU;
-    List_Task[27].id = 30;
-    List_Task[27].Priority = -1;
+    List_Task[27].state = ;
+    List_Task[27].core = ;
+    List_Task[27].id = 31;
+    List_Task[27].Priority = ;
 
     List_Task[28].state = ;
     List_Task[28].core = ;
-    List_Task[28].id = 31;
+    List_Task[28].id = 32;
     List_Task[28].Priority = ;
 
     List_Task[29].state = SUSPENDED;
     List_Task[29].core = GPU;
-    List_Task[29].id = 32;
-    List_Task[29].Priority = -1;
+    List_Task[29].id = 33;
+    List_Task[29].Priority = 11;
 
 
     int i;

@@ -3,7 +3,7 @@ from jinja2 import Environment, FileSystemLoader
 import os
 from collections import defaultdict
 
-base_path = "/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Done_Test/2SCHED"
+base_path = "/media/khalil-hamdoune/Khalil/Application/romeo-3.10.2/Test Jinja/Done_Test/Before/2SCHED"
 template_path = os.path.join(base_path, 'Templates')
 result_path = os.path.join(base_path, 'Resultats')
 
