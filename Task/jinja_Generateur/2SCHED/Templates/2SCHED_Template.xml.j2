@@ -371,7 +371,7 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
     {% set base_id_ns.base_id = passage_id %}
 
     <!-- Transition Passage -->
-    <transition id="{{ passage_id }}" identifier="TransitionPass" label=""
+    <transition id="{{ passage_id }}" identifier="TransitionPass{{succ.id}}" label=""
                 eft="0" lft="0" eft_param="0" lft_param="0"
                 speed="1" priority="70" cost="0" unctrl="1" obs="1" guard="">
       <graphics color="0">
@@ -551,7 +551,7 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
     {% set base_id_ns.base_id = passage_id %}
 
     <!-- Transition Passage -->
-    <transition id="{{ passage_id }}" identifier="TransitionPass" label=""
+    <transition id="{{ passage_id }}" identifier="TransitionPass{{succ.id}}" label=""
                 eft="0" lft="0" eft_param="0" lft_param="0"
                 speed="1" priority="70" cost="0" unctrl="1" obs="1" guard="">
       <graphics color="0">
@@ -734,7 +734,7 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
     {% set base_id_ns.base_id = passage_id %}
 
     <!-- Transition Passage -->
-    <transition id="{{ passage_id }}" identifier="TransitionPass" label=""
+    <transition id="{{ passage_id }}" identifier="TransitionPass{{succ.id}}" label=""
                 eft="0" lft="0" eft_param="0" lft_param="0"
                 speed="1" priority="70" cost="0" unctrl="1" obs="1" guard="">
       <graphics color="0">
@@ -945,7 +945,7 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
     {% if succ.id not in drawn.nodes %}
 
     <!-- Transition Passage -->
-    <transition id="{{ passage_id }}" identifier="TransitionPass" label=""
+    <transition id="{{ passage_id }}" identifier="TransitionPass{{succ.id}}" label=""
                 eft="0" lft="0" eft_param="0" lft_param="0"
                 speed="1" priority="70" cost="0" unctrl="0" obs="1" guard="">
       <graphics color="0">
@@ -1874,7 +1874,7 @@ initially {
     {% set ns = namespace( index = 0 ) %}
     {% for task in tasks %}
     {% for subtask in task.subtasks %}
-    {% if subtask.type != "endcond" %}
+    {% if subtask.type not in ["endCond", "endAlt", "Cond", "Alt"] %}
     List_Task[{{ ns.index }}].state = {{ subtask.state }};
     List_Task[{{ ns.index }}].core = {{ subtask.core }};
     List_Task[{{ ns.index }}].id = {{ subtask.id }};

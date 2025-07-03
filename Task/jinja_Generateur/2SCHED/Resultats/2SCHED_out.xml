@@ -355,7 +355,7 @@ List_GPU, 33);
 ]]></update> 
   </transition> 
 
-  <transition id="34" identifier="TransitionPass" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="70" cost="0" unctrl="0" obs="1"  guard=""> 
+  <transition id="34" identifier="TransitionPass26" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="70" cost="0" unctrl="0" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="331" y="661.0"/> 
         <deltaLabel deltax="9.0" deltay="-32.0"/> 
@@ -397,7 +397,7 @@ List_GPU, 29);
 ]]></update> 
   </transition> 
 
-  <transition id="49" identifier="TransitionPass_1" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="70" cost="0" unctrl="1" obs="1"  guard=""> 
+  <transition id="49" identifier="TransitionPass32" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="70" cost="0" unctrl="1" obs="1"  guard=""> 
      <graphics color="0"> 
         <position x="631" y="1171.0"/> 
         <deltaLabel deltax="9.0" deltay="-32.0"/> 
@@ -1202,40 +1202,35 @@ initially {
     List_Task[1].id = 23;
     List_Task[1].Priority = 1;
 
-
+    List_Task[2].state = SUSPENDED;
+    List_Task[2].core = CPU;
+    List_Task[2].id = 25;
+    List_Task[2].Priority = 7;
 
     List_Task[3].state = SUSPENDED;
-    List_Task[3].core = CPU;
-    List_Task[3].id = 25;
-    List_Task[3].Priority = 7;
+    List_Task[3].core = GPU;
+    List_Task[3].id = 27;
+    List_Task[3].Priority = -1;
 
-
+    List_Task[4].state = SUSPENDED;
+    List_Task[4].core = CPU;
+    List_Task[4].id = 28;
+    List_Task[4].Priority = 10;
 
     List_Task[5].state = SUSPENDED;
     List_Task[5].core = GPU;
-    List_Task[5].id = 27;
+    List_Task[5].id = 29;
     List_Task[5].Priority = -1;
 
     List_Task[6].state = SUSPENDED;
-    List_Task[6].core = CPU;
-    List_Task[6].id = 28;
-    List_Task[6].Priority = 10;
+    List_Task[6].core = GPU;
+    List_Task[6].id = 30;
+    List_Task[6].Priority = -1;
 
     List_Task[7].state = SUSPENDED;
     List_Task[7].core = GPU;
-    List_Task[7].id = 29;
-    List_Task[7].Priority = -1;
-
-    List_Task[8].state = SUSPENDED;
-    List_Task[8].core = GPU;
-    List_Task[8].id = 30;
-    List_Task[8].Priority = -1;
-
-
-    List_Task[11].state = SUSPENDED;
-    List_Task[11].core = GPU;
-    List_Task[11].id = 33;
-    List_Task[11].Priority = 11;
+    List_Task[7].id = 33;
+    List_Task[7].Priority = 11;
 
 
     int i;
@@ -1283,7 +1278,6 @@ initially {
 
 
 }
-
 
 ]]></declaration>
 
