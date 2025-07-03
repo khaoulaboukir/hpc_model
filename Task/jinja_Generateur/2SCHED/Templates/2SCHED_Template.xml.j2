@@ -203,6 +203,7 @@ List_{{ task.subtasks[0].core }}, {{ task.subtasks[0].id }});
 {% set alt_place_table = namespace(value=[]) %}
 {% set endalt_place_table = namespace(value=[]) %}
 {% set cond_place_table = namespace(value=[]) %}
+{% set last_sink_position = namespace(x=0, y=0) %}
 {% macro draw_node(node, x, y, parent_transition_id, base_id_ns, x_ns, dag, drawn) %}
 
   {% if node.id in drawn.nodes %}
@@ -312,6 +313,31 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
 {% endif %}
 {% endfor %}]]></update>
     </transition>
+
+    {% if not succ.successors %}
+
+    {% set susp_end_cond_id = base_id_ns.base_id + 1 %}
+    {% set base_id_ns.base_id = susp_end_cond_id %}
+
+    <!-- Place Susp -->
+    <place id="{{ susp_end_cond_id }}" identifier="Susp{{ succ.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="{{ x + 330 * loop.index0 }}" y="{{ y + 450 }}"/>
+        <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    {% set last_sink_position.x = x + 330 * loop.index0 %}
+    {% set last_sink_position.y = y + 450 %}
+
+
+    <arc place="{{ susp_end_cond_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    {% endif %}
 
     {% set _ = exec_trans_table.value.append({'node_id': succ.id, 'romeo_id': succ_exec_id}) %}
 
@@ -467,6 +493,31 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
 {% endif %}
 {% endfor %}]]></update>
     </transition>
+
+    {% if not succ.successors %}
+
+    {% set susp_end_cond_id = base_id_ns.base_id + 1 %}
+    {% set base_id_ns.base_id = susp_end_cond_id %}
+
+    <!-- Place Susp -->
+    <place id="{{ susp_end_cond_id }}" identifier="Susp{{ succ.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="{{ x + 330 * loop.index0 }}" y="{{ y + 390 }}"/>
+        <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    {% set last_sink_position.x = x + 330 * loop.index0 %}
+    {% set last_sink_position.y = y + 390 %}
+
+
+    <arc place="{{ susp_end_cond_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    {% endif %}
 
     {% set _ = exec_trans_table.value.append({'node_id': succ.id, 'romeo_id': succ_exec_id}) %}
 
@@ -624,6 +675,31 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
   {% endif %}
 {% endfor %}]]></update>
   </transition>
+
+  {% if not succ.successors %}
+
+    {% set susp_end_cond_id = base_id_ns.base_id + 1 %}
+    {% set base_id_ns.base_id = susp_end_cond_id %}
+
+    <!-- Place Susp -->
+    <place id="{{ susp_end_cond_id }}" identifier="Susp{{ succ.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="{{ x + 330 * loop.index0 }}" y="{{ y + 450 }}"/>
+        <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    {% set last_sink_position.x = x + 330 * loop.index0 %}
+    {% set last_sink_position.y = y + 450 %}
+
+
+    <arc place="{{ susp_end_cond_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    {% endif %}
 
   {% set _ = exec_trans_table.value.append({'node_id': succ.id, 'romeo_id': succ_exec_id}) %}
 
@@ -807,6 +883,31 @@ Ready_Task_{{ succ2.core }}, {{ succ2.id }});
 {% endfor %}]]></update>
   </transition>
 
+  {% if not succ.successors %}
+
+    {% set susp_end_cond_id = base_id_ns.base_id + 1 %}
+    {% set base_id_ns.base_id = susp_end_cond_id %}
+
+    <!-- Place Susp -->
+    <place id="{{ susp_end_cond_id }}" identifier="Susp{{ succ.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="{{ x + 330 * loop.index0 }}" y="{{ y + 450 }}"/>
+        <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    {% set last_sink_position.x = x + 330 * loop.index0 %}
+    {% set last_sink_position.y = y + 450 %}
+
+
+    <arc place="{{ susp_end_cond_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    {% endif %}
+
   {% set _ = exec_trans_table.value.append({'node_id': succ.id, 'romeo_id': succ_exec_id}) %}
 
   <!-- Arc Cond → Successor Start -->
@@ -988,6 +1089,31 @@ Ready_Task_{{ succ.core }}, {{ succ.id }});
 {% endfor %}]]></update>
   </transition>
 
+  {% if not node.successors %}
+
+    {% set susp_end_cond_id = base_id_ns.base_id + 1 %}
+    {% set base_id_ns.base_id = susp_end_cond_id %}
+
+    <!-- Place Susp -->
+    <place id="{{ susp_end_cond_id }}" identifier="Susp{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="{{ x + 180 }}" y="{{ y + 330 }}"/>
+        <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    {% set last_sink_position.x = x + 180 %}
+    {% set last_sink_position.y = y + 330 %}
+
+
+    <arc place="{{ susp_end_cond_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    {% endif %}
+
   {% set _ = exec_trans_table.value.append({'node_id': node.id, 'romeo_id': exec_id}) %}
 
   {% for entry in wait_table.value %}
@@ -1065,6 +1191,31 @@ Ready_Task_{{ succ.core }}, {{ succ.id }});
 {% endfor %}]]></update>
   </transition>
 
+  {% if not node.successors %}
+
+    {% set susp_end_cond_id = base_id_ns.base_id + 1 %}
+    {% set base_id_ns.base_id = susp_end_cond_id %}
+
+    <!-- Place Susp -->
+    <place id="{{ susp_end_cond_id }}" identifier="Susp{{ node.id }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="{{ x + 90 }}" y="{{ y + 270 }}"/>
+        <deltaLabel deltax="5.0" deltay="-20.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    {% set last_sink_position.x = x + 90 %}
+    {% set last_sink_position.y = y + 270 %}
+
+
+    <arc place="{{ susp_end_cond_id }}" transition="{{ succ_exec_id }}" type="PlaceTransition" weight="1" tokenColor="-1">
+      <nail xnail="0" ynail="0"/>
+      <graphics color="0"/>
+    </arc>
+
+    {% endif %}
+
   {% set _ = exec_trans_table.value.append({'node_id': node.id, 'romeo_id': exec_id}) %}
 
   {% for entry in wait_table.value %}
@@ -1140,6 +1291,132 @@ insert_{{ src.core }}_task(List_Task, Ready_Task_{{ src.core }}, {{ src.id }});
 {% endfor %}
 
 {% endfor %}
+
+<!-- === Observateurs des tâches === -->
+{% set obs_x_start = last_sink_position.x %}
+{% set obs_y_start = last_sink_position.y + 90 %}
+
+{% for dag in src %}
+
+{% set guard_exprs = [] %}
+{% for src_node in dag.src_nodes %}
+  {% if src_node.type not in ["Cond", "Alt"] %}
+    {% set _ = guard_exprs.append("ReadyTsub" ~ src_node.id) %}
+  {% elif src_node.successors|length == 1 %}
+    {% set succ_id = src_node.successors[0] %}
+    {% for node in dag.task.subtasks %}
+      {% if node.id == succ_id %}
+        {% set _ = guard_exprs.append("ReadyTsub" ~ node.id) %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+{% set susp_guard_exprs = [] %}
+{% for node in dag.task.subtasks %}
+  {% if (not node.successors) and (node.type not in ["Cond", "Alt", "endCond", "endAlt"]) %}
+    {% set _ = susp_guard_exprs.append("Susp" ~ node.id) %}
+  {% endif %}
+{% endfor %}
+
+    <place id="{{ ns.base_id + 6 * loop.index0 }}" identifier="TASK{{ loop.index0 }}" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+        <position x="{{ obs_x_start + 450 * loop.index0 }}" y="{{ obs_y_start }}"/>
+        <deltaLabel deltax="6.0" deltay="-23.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+    </place>
+
+    <transition id="{{ ns.base_id + 1 + 6 * loop.index0 }}" identifier="TASK{{ loop.index0 }}_is_ready" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="100" cost="0" unctrl="0" obs="1"  guard="{% for g in guard_exprs %}{{ g }}{% if not loop.last %} && {% endif %}{% endfor %}">
+     <graphics color="0">
+        <position x="{{ obs_x_start + 90 + 450 * loop.index0 }}" y="{{ obs_y_start }}"/>
+        <deltaLabel deltax="-1.0" deltay="-25.0"/>
+        <deltaGuard deltax="11.0" deltay="12.0"/>
+        <deltaUpdate deltax="20" deltay="10"/>
+        <deltaSpeed deltax="-20" deltay="5"/>
+        <deltaCost deltax="-20" deltay="5"/>
+     </graphics>
+     <update><![CDATA[]]></update>
+  </transition>
+
+  <arc place="{{ ns.base_id + 6 * loop.index0 }}" transition="{{ ns.base_id + 1 + 6 * loop.index0 }}" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition="">
+    <nail xnail="0" ynail="0"/>
+    <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <transition id="{{ ns.base_id + 2 + 6 * loop.index0 }}" identifier="TASK{{ loop.index0 }}_is_susp" label=""  eft="0" lft="0" lft_param="0" speed="1" priority="100" cost="0" unctrl="0" obs="1"  guard="{% for g in susp_guard_exprs %}{{ g }}{% if not loop.last %} && {% endif %}{% endfor %}">
+     <graphics color="0">
+        <position x="{{ obs_x_start + 90 + 450 * loop.index0 }}" y="{{ obs_y_start + 90 }}"/>
+        <deltaLabel deltax="67.0" deltay="-18.0"/>
+        <deltaGuard deltax="10.0" deltay="10.0"/>
+        <deltaUpdate deltax="20" deltay="10"/>
+        <deltaSpeed deltax="-20" deltay="5"/>
+        <deltaCost deltax="-20" deltay="5"/>
+     </graphics>
+     <update><![CDATA[]]></update>
+  </transition>
+
+  <arc place="{{ ns.base_id + 6 * loop.index0 }}" transition="{{ ns.base_id + 2 + 6 * loop.index0 }}" type="TransitionPlace" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <place id="{{ ns.base_id + 3 + 6 * loop.index0 }}" identifier="TASK{{ loop.index0 }}_is_exec" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ obs_x_start + 180 + 450 * loop.index0 }}" y="{{ obs_y_start }}"/>
+         <deltaLabel deltax="6.0" deltay="-23.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <arc place="{{ ns.base_id + 3 + 6 * loop.index0 }}" transition="{{ ns.base_id + 2 + 6 * loop.index0 }}" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition="">
+    <nail xnail="0" ynail="0"/>
+    <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <arc place="{{ ns.base_id + 3 + 6 * loop.index0 }}" transition="{{ ns.base_id + 1 + 6 * loop.index0 }}" type="TransitionPlace" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <transition id="{{ ns.base_id + 4 + 6 * loop.index0 }}" identifier="TASK{{ loop.index0 }}_deadline" label=""  eft="{{dag.task.deadline}}" lft="{{dag.task.deadline}}" eft_param="90" lft_param="90" speed="1" priority="0" cost="0" unctrl="0" obs="1"  guard="">
+     <graphics color="0">
+        <position x="{{ obs_x_start + 270 + 450 * loop.index0 }}" y="{{ obs_y_start }}"/>
+        <deltaLabel deltax="-1.0" deltay="-25.0"/>
+        <deltaGuard deltax="11.0" deltay="12.0"/>
+        <deltaUpdate deltax="20" deltay="10"/>
+        <deltaSpeed deltax="-20" deltay="5"/>
+        <deltaCost deltax="-20" deltay="5"/>
+     </graphics>
+     <update><![CDATA[]]></update>
+  </transition>
+
+  <arc place="{{ ns.base_id + 3 + 6 * loop.index0 }}" transition="{{ ns.base_id + 4 + 6 * loop.index0 }}" type="PlaceTransition" weight="1" tokenColor="-1"  inhibitingCondition="">
+    <nail xnail="0" ynail="0"/>
+    <graphics  color="0">
+     </graphics>
+  </arc>
+
+  <place id="{{ ns.base_id + 5 + 6 * loop.index0 }}" identifier="TASK{{ loop.index0 }}_deadline_misses" label="" initialMarking="0" eft="0" lft="inf">
+      <graphics color="0">
+         <position x="{{ obs_x_start + 360 + 450 * loop.index0 }}" y="{{ obs_y_start }}"/>
+         <deltaLabel deltax="81.0" deltay="-5.0"/>
+      </graphics>
+      <scheduling gamma="0" omega="0"/>
+  </place>
+
+  <arc place="{{ ns.base_id + 5 + 6 * loop.index0 }}" transition="{{ ns.base_id + 4 + 6 * loop.index0 }}" type="TransitionPlace" weight="1" tokenColor="-1">
+     <nail xnail="0" ynail="0"/>
+     <graphics  color="0">
+     </graphics>
+  </arc>
+
+{% endfor %}
+
 
 {% for endcond in endcond_place_table.value %}
   {% for pred_id in endcond.pred_ids %}
